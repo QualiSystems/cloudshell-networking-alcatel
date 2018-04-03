@@ -1,7 +1,7 @@
 # cloudshell-networking-alcatel
 
 [![Build status](https://travis-ci.org/QualiSystems/cloudshell-networking-alcatel.svg?branch=master)](https://travis-ci.org/QualiSystems/cloudshell-networking-alcatel)
-[![Coverage Status](https://coveralls.io/repos/github/QualiSystems/cloudshell-networking-alcatel/badge.svg?branch=master)](https://coveralls.io/github/QualiSystems/cloudshell-networking-alcatel?branch=master)
+[![codecov](https://codecov.io/gh/QualiSystems/cloudshell-networking-alcatel/branch/master/graph/badge.svg)](https://codecov.io/gh/QualiSystems/cloudshell-networking-alcatel)
 [![PyPI version](https://badge.fury.io/py/cloudshell-networking-alcatel.svg)](https://badge.fury.io/py/cloudshell-networking-alcatel)
 [![Dependency Status](https://dependencyci.com/github/QualiSystems/cloudshell-networking-alcatel/badge)](https://dependencyci.com/github/QualiSystems/cloudshell-networking-alcatel)
 
