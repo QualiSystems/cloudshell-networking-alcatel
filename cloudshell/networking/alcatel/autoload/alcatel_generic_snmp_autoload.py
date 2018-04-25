@@ -174,8 +174,12 @@ class AlcatelGenericSNMPAutoload(object):
         for index, value in resources.iteritems():
             hw_class = value["tmnxHwClass"].strip("'").lower()
 
-            if value["tmnxHwAdminState"].strip("'") == "inService" and value["tmnxHwOperState"].strip(
-                    "'") == "inService":  # discover only working devices
+            allowed_states = ("inService", "provisioned")
+            admin_state = value["tmnxHwAdminState"].strip("'")
+            oper_state = value["tmnxHwOperState"].strip("'")
+
+            # discover only working devices
+            if admin_state in allowed_states and oper_state in allowed_states:
 
                 if hw_class == "chassis":
                     self.chassis_list.append(index)
