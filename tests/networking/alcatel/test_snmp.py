@@ -82,7 +82,7 @@ class TestSnmp(BaseAlcatelTestCase):
 
         emu = CliEmulator()
 
-        for i, action in emu.actions:
+        for action in emu.actions:
             if action[0] == '^enable-admin$':
                 action[1] = 'Password:'
                 break
