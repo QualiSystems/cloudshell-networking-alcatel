@@ -10,6 +10,7 @@ from mock import create_autospec, MagicMock
 from cloudshell.networking.alcatel.cli.alcatel_cli_handler import AlcatelCliHandler
 
 DEFAULT_PROMPT = 'A:ALU#'
+ENABLE_PASSWORD = 'enable password'
 
 
 class CliEmulator(object):
@@ -20,6 +21,7 @@ class CliEmulator(object):
         self.actions = [
             ['^$', DEFAULT_PROMPT, None],
             ['^environment no more$', DEFAULT_PROMPT, None],
+            ['^enable-admin$', 'MINOR: CLI Already in admin mode.\n{}'.format(DEFAULT_PROMPT), None],
         ]
 
         if actions:
@@ -76,6 +78,7 @@ class BaseAlcatelTestCase(TestCase):
         attributes = {
             'User': 'user',
             'Password': 'password',
+            'Enable Password': ENABLE_PASSWORD,
             'host': 'host',
             'CLI Connection Type': 'ssh',
             'Sessions Concurrency Limit': '1',
@@ -93,8 +96,7 @@ class BaseAlcatelTestCase(TestCase):
         self._cli = get_cli(int(self.resource_config.sessions_concurrency_limit))
 
         self.logger = MagicMock()
-        self.api = MagicMock()
-        self.api.DecryptPassword().Value.return_value = "password"
+        self.api = MagicMock(DecryptPassword=lambda password: MagicMock(Value=password))
 
         self.cli_handler = AlcatelCliHandler(self._cli, self.resource_config, self.logger, self.api)
 

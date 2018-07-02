@@ -1,9 +1,11 @@
 from cloudshell.snmp.quali_snmp import QualiMibTable
 from mock import patch
+from mock.mock import MagicMock
 
 from cloudshell.networking.alcatel.runners.alcatel_autoload_runner import AlcatelAutoloadRunner
 from cloudshell.networking.alcatel.snmp.alcatel_snmp_handler import AlcatelSnmpHandler
-from tests.networking.alcatel.base_test import BaseAlcatelTestCase, CliEmulator, DEFAULT_PROMPT
+from tests.networking.alcatel.base_test import BaseAlcatelTestCase, CliEmulator, DEFAULT_PROMPT, \
+    ENABLE_PASSWORD
 
 
 class TestSnmp(BaseAlcatelTestCase):
@@ -38,6 +40,55 @@ class TestSnmp(BaseAlcatelTestCase):
         self._setUp()
 
         emu = CliEmulator([
+            [r'^configure system snmp no shutdown$',
+             '{}'.format(DEFAULT_PROMPT),
+             1],
+            [r'^configure system security snmp community \t$',
+             ['<community-string>\n'
+              '"community1" "community2"\t"community3"\n'
+              '{0} configure system security snmp community\n'
+              '                                                        ^\n'
+              'Error: Missing parameter\n'
+              '{0}'.format(DEFAULT_PROMPT),
+
+              '<community-string>\n'
+              '"community1" "community2"\t"community3" "public"\n'
+              '{0} configure system security snmp community\n'
+              '                                                        ^\n'
+              'Error: Missing parameter\n'
+              '{0}'.format(DEFAULT_PROMPT)],
+             2],
+            [r'^configure system security snmp community public r version v2c$',
+             '*{}'.format(DEFAULT_PROMPT),
+             1]
+        ])
+        send_mock.side_effect = emu.send_line
+        recv_mock.side_effect = emu.receive_all
+
+        self.runner.discover()
+
+        emu.check_calls()
+
+    @patch('cloudshell.networking.alcatel.flows.alcatel_autoload_flow.AlcatelGenericSNMPAutoload',
+           MagicMock())
+    @patch('cloudshell.devices.snmp_handler.QualiSnmp', MagicMock())
+    @patch('cloudshell.cli.session.ssh_session.paramiko', MagicMock())
+    @patch('cloudshell.cli.session.ssh_session.SSHSession._clear_buffer',
+           MagicMock(return_value=''))
+    @patch('cloudshell.cli.session.ssh_session.SSHSession._receive_all')
+    @patch('cloudshell.cli.session.ssh_session.SSHSession.send_line')
+    def test_enable_snmp_v2_with_enable_admin(self, send_mock, recv_mock):
+        self._setUp()
+
+        emu = CliEmulator()
+
+        for action in emu.actions:
+            if action[0] == '^enable-admin$':
+                action[1] = 'Password:'
+                break
+
+        emu.actions.extend([
+            [ENABLE_PASSWORD, DEFAULT_PROMPT, None],
             [r'^configure system snmp no shutdown$',
              '{}'.format(DEFAULT_PROMPT),
              1],
