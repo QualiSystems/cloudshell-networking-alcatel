@@ -1,8 +1,7 @@
-import os
-
 from cloudshell.devices.flows.action_flows import SaveConfigurationFlow
 
 from cloudshell.networking.alcatel.command_actions.system_actions import SystemActions
+from cloudshell.networking.alcatel.helpers import copy_additional_settings_files
 
 
 class AlcatelSaveFlow(SaveConfigurationFlow):
@@ -22,7 +21,4 @@ class AlcatelSaveFlow(SaveConfigurationFlow):
             else:
                 config_path = system_action.get_startup_config_path()
                 system_action.copy(config_path, folder_path)
-
-                file_name, old_ext = os.path.splitext(config_path)
-                for ext in ('.sdx', '.ndx'):
-                    system_action.copy(file_name + ext, folder_path + ext)
+                copy_additional_settings_files(system_action, config_path, folder_path)
