@@ -95,6 +95,43 @@ class TestSaveConfig(BaseAlcatelTestCase):
 
         emu.check_calls()
 
+    @patch("cloudshell.cli.session.ssh_session.paramiko", MagicMock())
+    @patch("cloudshell.cli.session.ssh_session.SSHSession._clear_buffer",
+           MagicMock(return_value=""))
+    @patch('cloudshell.cli.session.ssh_session.SSHSession._receive_all')
+    @patch('cloudshell.cli.session.ssh_session.SSHSession.send_line')
+    def test_save_copy_addition_files_raise_not_known_error(self, send_mock, recv_mock):
+        ftp = 'ftp://test.url'
+        file_pattern = r'Alcatel-startup-\d+-\d+'
+        emu = CliEmulator([
+            ['^show system information$',
+             '{0} show system information\n\n'
+             '===============================================================================\n'
+             'System Information\n'
+             '===============================================================================\n'
+             'System Name            : test\n'
+             'System Type            : 7210 SAS-M-1\n'
+             'System Version         : B-8.0.R4\n\n'
+             'BOF Source             : cf1:\n'
+             'Image Source           : primary\n'
+             'Config Source          : primary\n'
+             'Last Booted Config File: cf1:\config.cfg\n'
+             '{0}'''.format(DEFAULT_PROMPT), 1],
+            [r'^file copy cf1:\\config.cfg {}/{}$'.format(ftp, file_pattern),
+             'Copying file cf1:\config.cfg ... OK\n1 file copied.\n{}'.format(DEFAULT_PROMPT),
+             1],
+            [r'^file copy cf1:\\config\.sdx {}/{}\.sdx$'.format(ftp, file_pattern),
+             Exception('Don\'t known exception'),
+             1],
+        ])
+        recv_mock.side_effect = emu.receive_all
+        send_mock.side_effect = emu.send_line
+
+        with self.assertRaisesRegexp(Exception, 'Don\'t known exception'):
+            self.runner.save(ftp, 'startup')
+
+        emu.check_calls()
+
     @patch("cloudshell.cli.session.ssh_session.paramiko")
     @patch("cloudshell.cli.session.ssh_session.SSHSession._clear_buffer", return_value="")
     @patch('cloudshell.cli.session.ssh_session.SSHSession._receive_all')
