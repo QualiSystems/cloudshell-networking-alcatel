@@ -1,7 +1,10 @@
+import re
+
 from cloudshell.devices.flows.action_flows import RestoreConfigurationFlow
 from cloudshell.devices.networking_utils import UrlParser
 
 from cloudshell.networking.alcatel.command_actions.system_actions import SystemActions
+from cloudshell.networking.alcatel.helpers import copy_additional_settings_files
 
 
 class AlcatelRestoreFlow(RestoreConfigurationFlow):
@@ -23,12 +26,12 @@ class AlcatelRestoreFlow(RestoreConfigurationFlow):
             raise Exception(msg)
 
         with self._cli_handler.get_cli_service(self._cli_handler.enable_mode) as enable_session:
-            dst = self._get_dst_path(path)
             system_action = SystemActions(enable_session, self._logger)
             old_primary_config_path = system_action.get_primary_config_path()
 
-            for ext in ('', '.sdx', '.ndx'):
-                system_action.copy(path + ext, dst + ext)
+            dst = self._get_dst_path(path, old_primary_config_path)
+            system_action.copy(path, dst)
+            copy_additional_settings_files(system_action, path, dst)
 
             system_action.change_primary_conf(dst)
             system_action.save_bof()
@@ -38,6 +41,13 @@ class AlcatelRestoreFlow(RestoreConfigurationFlow):
                 system_action.change_primary_conf(old_primary_config_path)
                 system_action.save_bof()
 
-    def _get_dst_path(self, path):
-        file_name = UrlParser.parse_url(path).get(UrlParser.FILENAME)
-        return self.DEFAULT_FILESYSTEM + file_name
+    def _get_dst_path(self, src, old_config_path):
+        match = re.search(r'cf\d:/', old_config_path)
+
+        try:
+            file_system = match.group()
+        except AttributeError:
+            file_system = self.DEFAULT_FILESYSTEM
+
+        file_name = UrlParser.parse_url(src).get(UrlParser.FILENAME)
+        return file_system + file_name
