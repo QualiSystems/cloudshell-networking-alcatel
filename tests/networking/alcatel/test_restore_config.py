@@ -150,6 +150,46 @@ class TestRestoreConfig(BaseAlcatelTestCase):
 
         emu.check_calls()
 
+    @patch("cloudshell.cli.session.ssh_session.paramiko", MagicMock())
+    @patch("cloudshell.cli.session.ssh_session.SSHSession._clear_buffer",
+           MagicMock(return_value=""))
+    @patch('cloudshell.cli.session.ssh_session.SSHSession._receive_all')
+    @patch('cloudshell.cli.session.ssh_session.SSHSession.send_line')
+    def test_restore_not_known_file_system(self, send_mock, recv_mock):
+        ftp = 'ftp://test.url'
+        file_name = 'Alcatel-startup-200218-133900'
+        emu = CliEmulator([
+            [r'^show bof$',
+             '{0} show bof\n'
+             '===============================================================================\n'
+             'BOF (Memory)\n'
+             '===============================================================================\n'
+             'primary-image      xx:/images/TiMOS-8.0.R4\n'
+             'primary-config     xx:/config.cfg\n'
+             '===============================================================================\n'
+             '{0}'''.format(DEFAULT_PROMPT),
+             1],
+            [r'^file copy {0}/{1} cf1:/{1}$'.format(ftp, file_name),
+             'Copying file cf1:\{} ... OK\n1 file copied.\n{}'.format(file_name, DEFAULT_PROMPT),
+             1],
+            [r'^file copy {0}/{1}\.sdx cf1:/{1}\.sdx$'.format(ftp, file_name),
+             Exception('Copy failed.'),
+             1],
+            [r'^bof primary-config cf1:/{}$'.format(file_name),
+             '{}'.format(DEFAULT_PROMPT),
+             1],
+            ['^bof save$',
+             'Writing BOF to cf1:/bof.cfg ... OK\nCompleted.\n{}'.format(DEFAULT_PROMPT),
+             1],
+        ])
+        recv_mock.side_effect = emu.receive_all
+        send_mock.side_effect = emu.send_line
+
+        path = '{}/{}'.format(ftp, file_name)
+        self.runner.restore(path, 'startup', 'override')
+
+        emu.check_calls()
+
     @patch("cloudshell.cli.session.ssh_session.paramiko")
     @patch("cloudshell.cli.session.ssh_session.SSHSession._clear_buffer", return_value="")
     @patch('cloudshell.cli.session.ssh_session.SSHSession._receive_all')
