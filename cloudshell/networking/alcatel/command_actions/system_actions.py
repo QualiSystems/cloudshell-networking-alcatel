@@ -53,6 +53,23 @@ class SystemActions(object):
             timeout=timeout,
         ).execute_command(src=src, dst=dst)
 
+    def copy_additional_settings_files(self, src, dst):
+        """Copy additional settings files that can be exists.
+
+        :type src: str
+        :type dst: str
+        """
+        src = re.sub(r'\..{1,3}$', '', src)
+        for ext in ('.sdx', '.ndx'):
+            try:
+                self.copy(src + ext, dst + ext)
+            except Exception as e:
+                # if we don't have these files just skip
+                if 'Copy failed' in str(e):
+                    break
+                else:
+                    raise e
+
     def change_primary_conf(self, path):
         """Change path to primary config in BOF
 
