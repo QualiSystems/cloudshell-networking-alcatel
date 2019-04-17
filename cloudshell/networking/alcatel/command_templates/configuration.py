@@ -35,5 +35,3 @@ SAVE_RUNNING_CONFIG = CommandTemplate(
         r'^((?!Completed\.).)*$': Exception('Fail to save'),
     }
 )
-
-CREATE_FOLDER = CommandTemplate('file md {folder_path}')
