@@ -109,14 +109,6 @@ class SystemActions(object):
             self._logger.info('Device rebooted, starting reconnect')
         self._cli_service.reconnect(timeout)
 
-    def create_folder(self, folder_path):
-        """Create folder"""
-
-        CommandTemplateExecutor(
-            self._cli_service,
-            configuration.CREATE_FOLDER,
-        ).execute_command(folder_path=folder_path)
-
     def change_primary_image(self, folder_path):
         """Change path to primary image in BOF
 
@@ -132,3 +124,22 @@ class SystemActions(object):
         """Save BOF"""
 
         CommandTemplateExecutor(self._cli_service, configuration.SAVE_BOF).execute_command()
+
+    def get_bof_source(self):
+        """Get BOF Source from command 'show system information'.
+
+        Return cf1: cf3:     etc..
+        :rtype: str:
+        """
+        sys_info = CommandTemplateExecutor(
+            self._cli_service,
+            configuration.SHOW_SYS_INFO,
+        ).execute_command()
+
+        # look for the string "BOF Source             : cf1:"
+        match = re.search(
+            r'^\s*BOF Source\s*:\s+(?P<source>.+)\s*$',
+            sys_info,
+            flags=re.MULTILINE,
+        )
+        return match.group('source').strip()
