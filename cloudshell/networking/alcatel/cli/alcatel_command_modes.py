@@ -5,7 +5,7 @@ from cloudshell.cli.command_mode import CommandMode
 
 
 class EnableCommandMode(CommandMode):
-    PROMPT = r'\*?[^>\n]+?#\s*$'
+    PROMPT = r'[\n^]\*?[^>\n]+?#\s*$'
     ENTER_COMMAND = ''
     EXIT_COMMAND = ''
 
@@ -18,7 +18,7 @@ class EnableCommandMode(CommandMode):
 
 
 class ConfigCommandMode(CommandMode):
-    PROMPT = r'\*?[^>\n]+?>config#\s*$'
+    PROMPT = r'[\n^]\*?[^>\n]+?>config#\s*$'
     ENTER_COMMAND = 'configure'
     EXIT_COMMAND = 'exit'
 
