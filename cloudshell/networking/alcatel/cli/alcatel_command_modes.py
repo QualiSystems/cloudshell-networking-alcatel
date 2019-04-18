@@ -4,8 +4,12 @@
 from cloudshell.cli.command_mode import CommandMode
 
 
+# do not include symbol \n from previous line
+NEW_LINE_OR_BEGIN_LINE = r'((?<=\n)|^)'
+
+
 class EnableCommandMode(CommandMode):
-    PROMPT = r'[\n^]\*?[^>\n]+?#\s*$'
+    PROMPT = r'{}\*?[^>\n]+?#\s*$'.format(NEW_LINE_OR_BEGIN_LINE)
     ENTER_COMMAND = ''
     EXIT_COMMAND = ''
 
@@ -18,7 +22,7 @@ class EnableCommandMode(CommandMode):
 
 
 class ConfigCommandMode(CommandMode):
-    PROMPT = r'[\n^]\*?[^>\n]+?>config#\s*$'
+    PROMPT = r'{}\*?[^>\n]+?>config#\s*$'.format(NEW_LINE_OR_BEGIN_LINE)
     ENTER_COMMAND = 'configure'
     EXIT_COMMAND = 'exit'
 

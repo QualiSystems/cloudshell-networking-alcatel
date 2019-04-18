@@ -1,8 +1,7 @@
 import re
 
-from mock import patch
+from mock import patch, MagicMock
 
-from cloudshell.networking.alcatel.flows.alcatel_load_firmware_flow import AlcatelLoadFirmwareFlow
 from cloudshell.networking.alcatel.runners.alcatel_firmware_runner import AlcatelFirmwareRunner
 from tests.networking.alcatel.base_test import BaseAlcatelTestCase, DEFAULT_PROMPT, CliEmulator
 
@@ -17,11 +16,11 @@ class TestLoadFirmware(BaseAlcatelTestCase):
         super(TestLoadFirmware, self).setUp()
         self._setUp()
 
-    @patch('cloudshell.cli.session.ssh_session.paramiko')
-    @patch('cloudshell.cli.session.ssh_session.SSHSession._clear_buffer', return_value='')
+    @patch('cloudshell.cli.session.ssh_session.paramiko', MagicMock())
+    @patch('cloudshell.cli.session.ssh_session.SSHSession._clear_buffer', MagicMock(return_value=''))
     @patch('cloudshell.cli.session.ssh_session.SSHSession._receive_all')
     @patch('cloudshell.cli.session.ssh_session.SSHSession.send_line')
-    def test_load_firmware(self, send_mock, recv_mock, cb_mock, paramiko_mock):
+    def test_load_firmware(self, send_mock, recv_mock):
         ftp = 'ftp://test.url'
         file_name = 'both.tim'
         file_system = 'cf1:\\'
@@ -63,11 +62,11 @@ class TestLoadFirmware(BaseAlcatelTestCase):
 
         emu.check_calls()
 
-    @patch('cloudshell.cli.session.ssh_session.paramiko')
-    @patch('cloudshell.cli.session.ssh_session.SSHSession._clear_buffer', return_value='')
+    @patch('cloudshell.cli.session.ssh_session.paramiko', MagicMock())
+    @patch('cloudshell.cli.session.ssh_session.SSHSession._clear_buffer', MagicMock(return_value=''))
     @patch('cloudshell.cli.session.ssh_session.SSHSession._receive_all')
     @patch('cloudshell.cli.session.ssh_session.SSHSession.send_line')
-    def test_load_firmware_to_cf3(self, send_mock, recv_mock, cb_mock, paramiko_mock):
+    def test_load_firmware_to_cf3(self, send_mock, recv_mock):
         ftp = 'ftp://test.url'
         file_name = 'both.tim'
         file_system = 'cf3:\\'
