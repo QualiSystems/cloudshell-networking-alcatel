@@ -115,10 +115,10 @@ class TestSaveConfig(BaseAlcatelTestCase):
              'BOF Source             : cf1:\n'
              'Image Source           : primary\n'
              'Config Source          : primary\n'
-             'Last Booted Config File: cf1:\config.cfg\n'
+             'Last Booted Config File: cf1:\\config.cfg\n'
              '{0}'''.format(DEFAULT_PROMPT), 1],
             [r'^file copy cf1:\\config.cfg {}/{}$'.format(ftp, file_pattern),
-             'Copying file cf1:\config.cfg ... OK\n1 file copied.\n{}'.format(DEFAULT_PROMPT),
+             'Copying file cf1:\\config.cfg ... OK\n1 file copied.\n{}'.format(DEFAULT_PROMPT),
              1],
             [r'^file copy cf1:\\config\.sdx {}/{}\.sdx$'.format(ftp, file_pattern),
              Exception('Don\'t known exception'),
