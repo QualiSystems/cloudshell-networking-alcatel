@@ -41,7 +41,7 @@ class AlcatelRestoreFlow(RestoreConfigurationFlow):
                 system_action.save_bof()
 
     def _get_dst_path(self, src, old_config_path):
-        match = re.search(r'cf\d+:/', old_config_path)
+        match = re.search(r'cf\d+:\\/', old_config_path)
 
         try:
             file_system = match.group()
