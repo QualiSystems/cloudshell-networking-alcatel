@@ -43,8 +43,8 @@ class TmnxHwIndexOrZero(Integer32, TextualConvention):
     subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,2147483647)
 
 class TmnxHwClass(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 30,)
-    namedValues = NamedValues(("other", 1), ("unknown", 2), ("chassis", 3), ("container", 4), ("powerSupply", 5), ("fan", 6), ("sensor", 7), ("ioModule", 8), ("cpmModule", 9), ("fabricModule", 10), ("mdaModule", 11), ("flashDiskModule", 12), ("port", 13), ("mcm", 14), ("ccm", 15), ("alarmInputModule", 16), ("vwmShelfModule", 30),)
+    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 21, 22, 23, 30,)
+    namedValues = NamedValues(("other", 1), ("unknown", 2), ("chassis", 3), ("container", 4), ("powerSupply", 5), ("fan", 6), ("sensor", 7), ("ioModule", 8), ("cpmModule", 9), ("fabricModule", 10), ("mdaModule", 11), ("flashDiskModule", 12), ("port", 13), ("mcm", 14), ("ccm", 15), ("alarmInputModule", 16), ("unkownModule_21", 21), ("unkownModule_22", 22), ("unkownModule_23", 23), ("vwmShelfModule", 30),)
 
 class TmnxCardType(Unsigned32, TextualConvention):
     pass
