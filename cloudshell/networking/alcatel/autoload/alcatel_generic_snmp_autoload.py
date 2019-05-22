@@ -10,12 +10,7 @@ from cloudshell.devices.standards.networking.autoload_structure import *
 
 
 class AlcatelGenericSNMPAutoload(object):
-    HW_POSSIBLE_CLASSES = ["chassis", "powerSupply", "ioModule", "mdaModule"]
-    # HW_POSSIBLE_CLASSES = ["chassis", "powerSupply", "ioModule", "mdaModule",
-    #                        "isaModule", "imModule"]  # List that based on documentaion
-
-    HW_DISPLAYED_STATES = ["inService", "upgrade", "downgrade", "inServiceUpgrade", "inServiceDowngrade",
-                           "resetPending", "softReset"]
+    HW_POSSIBLE_CLASSES = ["physChassis", "powerSupply", "ioModule", "mdaModule"]
 
     def __init__(self, snmp_handler, shell_name, shell_type, resource_name, logger):
         """ Basic init with injected snmp handler and logger """
@@ -26,9 +21,11 @@ class AlcatelGenericSNMPAutoload(object):
         self.resource_name = resource_name
         self.logger = logger
 
-        self.chassis_list = []
-        self.power_supply_list = []
-        self.modules = defaultdict(list)
+        self.hw_data_dict = {}
+        self.chassis_dict = {}
+        self.power_supply_dict = {}
+        self.io_modules_dict = {}
+        self.mda_modules = {}
         self.port_channel2ports = defaultdict(list)
 
         self.elements = {}
@@ -155,40 +152,49 @@ class AlcatelGenericSNMPAutoload(object):
         """ Read TIMETRA-CHASSIS-MIB and filter out device's structure and elements like chassis, modules, power ports
         """
 
-        hw_name = self.snmp_handler.get_table('TIMETRA-CHASSIS-MIB', 'tmnxHwName')
+        hw_names = self.snmp_handler.get_table('TIMETRA-CHASSIS-MIB', 'tmnxHwName')
 
         resources = {}
-        for name in hw_name.values():
-            if name['tmnxHwName'] != '':
+        for index, attrs in hw_names.items():
+            hw_name = attrs["tmnxHwName"]
 
-                res = self.snmp_handler.get_properties("TIMETRA-CHASSIS-MIB", name["suffix"],
-                                                       {"tmnxHwClass": "str",
-                                                        "tmnxHwContainedIn": "str",
-                                                        "tmnxHwParentRelPos": "str",
-                                                        "tmnxHwAdminState": "str",
-                                                        "tmnxHwOperState": "str"})
+            if hw_name != "":
+                res = self.snmp_handler.get_properties(
+                    "TIMETRA-CHASSIS-MIB",
+                    index,
+                    {
+                        "tmnxHwClass": "str",
+                        "tmnxHwContainedIn": "str",
+                        "tmnxHwParentRelPos": "str",
+                        "tmnxHwAdminState": "str",
+                        "tmnxHwOperState": "str",
+                        "tmnxHwSerialNumber": "str",
+                    },
+                )
+                res = {k: {kk: vv.strip("'") for kk, vv in v.items()} for k, v in res.items()}
+                self.hw_data_dict.update(res)
 
-                if res[name["suffix"]].get("tmnxHwClass").strip("'") in self.HW_POSSIBLE_CLASSES:
+                if res.values()[0]["tmnxHwClass"] in self.HW_POSSIBLE_CLASSES:
                     resources.update(res)
 
-        for index, value in resources.iteritems():
-            hw_class = value["tmnxHwClass"].strip("'").lower()
+        for index, attrs in resources.iteritems():
+            hw_class = attrs["tmnxHwClass"].lower()
 
             allowed_states = ("inService", "provisioned")
-            admin_state = value["tmnxHwAdminState"].strip("'")
-            oper_state = value["tmnxHwOperState"].strip("'")
+            admin_state = attrs["tmnxHwAdminState"]
+            oper_state = attrs["tmnxHwOperState"]
 
             # discover only working devices
             if admin_state in allowed_states and oper_state in allowed_states:
 
-                if hw_class == "chassis":
-                    self.chassis_list.append(index)
+                if hw_class == "physchassis":
+                    self.chassis_dict[index] = attrs
                 elif hw_class == "powersupply":
-                    self.power_supply_list.append(index)
+                    self.power_supply_dict[index] = attrs
                 elif hw_class == "iomodule":
-                    self.modules["io"].append(index)
+                    self.io_modules_dict[index] = attrs
                 elif hw_class == "mdamodule":
-                    self.modules["mda"].append(index)
+                    self.mda_modules[index] = attrs
                 else:
                     continue
 
@@ -197,16 +203,14 @@ class AlcatelGenericSNMPAutoload(object):
 
         self.logger.info("Building Chassis")
 
-        for chassis_index in self.chassis_list:
+        for chassis_index, attrs in self.chassis_dict.items():
             chassis_id = chassis_index.split(".")[0]
 
             chassis_object = GenericChassis(shell_name=self.shell_name,
                                             name="Chassis {}".format(chassis_id),
                                             unique_id="{}.{}.{}".format(self.resource_name, "chassis", chassis_index))
 
-            chassis_object.serial_number = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
-                                                                          "tmnxHwSerialNumber",
-                                                                          chassis_index) or "Unknown"
+            chassis_object.serial_number = attrs.get("tmnxHwSerialNumber", "Unknown")
 
             chassis_type_id = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB", "tmnxChassisType", chassis_index)
             chassis_object.model = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB", "tmnxChassisTypeDescription",
@@ -216,33 +220,40 @@ class AlcatelGenericSNMPAutoload(object):
 
         self.logger.info("Building Chassis completed")
 
+    def _get_parent_ids(self, item_index):
+        pos_id = self.hw_data_dict[item_index]["tmnxHwParentRelPos"]
+        contained_in_id = self.hw_data_dict[item_index]["tmnxHwContainedIn"]
+        chassis_id = item_index.split(".", 1)[0]
+        if contained_in_id == "0":
+            return [chassis_id]
+
+        contained_in_id = "{}.{}".format(chassis_id, contained_in_id)
+        return self._get_parent_ids(contained_in_id) + [pos_id]
+
     def _get_power_ports_info(self):
         """ Get power port elements attributes """
 
         self.logger.info("Start loading Power Ports")
 
-        for power_port_id in self.power_supply_list:
-            pp_rel_path_seq = re.findall(r"\d+", self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
-                                                                                "tmnxHwID",
-                                                                                power_port_id))
+        for index, attrs in self.power_supply_dict.items():
+            pp_ids = self._get_parent_ids(index)  # [<Chassis id>, <PowerShelf id>, <Power Port id>]
+            pp_name = "PP {0}".format('-'.join(pp_ids[1:]))
 
-            pp_name = "PP{0}".format(pp_rel_path_seq[-1])
-
-            power_port_object = GenericPowerPort(shell_name=self.shell_name,
-                                                 name=pp_name,
-                                                 unique_id="{0}.{1}.{2}".format(self.resource_name,
-                                                                                "power_port",
-                                                                                ".".join(pp_rel_path_seq)))
+            power_port_object = GenericPowerPort(
+                shell_name=self.shell_name,
+                name=pp_name,
+                unique_id="{0}.{1}.{2}".format(self.resource_name, "power_port", '-'.join(pp_ids)),
+            )
             # TODO
             power_port_object.model = "Unknown"
             power_port_object.port_description = "Unknown"
             power_port_object.version = "Unknown"
-            power_port_object.serial_number = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
-                                                                             "tmnxHwSerialNumber",
-                                                                             power_port_id).strip("'")
+            power_port_object.serial_number = attrs["tmnxHwSerialNumber"]
 
-            pp_rel_path_seq[-1] = pp_name
-            self._add_element(relative_path="/".join(pp_rel_path_seq), resource=power_port_object)
+            self._add_element(
+                relative_path="{}/{}".format(pp_ids[0], pp_ids[-1]),
+                resource=power_port_object,
+            )
 
         self.logger.info("Building Power Ports completed")
 
@@ -253,78 +264,67 @@ class AlcatelGenericSNMPAutoload(object):
 
         self.logger.info("Building IO Modules")
 
-        for module_index in self.modules.get("io", []):
-            module_rel_path_seq = re.findall(r"\d+", self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
-                                                                                    "tmnxHwID",
-                                                                                    module_index))
+        for index, attrs in self.io_modules_dict.items():
+            module_ids = self._get_parent_ids(index)
 
-            if len(module_rel_path_seq) < 2:
-                self.logger.error("Impossible to determine IO Module parent. Module HwIndex: {}".format(module_index))
-            elif len(module_rel_path_seq) == 2:
-                module_id = module_rel_path_seq[-1]
-                module_object = GenericModule(shell_name=self.shell_name,
-                                              name="Module {}".format(module_id),
-                                              unique_id="{0}.{1}.{2}".format(self.resource_name,
-                                                                             "module",
-                                                                             ".".join(module_rel_path_seq)))
+            if len(module_ids) < 2:
+                self.logger.error("Impossible to determine IO Module parent. Module HwIndex: {}".format(index))
+                continue
+            elif len(module_ids) == 2:
+                module_id = module_ids[-1]
+                module_object = GenericModule(
+                    shell_name=self.shell_name,
+                    name="Module {}".format(module_id),
+                    unique_id="{0}.{1}.{2}".format(self.resource_name, "module", ".".join(module_ids)))
             else:
-                module_id = module_rel_path_seq[-1]
-                module_object = GenericSubModule(shell_name=self.shell_name,
-                                                 name="SubModule {}".format(module_id),
-                                                 unique_id="{0}.{1}.{2}".format(self.resource_name,
-                                                                                "sub_module",
-                                                                                ".".join(module_rel_path_seq)))
+                module_id = module_ids[-1]
+                module_object = GenericSubModule(
+                    shell_name=self.shell_name,
+                    name="SubModule {}".format(module_id),
+                    unique_id="{0}.{1}.{2}".format(self.resource_name, "sub_module", ".".join(module_ids)))
 
-            module_object.serial_number = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
-                                                                         "tmnxHwSerialNumber",
-                                                                         module_index) or "Unknown"
-
+            module_object.serial_number = attrs.get("tmnxHwSerialNumber", "Unknown")
             module_type_id = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
                                                             "tmnxCardEquippedType",
-                                                            ".".join(module_rel_path_seq))
+                                                            ".".join(module_ids))
             module_object.model = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
                                                                  "tmnxCardTypeDescription",
                                                                  module_type_id)
 
             module_object.version = ""
-            self._add_element(relative_path="/".join(module_rel_path_seq), resource=module_object)
+            self._add_element(relative_path="/".join(module_ids), resource=module_object)
 
         self.logger.info("Building MDA Modules")
-        for module_index in self.modules.get("mda", []):
-            module_rel_path_seq = re.findall(r"\d+", self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
-                                                                                    "tmnxHwID",
-                                                                                    module_index))
+        for index, attrs in self.mda_modules.items():
+            module_ids = self._get_parent_ids(index)
 
-            if len(module_rel_path_seq) < 2:
-                self.logger.error("Impossible to determine IO Module parent. Module HwIndex: {}".format(module_index))
-            elif len(module_rel_path_seq) == 2:
-                module_id = module_rel_path_seq[-1]
-                module_object = GenericModule(shell_name=self.shell_name,
-                                              name="Module {}".format(module_id),
-                                              unique_id="{0}.{1}.{2}".format(self.resource_name,
-                                                                             "module",
-                                                                             ".".join(module_rel_path_seq)))
+            if len(module_ids) < 2:
+                self.logger.error("Impossible to determine IO Module parent. Module HwIndex: {}".format(index))
+                continue
+            elif len(module_ids) == 2:
+                module_id = module_ids[-1]
+                module_object = GenericModule(
+                    shell_name=self.shell_name,
+                    name="Module {}".format(module_id),
+                    unique_id="{0}.{1}.{2}".format(self.resource_name, "module", ".".join(module_ids)))
             else:
-                module_id = module_rel_path_seq[-1]
-                module_object = GenericSubModule(shell_name=self.shell_name,
-                                                 name="SubModule {}".format(module_id),
-                                                 unique_id="{0}.{1}.{2}".format(self.resource_name,
-                                                                                "sub_module",
-                                                                                ".".join(module_rel_path_seq)))
+                module_id = module_ids[-1]
+                module_object = GenericSubModule(
+                    shell_name=self.shell_name,
+                    name="SubModule {}".format(module_id),
+                    unique_id="{0}.{1}.{2}".format(self.resource_name, "sub_module", ".".join(module_ids)))
 
-            module_object.serial_number = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
-                                                                         "tmnxHwSerialNumber",
-                                                                         module_index) or "Unknown"
+            module_object.serial_number = attrs.get("tmnxHwSerialNumber", "Unknown")
 
             module_type_id = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
                                                             "tmnxCardEquippedType",
-                                                            ".".join(module_rel_path_seq))
+                                                            ".".join(module_ids))
             module_object.model = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
                                                                  "tmnxMdaTypeDescription",
                                                                  module_type_id)
 
             module_object.version = ""
-            self._add_element(relative_path="/".join(module_rel_path_seq), resource=module_object)
+            self._add_element(relative_path="/".join(module_ids), resource=module_object)
 
         self.logger.info("Building Modules completed")
 
@@ -332,6 +332,8 @@ class AlcatelGenericSNMPAutoload(object):
         """ Get port and port channel elements attributes """
 
         self.logger.info("Building Ports and PortChannels")
+
+        port_pattern = re.compile(r'^(\d+/)*(?P<sfp_port>[a-zA-Z])?\d+/\d+$')  # 1/1/4 or 1/1/c2/1
 
         port_hw_table = self.snmp_handler.get_table('TIMETRA-PORT-MIB', 'tmnxPortName').values()
         port_ifindex2name = {port_data.get("suffix").split(".")[-1]: "Port {}".format(port_data.get("tmnxPortName")) for
@@ -341,6 +343,7 @@ class AlcatelGenericSNMPAutoload(object):
             port_name = port_data.get("tmnxPortName")
             port_hw_index = port_data.get("suffix")
             chassis_index, if_index = port_hw_index.split(".")
+            port_match = port_pattern.match(port_name)
 
             if "lag" in port_name:  # Check if it is portchannel
                 port_channel = GenericPortChannel(shell_name=self.shell_name,
@@ -359,8 +362,9 @@ class AlcatelGenericSNMPAutoload(object):
                 # TODO Fix relative path
                 self._add_element(relative_path=if_index, resource=port_channel)
                 self.logger.info("Added PortChannel '{}'".format(port_channel.name))
-            elif re.match(r"^\d+(/\d+)*$", port_name):  # Determine useful ports like 1/2/3.
-                # Port like A/1 or 1/B/3 should be skipped
+            elif port_match:
+                if port_match.group('sfp_port'):
+                    port_name = '-'.join(port_name.rsplit('/', 1))  # replace last "/" with "-"
 
                 port_object = GenericPort(shell_name=self.shell_name,
                                           name="Port {}".format(port_name.replace("/", "-")),
