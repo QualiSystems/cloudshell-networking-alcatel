@@ -242,7 +242,7 @@ class AlcatelGenericSNMPAutoload(object):
             power_port_object = GenericPowerPort(
                 shell_name=self.shell_name,
                 name=pp_name,
-                unique_id="{0}.{1}.{2}".format(self.resource_name, "power_port", '-'.join(pp_ids)),
+                unique_id="{0}.{1}.{2}".format(self.resource_name, "power_port", '.'.join(pp_ids)),
             )
             # TODO
             power_port_object.model = "Unknown"
