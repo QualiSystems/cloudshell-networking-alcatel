@@ -251,7 +251,7 @@ class AlcatelGenericSNMPAutoload(object):
             power_port_object.serial_number = attrs["tmnxHwSerialNumber"]
 
             self._add_element(
-                relative_path="{}/{}".format(pp_ids[0], pp_ids[-1]),
+                relative_path="{}/{}".format(pp_ids[0], pp_name),
                 resource=power_port_object,
             )
 
