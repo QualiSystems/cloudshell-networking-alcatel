@@ -210,7 +210,7 @@ class AlcatelGenericSNMPAutoload(object):
                                             name="Chassis {}".format(chassis_id),
                                             unique_id="{}.{}.{}".format(self.resource_name, "chassis", chassis_index))
 
-            chassis_object.serial_number = attrs.get("tmnxHwSerialNumber", "Unknown")
+            chassis_object.serial_number = attrs.get("tmnxHwSerialNumber", "")
 
             chassis_type_id = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB", "tmnxChassisType", chassis_index)
             chassis_object.model = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB", "tmnxChassisTypeDescription",
@@ -245,9 +245,9 @@ class AlcatelGenericSNMPAutoload(object):
                 unique_id="{0}.{1}.{2}".format(self.resource_name, "power_port", '.'.join(pp_ids)),
             )
             # TODO
-            power_port_object.model = "Unknown"
-            power_port_object.port_description = "Unknown"
-            power_port_object.version = "Unknown"
+            power_port_object.model = ""
+            power_port_object.port_description = ""
+            power_port_object.version = ""
             power_port_object.serial_number = attrs["tmnxHwSerialNumber"]
 
             self._add_element(
@@ -283,7 +283,7 @@ class AlcatelGenericSNMPAutoload(object):
                     name="SubModule {}".format(module_id),
                     unique_id="{0}.{1}.{2}".format(self.resource_name, "sub_module", ".".join(module_ids)))
 
-            module_object.serial_number = attrs.get("tmnxHwSerialNumber", "Unknown")
+            module_object.serial_number = attrs.get("tmnxHwSerialNumber", "")
             module_type_id = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
                                                             "tmnxCardEquippedType",
                                                             ".".join(module_ids))
@@ -314,7 +314,7 @@ class AlcatelGenericSNMPAutoload(object):
                     name="SubModule {}".format(module_id),
                     unique_id="{0}.{1}.{2}".format(self.resource_name, "sub_module", ".".join(module_ids)))
 
-            module_object.serial_number = attrs.get("tmnxHwSerialNumber", "Unknown")
+            module_object.serial_number = attrs.get("tmnxHwSerialNumber", "")
 
             module_type_id = self.snmp_handler.get_property("TIMETRA-CHASSIS-MIB",
                                                             "tmnxCardEquippedType",
