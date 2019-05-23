@@ -1,1257 +1,2080 @@
 #
-# PySNMP MIB module TIMETRA-TC-MIB (http://pysnmp.sf.net)
-# ASN.1 source file://C:\MIBS\text_mibs\aos\TIMETRA-TC-MIB
-# Produced by pysmi-0.0.6 at Wed May 31 13:16:58 2017
-# On host ? platform ? version ? by user ?
-# Using Python version 2.7.9 (default, Dec 10 2014, 12:24:55) [MSC v.1500 32 bit (Intel)]
+# PySNMP MIB module TIMETRA-TC-MIB (http://snmplabs.com/pysmi)
+# ASN.1 source TIMETRA-TC-MIB.mib
+# Produced by pysmi-0.3.4 at Mon May 20 16:59:06 2019
+# On host ? platform Linux version 4.15.0-48-generic by user ?
+# Using Python version 3.6.7 (default, Oct 22 2018, 11:32:17)
 #
-( Integer, ObjectIdentifier, OctetString, ) = mibBuilder.importSymbols("ASN1", "Integer", "ObjectIdentifier", "OctetString")
-( NamedValues, ) = mibBuilder.importSymbols("ASN1-ENUMERATION", "NamedValues")
-( ConstraintsUnion, SingleValueConstraint, ConstraintsIntersection, ValueSizeConstraint, ValueRangeConstraint, ) = mibBuilder.importSymbols("ASN1-REFINEMENT", "ConstraintsUnion", "SingleValueConstraint", "ConstraintsIntersection", "ValueSizeConstraint", "ValueRangeConstraint")
-( NotificationGroup, ModuleCompliance, ) = mibBuilder.importSymbols("SNMPv2-CONF", "NotificationGroup", "ModuleCompliance")
-( Integer32, MibScalar, MibTable, MibTableRow, MibTableColumn, NotificationType, MibIdentifier, IpAddress, TimeTicks, Counter64, Unsigned32, ModuleIdentity, Gauge32, iso, ObjectIdentity, Bits, Counter32, ) = mibBuilder.importSymbols("SNMPv2-SMI", "Integer32", "MibScalar", "MibTable", "MibTableRow", "MibTableColumn", "NotificationType", "MibIdentifier", "IpAddress", "TimeTicks", "Counter64", "Unsigned32", "ModuleIdentity", "Gauge32", "iso", "ObjectIdentity", "Bits", "Counter32")
-( DisplayString, TextualConvention, ) = mibBuilder.importSymbols("SNMPv2-TC", "DisplayString", "TextualConvention")
-( timetraModules, ) = mibBuilder.importSymbols("TIMETRA-GLOBAL-MIB", "timetraModules")
-timetraTCMIBModule = ModuleIdentity((1, 3, 6, 1, 4, 1, 6527, 1, 1, 2)).setRevisions(("1911-02-01 00:00", "1909-02-28 00:00", "1908-07-01 00:00", "1908-01-01 00:00", "1907-01-01 00:00", "1906-03-23 00:00", "1905-08-31 00:00", "1905-01-24 00:00", "1904-01-15 00:00", "1903-08-15 00:00", "1903-01-20 00:00", "1901-05-29 00:00",))
-class InterfaceIndex(Integer32, TextualConvention):
+ObjectIdentifier, OctetString, Integer = mibBuilder.importSymbols("ASN1", "ObjectIdentifier", "OctetString", "Integer")
+NamedValues, = mibBuilder.importSymbols("ASN1-ENUMERATION", "NamedValues")
+SingleValueConstraint, ConstraintsIntersection, ValueSizeConstraint, ValueRangeConstraint, ConstraintsUnion = mibBuilder.importSymbols("ASN1-REFINEMENT", "SingleValueConstraint", "ConstraintsIntersection", "ValueSizeConstraint", "ValueRangeConstraint", "ConstraintsUnion")
+InetAddressIPv6, InetAddressType, InetAddress, InetAddressPrefixLength = mibBuilder.importSymbols("INET-ADDRESS-MIB", "InetAddressIPv6", "InetAddressType", "InetAddress", "InetAddressPrefixLength")
+ModuleCompliance, NotificationGroup = mibBuilder.importSymbols("SNMPv2-CONF", "ModuleCompliance", "NotificationGroup")
+Integer32, Counter32, Counter64, ObjectIdentity, Unsigned32, MibIdentifier, ModuleIdentity, MibScalar, MibTable, MibTableRow, MibTableColumn, TimeTicks, Bits, Gauge32, NotificationType, IpAddress, iso = mibBuilder.importSymbols("SNMPv2-SMI", "Integer32", "Counter32", "Counter64", "ObjectIdentity", "Unsigned32", "MibIdentifier", "ModuleIdentity", "MibScalar", "MibTable", "MibTableRow", "MibTableColumn", "TimeTicks", "Bits", "Gauge32", "NotificationType", "IpAddress", "iso")
+TextualConvention, DisplayString, TruthValue = mibBuilder.importSymbols("SNMPv2-TC", "TextualConvention", "DisplayString", "TruthValue")
+timetraModules, = mibBuilder.importSymbols("TIMETRA-GLOBAL-MIB", "timetraModules")
+timetraTCMIBModule = ModuleIdentity((1, 3, 6, 1, 4, 1, 6527, 1, 1, 2))
+timetraTCMIBModule.setRevisions(('2017-01-01 00:00', '2016-01-01 00:00', '2015-01-01 00:00', '2014-01-01 00:00', '2011-02-01 00:00', '2009-02-28 00:00', '2008-07-01 00:00', '2008-01-01 00:00', '2007-01-01 00:00', '2006-03-23 00:00', '2005-08-31 00:00', '2005-01-24 00:00', '2004-01-15 00:00', '2003-08-15 00:00', '2003-01-20 00:00', '2001-05-29 00:00',))
+if mibBuilder.loadTexts: timetraTCMIBModule.setLastUpdated('201701010000Z')
+if mibBuilder.loadTexts: timetraTCMIBModule.setOrganization('Nokia')
+class InterfaceIndex(TextualConvention, Integer32):
+    status = 'current'
     displayHint = 'd'
 
-class TmnxPortID(Unsigned32, TextualConvention):
-    pass
+class TmnxPortID(TextualConvention, Unsigned32):
+    status = 'current'
 
-class TmnxEncapVal(Unsigned32, TextualConvention):
-    pass
+class TmnxEncapVal(TextualConvention, Unsigned32):
+    status = 'current'
 
-class QTag(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,4094)
+class QTag(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 4094)
 
-class QTagOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,4094)
+class QTagOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 4094)
 
-class QTagFullRange(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,4095)
+class QTagFullRange(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 4095)
 
-class QTagFullRangeOrNone(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,4095),)
-class TmnxStrSapId(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,32)
+class QTagFullRangeOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 4095), )
+class TmnxSapAASubScope(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2))
+    namedValues = NamedValues(("none", 0), ("subscriber", 1), ("mac", 2))
 
-class IpAddressPrefixLength(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,32)
+class TmnxStrSapId(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 32)
 
-class TmnxActionType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("doAction", 1), ("notApplicable", 2),)
+class IpAddressPrefixLength(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 32)
 
-class TmnxAdminState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("noop", 1), ("inService", 2), ("outOfService", 3),)
+class TmnxActionType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("doAction", 1), ("notApplicable", 2))
 
-class TmnxOperState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4,)
-    namedValues = NamedValues(("unknown", 1), ("inService", 2), ("outOfService", 3), ("transition", 4),)
+class TmnxAdminState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("noop", 1), ("inService", 2), ("outOfService", 3))
 
-class TmnxStatus(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("create", 1), ("delete", 2),)
+class TmnxOperState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4))
+    namedValues = NamedValues(("unknown", 1), ("inService", 2), ("outOfService", 3), ("transition", 4))
 
-class TmnxEnabledDisabled(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("enabled", 1), ("disabled", 2),)
+class TmnxStatus(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("create", 1), ("delete", 2))
 
-class TmnxEnabledDisabledOrInherit(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("enabled", 1), ("disabled", 2), ("inherit", 3),)
+class TmnxEnabledDisabledAdminState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("enabled", 1), ("disabled", 2))
 
-class TNamedItem(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,32)
+class TmnxEnabledDisabled(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("enabled", 1), ("disabled", 2))
 
-class TNamedItemOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ConstraintsUnion(ValueSizeConstraint(0,0),ValueSizeConstraint(1,32),)
-class TLNamedItem(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,64)
+class TmnxEnabledDisabledOrNA(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("enabled", 1), ("disabled", 2), ("notApplicable", 3))
 
-class TLNamedItemOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ConstraintsUnion(ValueSizeConstraint(0,0),ValueSizeConstraint(1,64),)
-class TItemDescription(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,80)
+class TmnxEnabledDisabledOrInherit(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("enabled", 1), ("disabled", 2), ("inherit", 3))
 
-class TItemLongDescription(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,160)
+class TmnxTimeInterval(TextualConvention, Unsigned32):
+    status = 'current'
 
-class TmnxVRtrID(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,10240)
+class TNamedItem(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 32)
 
-class TmnxVRtrIDOrZero(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,10240)
+class TNamedItemOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ConstraintsUnion(ValueSizeConstraint(0, 0), ValueSizeConstraint(1, 32), )
+class TLNamedItem(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 64)
 
-class TmnxBgpAutonomousSystem(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,65535)
+class TLNamedItemOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ConstraintsUnion(ValueSizeConstraint(0, 0), ValueSizeConstraint(1, 64), )
+class TXLNamedItem(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 255)
 
-class TmnxBgpLocalPreference(Unsigned32, TextualConvention):
-    pass
+class TXLNamedItemOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ConstraintsUnion(ValueSizeConstraint(0, 0), ValueSizeConstraint(1, 255), )
+class TItemDescription(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 80)
 
-class TmnxBgpPreference(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,255)
+class TItemLongDescription(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 160)
 
-class TmnxCustId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,2147483647),)
-class BgpPeeringStatus(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,)
-    namedValues = NamedValues(("notApplicable", 0), ("installed", 1), ("notInstalled", 2), ("noEnhancedSubmgt", 3), ("wrongAntiSpoof", 4), ("parentItfDown", 5), ("hostInactive", 6), ("noDualHomingSupport", 7), ("invalidRadiusAttr", 8), ("noDynamicPeerGroup", 9), ("duplicatePeer", 10), ("maxPeersReached", 11), ("genError", 12),)
+class TRegularExpression(DisplayString):
+    status = 'current'
 
-class TmnxServId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,2147483647),ValueRangeConstraint(2147483648,2147483648),ValueRangeConstraint(2147483649,2147483649),ValueRangeConstraint(2147483650,2147483650),)
-class ServiceAdminStatus(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("up", 1), ("down", 2),)
+class TmnxHttpRedirectUrl(DisplayString):
+    status = 'current'
 
-class ServiceOperStatus(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("up", 1), ("down", 2),)
+class TmnxDisplayStringURL(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 180)
 
-class TPolicyID(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,65535),ValueRangeConstraint(65536,65536),ValueRangeConstraint(65537,65537),)
-class TTmplPolicyID(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,65535)
+class TmnxVRtrID(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 10240)
 
-class TSapIngressPolicyID(TPolicyID, TextualConvention):
-    pass
+class TmnxVRtrIDOrZero(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 10240)
 
-class TSapEgressPolicyID(TPolicyID, TextualConvention):
-    subtypeSpec = TPolicyID.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(1,65535),ValueRangeConstraint(65536,65536),ValueRangeConstraint(65537,65537),)
-class TSdpIngressPolicyID(TPolicyID, TextualConvention):
-    pass
+class VRtrIgmpHostMcRDstStatType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6))
+    namedValues = NamedValues(("joinTx", 1), ("joinDenyTx", 2), ("dropTx", 3), ("joinLost", 4), ("joinDenyLost", 5), ("dropLost", 6))
 
-class TSdpEgressPolicyID(TPolicyID, TextualConvention):
-    pass
+class TmnxBgpAutonomousSystem(TextualConvention, Integer32):
+    reference = 'BGP4-MIB.bgpPeerRemoteAs'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 65535)
 
-class TQosQGrpInstanceIDorZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,65535),)
-class TmnxBsxTransitIpPolicyId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,65535)
+class TmnxBgpLocalPreference(TextualConvention, Unsigned32):
+    reference = 'RFC 1771 section 4.3 Path Attributes e)'
+    status = 'current'
 
-class TmnxBsxTransitIpPolicyIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,65535),)
-class TmnxBsxTransPrefPolicyId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,65535)
+class TmnxBgpPreference(TextualConvention, Unsigned32):
+    reference = 'RFC 1771 section 4.3 Path Attributes e)'
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 255)
 
-class TmnxBsxTransPrefPolicyIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,65535),)
-class TmnxBsxAarpId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,65535)
+class TmnxCustId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 2147483647), )
+class TmnxCustIdNoZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 2147483647)
 
-class TmnxBsxAarpIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,65535),)
-class TmnxBsxAarpServiceRefType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("none", 0), ("dualHomed", 1), ("shuntSubscriberSide", 2), ("shuntNetworkSide", 3),)
+class BgpPeeringStatus(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
+    namedValues = NamedValues(("notApplicable", 0), ("installed", 1), ("notInstalled", 2), ("noEnhancedSubmgt", 3), ("wrongAntiSpoof", 4), ("parentItfDown", 5), ("hostInactive", 6), ("noDualHomingSupport", 7), ("invalidRadiusAttr", 8), ("noDynamicPeerGroup", 9), ("duplicatePeer", 10), ("maxPeersReached", 11), ("l2AwNotSupported", 12), ("gtpNotSupported", 13), ("genError", 14))
 
-class TSapEgrEncapGrpQosPolicyIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,65535),)
-class TSapEgrEncapGroupType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1,)
-    namedValues = NamedValues(("isid", 1),)
+class TmnxRipListenerStatus(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+    namedValues = NamedValues(("notApplicable", 0), ("active", 1), ("inactive", 2), ("noEnhancedSubmgt", 3), ("wrongAntiSpoof", 4), ("parentItfDown", 5), ("hostInactive", 6), ("l2AwNotSupported", 7), ("gtpNotSupported", 8), ("mcStandby", 9), ("ripDisabled", 10))
 
-class TSapEgrEncapGroupActionType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("create", 1), ("destroy", 2),)
+class TmnxServId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 2147483647), ValueRangeConstraint(2147483648, 2147483648), ValueRangeConstraint(2147483649, 2147483649), ValueRangeConstraint(2147483650, 2147483650), ValueRangeConstraint(2147483651, 2147483690), ValueRangeConstraint(2147483691, 2148007980), ValueRangeConstraint(2148007981, 2148012076), ValueRangeConstraint(2148012077, 2148016172), ValueRangeConstraint(2148016173, 2148278316), ValueRangeConstraint(2148278317, 2148278317), ValueRangeConstraint(2148278318, 2148278381), )
+class TmnxExtServId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 2147483647), )
+class TmnxAdminStateUpDown(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("up", 1), ("down", 2))
 
-class TPerPacketOffset(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(-32,31)
+class TmnxAdminStateTruthValue(TruthValue):
+    status = 'current'
 
-class TPerPacketOffsetOvr(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-128,-128),ValueRangeConstraint(-32,31),)
-class TIngressHsmdaPerPacketOffset(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(-32,31)
+class TruthValueNoTypeTranslator(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("true", 1), ("false", 2))
 
-class TEgressQPerPacketOffset(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(-64,32)
+class ServiceAdminStatus(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("up", 1), ("down", 2))
 
-class TIngHsmdaPerPacketOffsetOvr(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-128,-128),ValueRangeConstraint(-32,31),)
-class TEgressHsmdaPerPacketOffset(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(-32,31)
+class ServiceOperStatus(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("up", 1), ("down", 2))
 
-class THsmdaCounterIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,8),)
-class THsmdaCounterIdOrZeroOrAll(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,0),ValueRangeConstraint(1,8),)
-class TEgrHsmdaPerPacketOffsetOvr(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-128,-128),ValueRangeConstraint(-32,31),)
-class TIngressHsmdaCounterId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,8)
+class TPolicyID(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 65535), ValueRangeConstraint(65536, 65536), ValueRangeConstraint(65537, 65537), ValueRangeConstraint(65538, 65538), )
+class TTmplPolicyID(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 65535)
 
-class TIngressHsmdaCounterIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,8),)
-class TEgressHsmdaCounterId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,8)
+class TQosIngressPolicyID(TPolicyID):
+    status = 'current'
 
-class TEgressHsmdaCounterIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,8),)
-class TEgrRateModType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("none", 1), ("aggRateLimit", 2), ("namedScheduler", 3),)
+class TSapIngressPolicyID(TPolicyID):
+    status = 'current'
 
-class TPolicyStatementNameOrEmpty(TNamedItemOrEmpty, TextualConvention):
-    pass
+class TSapEgressPolicyID(TPolicyID):
+    status = 'current'
+    subtypeSpec = TPolicyID.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(1, 65535), ValueRangeConstraint(65536, 65536), ValueRangeConstraint(65537, 65537), ValueRangeConstraint(65538, 65538), )
+class TAnyQosPolicyID(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 4294967295)
 
-class TmnxVcType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 9, 10, 11, 17, 18, 19, 20, 21, 23, 25, 4096,)
-    namedValues = NamedValues(("frDlciMartini", 1), ("atmSdu", 2), ("atmCell", 3), ("ethernetVlan", 4), ("ethernet", 5), ("atmVccCell", 9), ("atmVpcCell", 10), ("ipipe", 11), ("satopE1", 17), ("satopT1", 18), ("satopE3", 19), ("satopT3", 20), ("cesopsn", 21), ("cesopsnCas", 23), ("frDlci", 25), ("mirrorDest", 4096),)
+class TAnyQosPolicyIDorZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 4294967295), )
+class TSdpIngressPolicyID(TPolicyID):
+    status = 'current'
 
-class TmnxVcId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,4294967295)
+class TSdpEgressPolicyID(TPolicyID):
+    status = 'current'
 
-class TmnxVcIdOrNone(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,4294967295),)
-class Dot1PPriority(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,7),)
-class Dot1PPriorityMask(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,7)
+class TQosQGrpInstanceIDorZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 65535), )
+class TmnxCreateOrigin(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 17, 18, 19, 20))
+    namedValues = NamedValues(("manual", 1), ("bgp-l2vpn", 2), ("radius", 3), ("bgpSignalL2vpn", 4), ("multiSegmentPW", 5), ("vplsPmsi", 6), ("dynScript", 7), ("bof", 8), ("bgpSignalVpws", 9), ("vsd", 12), ("evpn", 13), ("vsd-sd", 14), ("satellites", 15), ("fpe", 16), ("evpnIsa", 17), ("greBridged", 18), ("tli", 19), ("pdn", 20))
 
-class ServiceAccessPoint(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,255),)
-class TLspExpValue(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,7),)
-class TIpProtocol(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,255),)
-class TIpOption(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,255)
+class TmnxBsxTransitIpPolicyId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 65535)
 
-class TTcpUdpPort(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,65535),)
-class TOperator(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4,)
-    namedValues = NamedValues(("none", 0), ("eq", 1), ("range", 2), ("lt", 3), ("gt", 4),)
+class TmnxBsxTransitIpPolicyIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 65535), )
+class TmnxBsxTransPrefPolicyId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 65535)
 
-class TTcpUdpPortOperator(TOperator, TextualConvention):
-    pass
+class TmnxBsxTransPrefPolicyIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 65535), )
+class TmnxBsxAarpId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 65535)
 
-class TFrameType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 5,)
-    namedValues = NamedValues(("e802dot3", 0), ("e802dot2LLC", 1), ("e802dot2SNAP", 2), ("ethernetII", 3), ("atm", 5),)
+class TmnxBsxAarpIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 65535), )
+class TmnxBsxAarpServiceRefType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4))
+    namedValues = NamedValues(("none", 0), ("dualHomed", 1), ("shuntSubscriberSide", 2), ("shuntNetworkSide", 3), ("dualHomedSecondary", 4))
 
-class TQueueId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,32),)
-class TQueueIdOrAll(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,0),ValueRangeConstraint(1,32),)
-class TIngressQueueId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,32),)
-class TIngressMeterId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,32),)
-class TSapIngressMeterId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,32),)
-class TNetworkIngressMeterId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,16),)
-class TEgressQueueId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,8),)
-class TIngressHsmdaQueueId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,8),)
-class TEgressHsmdaQueueId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,8),)
-class THsmdaSchedulerPolicyGroupId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,2),)
-class THsmdaPolicyIncludeQueues(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("q1to2", 1), ("q1to3", 2),)
+class TmnxBsxIsaAaGroupIndexOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 255)
 
-class THsmdaPolicyScheduleClass(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,3)
+class TmnxBsxAaGrpPartIndexOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 16777215)
 
-class TDSCPName(TNamedItem, TextualConvention):
-    pass
+class TSapEgrEncapGrpQosPolicyIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 65535), )
+class TSapEgrEncapGroupType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1))
+    namedValues = NamedValues(("isid", 1))
 
-class TDSCPNameOrEmpty(TNamedItemOrEmpty, TextualConvention):
-    pass
+class TSapEgrEncapGroupActionType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("create", 1), ("destroy", 2))
 
-class TDSCPValue(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,63)
+class TPerPacketOffset(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(-32, 31)
 
-class TDSCPValueOrNone(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,63),)
-class TDSCPFilterActionValue(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,255),)
-class TFCName(TNamedItem, TextualConvention):
-    pass
+class TPerPacketOffsetOvr(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-128, -128), ValueRangeConstraint(-32, 31), )
+class TIngressHsmdaPerPacketOffset(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(-32, 31)
 
-class TFCNameOrEmpty(TNamedItemOrEmpty, TextualConvention):
-    pass
+class TIngHsmdaPerPacketOffsetOvr(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-128, -128), ValueRangeConstraint(-32, 31), )
+class TEgressQPerPacketOffset(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(-64, 32)
 
-class TFCSet(Bits, TextualConvention):
-    namedValues = NamedValues(("be", 0), ("l2", 1), ("af", 2), ("l1", 3), ("h2", 4), ("ef", 5), ("h1", 6), ("nc", 7),)
+class TEgressPerPacketOffset(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(-64, 31)
 
-class TFCType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7,)
-    namedValues = NamedValues(("be", 0), ("l2", 1), ("af", 2), ("l1", 3), ("h2", 4), ("ef", 5), ("h1", 6), ("nc", 7),)
+class TEgressPerPacketOffsetOvr(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-128, -128), ValueRangeConstraint(-64, 31), )
+class TEgressHsmdaPerPacketOffset(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(-64, 31)
 
-class TmnxTunnelType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6, 7,)
-    namedValues = NamedValues(("sdp", 1), ("ldp", 2), ("rsvp", 3), ("gre", 4), ("bypass", 5), ("invalid", 6), ("bgp", 7),)
+class TEgrHsmdaPerPacketOffsetOvr(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-128, -128), ValueRangeConstraint(-64, 31), )
+class TIngressQPerPacketOffset(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(-32, 30)
 
-class TmnxTunnelID(Unsigned32, TextualConvention):
-    pass
+class THsmdaCounterIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 8), )
+class THsmdaCounterIdOrZeroOrAll(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 8), )
+class TIngressHsmdaCounterId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 8)
 
-class TmnxBgpRouteTarget(OctetString, TextualConvention):
-    subtypeSpec = OctetString.subtypeSpec+ValueSizeConstraint(1,32)
+class TIngressHsmdaCounterIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 8), )
+class TEgressHsmdaCounterId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 8)
 
-class TmnxVPNRouteDistinguisher(OctetString, TextualConvention):
-    subtypeSpec = OctetString.subtypeSpec+ValueSizeConstraint(8,8)
+class TEgressHsmdaCounterIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 8), )
+class TEgrRateModType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("none", 1), ("aggRateLimit", 2), ("namedScheduler", 3))
+
+class TPolicyStatementName(TNamedItem):
+    status = 'current'
+
+class TPolicyStatementNameOrEmpty(TNamedItemOrEmpty):
+    status = 'current'
+
+class TLPolicyStatementNameOrEmpty(TLNamedItemOrEmpty):
+    status = 'current'
+
+class TLPolicyNameOrExpOrEmpty(TLNamedItemOrEmpty):
+    status = 'current'
+
+class TXLPolicyNameOrExpOrEmpty(TXLNamedItemOrEmpty):
+    status = 'current'
+
+class TmnxVcType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 9, 10, 11, 17, 18, 19, 20, 21, 23, 25, 4096))
+    namedValues = NamedValues(("frDlciMartini", 1), ("atmSdu", 2), ("atmCell", 3), ("ethernetVlan", 4), ("ethernet", 5), ("atmVccCell", 9), ("atmVpcCell", 10), ("ipipe", 11), ("satopE1", 17), ("satopT1", 18), ("satopE3", 19), ("satopT3", 20), ("cesopsn", 21), ("cesopsnCas", 23), ("frDlci", 25), ("mirrorDest", 4096))
+
+class TmnxVcId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 4294967295)
+
+class TmnxVcIdOrNone(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 4294967295), )
+class Dot1PPriority(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 7), )
+class Dot1PPriorityMask(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 7)
+
+class Dot1PPriorityNonZeroMask(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 7)
+
+class ServiceAccessPoint(TextualConvention, Integer32):
+    reference = 'assigned numbers: http://www.iana.org/assignments/ieee-802-numbers'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 255), )
+class TLspExpValue(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 7), )
+class TIpProtocol(TextualConvention, Integer32):
+    reference = 'http://www.iana.org/assignments/protocol-numbers'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 255), )
+class TIpOption(TextualConvention, Integer32):
+    reference = 'http://www.iana.org/assignments/ip-parameters'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 255)
+
+class TTcpUdpPort(TextualConvention, Integer32):
+    reference = 'http://www.iana.org/assignments/port-numbers'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 65535), )
+class TOperator(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4))
+    namedValues = NamedValues(("none", 0), ("eq", 1), ("range", 2), ("lt", 3), ("gt", 4))
+
+class TTcpUdpPortOperator(TOperator):
+    status = 'current'
+
+class TFrameType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 5))
+    namedValues = NamedValues(("e802dot3", 0), ("e802dot2LLC", 1), ("e802dot2SNAP", 2), ("ethernetII", 3), ("atm", 5))
+
+class TQueueId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 32), )
+class TQueueIdOrAll(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 32), )
+class TIngressQueueId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 32), )
+class TEgressQueueId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 8), )
+class TIngressHsmdaQueueId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 8), )
+class TEgressHsmdaQueueId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 8), )
+class THsmdaSchedulerPolicyGroupId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 2), )
+class THsmdaPolicyIncludeQueues(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("q1to2", 1), ("q1to3", 2))
+
+class THsmdaPolicyScheduleClass(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 3)
+
+class TDSCPName(TNamedItem):
+    status = 'current'
+
+class TDSCPNameOrEmpty(TNamedItemOrEmpty):
+    status = 'current'
+
+class TDSCPValue(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 63)
+
+class TDSCPValueOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 63), )
+class TDSCPFilterActionValue(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 255), )
+class TFCName(TNamedItem):
+    status = 'current'
+
+class TFCNameOrEmpty(TNamedItemOrEmpty):
+    status = 'current'
+
+class TFCSet(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("be", 0), ("l2", 1), ("af", 2), ("l1", 3), ("h2", 4), ("ef", 5), ("h1", 6), ("nc", 7))
+
+class TFCType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7))
+    namedValues = NamedValues(("be", 0), ("l2", 1), ("af", 2), ("l1", 3), ("h2", 4), ("ef", 5), ("h1", 6), ("nc", 7))
+
+class TFCTypeOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(-1, 0, 1, 2, 3, 4, 5, 6, 7))
+    namedValues = NamedValues(("none", -1), ("be", 0), ("l2", 1), ("af", 2), ("l1", 3), ("h2", 4), ("ef", 5), ("h1", 6), ("nc", 7))
+
+class TmnxTunnelType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7))
+    namedValues = NamedValues(("sdp", 1), ("ldp", 2), ("rsvp", 3), ("gre", 4), ("bypass", 5), ("invalid", 6), ("bgp", 7))
+
+class TmnxTunnelID(TextualConvention, Unsigned32):
+    status = 'current'
+
+class TmnxBgpRouteTarget(TextualConvention, OctetString):
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(1, 32)
+
+class TmnxVPNRouteDistinguisher(TextualConvention, OctetString):
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(8, 8)
     fixedLength = 8
 
-class SdpBindId(OctetString, TextualConvention):
-    subtypeSpec = OctetString.subtypeSpec+ValueSizeConstraint(8,8)
+class SdpBindId(TextualConvention, OctetString):
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(8, 8)
     fixedLength = 8
 
-class TmnxVRtrMplsLspID(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,65535)
-
-class TPortSchedulerPIR(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,100000000),)
-class TPortSchedulerPIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,400000000),)
-class TPortSchedulerCIR(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,400000000),)
-class TWeight(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,100)
-
-class TNonZeroWeight(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,100)
-
-class TPolicerWeight(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,100)
-
-class THsmdaWeight(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,100)
-
-class THsmdaWrrWeight(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,32)
-
-class THsmdaWeightClass(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 4, 8,)
-    namedValues = NamedValues(("class1", 1), ("class2", 2), ("class4", 4), ("class8", 8),)
-
-class THsmdaWeightOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(1,100),)
-class THsmdaWrrWeightOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(1,32),)
-class TCIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,100000000),)
-class THPolCIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,20000000),)
-class TRateType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("kbps", 1), ("percent", 2),)
-
-class TBWRateType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("kbps", 1), ("percentPortLimit", 2), ("percentLocalLimit", 3),)
-
-class TPolicerRateType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("kbps", 1), ("percentLocalLimit", 2),)
-
-class TCIRRateOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,100000000),)
-class THPolCIRRateOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,20000000),)
-class TCIRPercentOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(0,10000),)
-class THsmdaCIRKRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,100000000),)
-class THsmdaCIRKRateOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,100000000),)
-class THsmdaCIRMRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,100000),)
-class THsmdaCIRMRateOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,100000),)
-class TPIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,100000000),)
-class THPolVirtualSchePIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,800000000),)
-class THPolVirtualScheCIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,800000000),)
-class TAdvCfgRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,100000000)
-
-class TMaxDecRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,100000000),)
-class THPolPIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,20000000),)
-class TSecondaryShaper10GPIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,10000),)
-class TExpSecondaryShaperPIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,10000000),)
-class TExpSecondaryShaperClassRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,10000000),)
-class TPIRRateOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,100000000),)
-class THPolPIRRateOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,20000000),)
-class TPIRPercentOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(1,10000),)
-class TPIRRateOrZero(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,100000000),)
-class THsmdaPIRKRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,100000000),)
-class THsmdaPIRKRateOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,100000000),)
-class THsmdaPIRMRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,100000),)
-class THsmdaPIRMRateOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,100000),)
-class TmnxDHCP6MsgType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,)
-    namedValues = NamedValues(("dhcp6MsgTypeSolicit", 1), ("dhcp6MsgTypeAdvertise", 2), ("dhcp6MsgTypeRequest", 3), ("dhcp6MsgTypeConfirm", 4), ("dhcp6MsgTypeRenew", 5), ("dhcp6MsgTypeRebind", 6), ("dhcp6MsgTypeReply", 7), ("dhcp6MsgTypeRelease", 8), ("dhcp6MsgTypeDecline", 9), ("dhcp6MsgTypeReconfigure", 10), ("dhcp6MsgTypeInfoRequest", 11), ("dhcp6MsgTypeRelayForw", 12), ("dhcp6MsgTypeRelayReply", 13), ("dhcp6MsgTypeMaxValue", 14),)
-
-class TmnxOspfInstance(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,31)
-
-class TmnxBGPFamilyType(Bits, TextualConvention):
-    namedValues = NamedValues(("ipv4Unicast", 0), ("ipv4Multicast", 1), ("ipv4UastMcast", 2), ("ipv4MplsLabel", 3), ("ipv4Vpn", 4), ("ipv6Unicast", 5), ("ipv6Multicast", 6), ("ipv6UcastMcast", 7), ("ipv6MplsLabel", 8), ("ipv6Vpn", 9), ("l2Vpn", 10), ("ipv4Mvpn", 11), ("msPw", 12), ("ipv4Flow", 13), ("mdtSafi", 14), ("routeTarget", 15), ("mcastVpnIpv4", 16),)
-
-class TmnxIgmpGroupFilterMode(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("include", 1), ("exclude", 2),)
-
-class TmnxIgmpGroupType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("static", 1), ("dynamic", 2),)
-
-class TmnxIgmpVersion(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("version1", 1), ("version2", 2), ("version3", 3),)
-
-class TmnxMldGroupFilterMode(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("include", 1), ("exclude", 2),)
-
-class TmnxMldGroupType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("static", 1), ("dynamic", 2),)
-
-class TmnxMldVersion(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("version1", 1), ("version2", 2),)
-
-class TmnxManagedRouteStatus(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,)
-    namedValues = NamedValues(("installed", 0), ("notYetInstalled", 1), ("wrongAntiSpoofType", 2), ("outOfMemory", 3), ("shadowed", 4), ("routeTableFull", 5), ("parentInterfaceDown", 6), ("hostInactive", 7), ("enhancedSubMgmtRequired", 8), ("deprecated1", 9), ("l2AwNotSupported", 10),)
-
-class TmnxAncpString(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,63)
-
-class TmnxAncpStringOrZero(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,63)
-
-class TmnxMulticastAddrFamily(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1,)
-    namedValues = NamedValues(("ipv4Multicast", 0), ("ipv6Multicast", 1),)
-
-class TmnxAsciiSpecification(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,255)
-
-class TmnxMacSpecification(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,17)
-
-class TmnxBinarySpecification(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,255)
-
-class TmnxDefSubIdSource(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("useSapId", 1), ("useString", 2), ("useAutoId", 3),)
-
-class TmnxSubIdentString(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,32)
-
-class TmnxSubIdentStringOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,32)
-
-class TmnxSubRadServAlgorithm(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("direct", 1), ("roundRobin", 2), ("hashBased", 3),)
-
-class TmnxSubRadiusAttrType(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,255)
-
-class TmnxSubRadiusVendorId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,16777215)
-
-class TmnxRadiusPendingReqLimit(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,4096)
-
-class TmnxRadiusServerOperState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5,)
-    namedValues = NamedValues(("unknown", 1), ("inService", 2), ("outOfService", 3), ("transition", 4), ("overloaded", 5),)
-
-class TmnxSubProfileString(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,16)
-
-class TmnxSubProfileStringOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,16)
-
-class TmnxSlaProfileString(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,16)
-
-class TmnxSlaProfileStringOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,16)
-
-class TmnxAppProfileString(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,16)
-
-class TmnxAppProfileStringOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,16)
-
-class TmnxSubMgtIntDestIdOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,32)
-
-class TmnxSubMgtIntDestId(TmnxSubMgtIntDestIdOrEmpty, TextualConvention):
-    subtypeSpec = TmnxSubMgtIntDestIdOrEmpty.subtypeSpec+ValueSizeConstraint(1,32)
-
-class TmnxDefInterDestIdSource(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("useString", 1), ("useTopQTag", 2), ("useVpi", 3),)
-
-class TmnxSubNasPortSuffixType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2,)
-    namedValues = NamedValues(("none", 0), ("circuitId", 1), ("remoteId", 2),)
-
-class TmnxSubNasPortPrefixType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1,)
-    namedValues = NamedValues(("none", 0), ("userString", 1),)
-
-class TmnxSubNasPortTypeType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("standard", 1), ("config", 2),)
-
-class TmnxSubMgtOrgStrOrZero(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,32)
-
-class TmnxSubMgtOrgString(TmnxSubMgtOrgStrOrZero, TextualConvention):
-    subtypeSpec = TmnxSubMgtOrgStrOrZero.subtypeSpec+ValueSizeConstraint(1,32)
-
-class TmnxFilterProfileStringOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,16)
-
-class TmnxAccessLoopEncapDataLink(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1,)
-    namedValues = NamedValues(("aal5", 0), ("ethernet", 1),)
-
-class TmnxAccessLoopEncaps1(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2,)
-    namedValues = NamedValues(("notAvailable", 0), ("untaggedEthernet", 1), ("singleTaggedEthernet", 2),)
-
-class TmnxAccessLoopEncaps2(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8,)
-    namedValues = NamedValues(("notAvailable", 0), ("pppoaLlc", 1), ("pppoaNull", 2), ("ipoaLlc", 3), ("ipoaNull", 4), ("ethernetOverAal5LlcFcs", 5), ("ethernetOverAal5LlcNoFcs", 6), ("ethernetOverAal5NullFcs", 7), ("ethernetOverAal5NullNoFcs", 8),)
-
-class TmnxSubAleOffsetMode(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1,)
-    namedValues = NamedValues(("none", 0), ("auto", 1),)
-
-class TmnxSubAleOffset(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,)
-    namedValues = NamedValues(("none", 0), ("pppoaLlc", 1), ("pppoaNull", 2), ("pppoeoaLlc", 3), ("pppoeoaLlcFcs", 4), ("pppoeoaLlcTagged", 5), ("pppoeoaLlcTaggedFcs", 6), ("pppoeoaNull", 7), ("pppoeoaNullFcs", 8), ("pppoeoaNullTagged", 9), ("pppoeoaNullTaggedFcs", 10), ("ipoaLlc", 11), ("ipoaNull", 12), ("ipoeoaLlc", 13), ("ipoeoaLlcFcs", 14), ("ipoeoaLlcTagged", 15), ("ipoeoaLlcTaggedFcs", 16), ("ipoeoaNull", 17), ("ipoeoaNullFcs", 18), ("ipoeoaNullTagged", 19), ("ipoeoaNullTaggedFcs", 20), ("pppoe", 21), ("pppoeTagged", 22), ("ipoe", 23), ("ipoeTagged", 24),)
-
-class TmnxDhcpOptionType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5,)
-    namedValues = NamedValues(("ipv4", 1), ("ascii", 2), ("hex", 3), ("ipv6", 4), ("domain", 5),)
-
-class TmnxPppoeUserName(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,128)
-
-class TmnxPppoeUserNameOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,128)
-
-class TCpmProtPolicyID(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,255)
-
-class TCpmProtPolicyIDOrDefault(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,255),)
-class TMlpppQoSProfileId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,65535)
-
-class TMcFrQoSProfileId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,65535)
-
-class TmnxPppoeSessionId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,65535)
-
-class TmnxPppoePadoDelay(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,30),)
-class TmnxPppoeSessionInfoOrigin(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7,)
-    namedValues = NamedValues(("none", 0), ("default", 1), ("radius", 2), ("localUserDb", 3), ("dhcp", 4), ("midSessionChange", 5), ("tags", 6), ("l2tp", 7),)
-
-class TmnxPppoeSessionType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4,)
-    namedValues = NamedValues(("local", 1), ("localWholesale", 2), ("localRetail", 3), ("l2tp", 4),)
-
-class TmnxPppNcpProtocol(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("ipcp", 1), ("ipv6cp", 2),)
-
-class TmnxMlpppEpClass(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5,)
-    namedValues = NamedValues(("null", 0), ("local", 1), ("ipv4Address", 2), ("macAddress", 3), ("magicNumber", 4), ("directoryNumber", 5),)
-
-class TNetworkPolicyID(TPolicyID, TextualConvention):
-    subtypeSpec = TPolicyID.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(1,65535),ValueRangeConstraint(65536,65536),ValueRangeConstraint(65537,65537),)
-class TItemScope(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("exclusive", 1), ("template", 2),)
-
-class TItemMatch(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("off", 1), ("false", 2), ("true", 3),)
-
-class TPriority(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("low", 1), ("high", 2),)
-
-class TPriorityOrDefault(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("low", 1), ("high", 2), ("default", 3),)
-
-class TProfileUseDEOrNone(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("none", 0), ("in", 1), ("out", 2), ("de", 3),)
-
-class TPriorityOrUndefined(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2,)
-    namedValues = NamedValues(("undefined", 0), ("low", 1), ("high", 2),)
-
-class TProfile(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("in", 1), ("out", 2),)
-
-class TProfileOrDei(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 13,)
-    namedValues = NamedValues(("in", 1), ("out", 2), ("use-dei", 13),)
-
-class TDEProfile(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("in", 1), ("out", 2), ("de", 3),)
-
-class TDEProfileOrDei(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 13,)
-    namedValues = NamedValues(("in", 1), ("out", 2), ("de", 3), ("use-dei", 13),)
-
-class TProfileOrNone(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2,)
-    namedValues = NamedValues(("none", 0), ("in", 1), ("out", 2),)
-
-class TAdaptationRule(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("max", 1), ("min", 2), ("closest", 3),)
-
-class TAdaptationRuleOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("noOverride", 0), ("max", 1), ("min", 2), ("closest", 3),)
-
-class TRemarkType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("none", 1), ("dscp", 2), ("precedence", 3),)
-
-class TPrecValue(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,7)
-
-class TPrecValueOrNone(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,7),)
-class TBurstSize(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,131072),)
-class TBurstSizeOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,131072),)
-class TBurstPercent(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,100)
-
-class TBurstHundredthsOfPercent(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,10000)
-
-class TBurstPercentOrDefault(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,100),)
-class TBurstPercentOrDefaultOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,100),)
-class TRatePercent(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,100)
-
-class TPIRRatePercent(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,100)
-
-class TLevel(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,8)
-
-class TLevelOrDefault(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,8),)
-class TQWeight(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,100),)
-class TMeterMode(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("priority", 1), ("profile", 2),)
-
-class TPlcyMode(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("none", 0), ("roundRobin", 1), ("weightedRoundRobin", 2), ("weightedDeficitRoundRobin", 3),)
-
-class TPlcyQuanta(Integer32, TextualConvention):
-    pass
-
-class TQueueMode(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("priority", 1), ("profile", 2),)
-
-class TEntryIndicator(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,65535)
-
-class TEntryId(TEntryIndicator, TextualConvention):
-    subtypeSpec = TEntryIndicator.subtypeSpec+ValueRangeConstraint(1,65535)
-
-class TMatchCriteria(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6,)
-    namedValues = NamedValues(("ip", 1), ("mac", 2), ("none", 3), ("dscp", 4), ("dot1p", 5), ("prec", 6),)
-
-class TmnxMdaQos(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("unknown", 0), ("mda", 1), ("hsmda1", 2), ("hsmda2", 3),)
-
-class TAtmTdpDescrType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("clp0And1pcr", 0), ("clp0And1pcrPlusClp0And1scr", 1), ("clp0And1pcrPlusClp0scr", 2), ("clp0And1pcrPlusClp0scrTag", 3),)
-
-class TDEValue(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,1),)
-class TQGroupType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1,)
-    namedValues = NamedValues(("port", 0), ("vpls", 1),)
-
-class TQosOverrideType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5,)
-    namedValues = NamedValues(("queue", 1), ("policer", 2), ("aggRateLimit", 3), ("arbiter", 4), ("scheduler", 5),)
-
-class TmnxIPsecTunnelTemplateId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,2048)
-
-class TmnxIPsecTunnelTemplateIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,2048)
-
-class TmnxIpSecIsaOperFlags(Bits, TextualConvention):
-    namedValues = NamedValues(("adminDown", 0), ("noActive", 1), ("noResources", 2),)
-
-class TmnxIkePolicyAuthMethod(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5,)
-    namedValues = NamedValues(("psk", 1), ("hybridX509XAuth", 2), ("plainX509XAuth", 3), ("plainPskXAuth", 4), ("cert", 5),)
-
-class TmnxIkePolicyOwnAuthMethod(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 5,)
-    namedValues = NamedValues(("symmetric", 0), ("psk", 1), ("cert", 5),)
-
-class TmnxRsvpDSTEClassType(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,7)
-
-class TmnxAccPlcyQICounters(Bits, TextualConvention):
-    namedValues = NamedValues(("hpo", 0), ("lpo", 1), ("ucp", 2), ("hoo", 3), ("loo", 4), ("uco", 5), ("apo", 6), ("aoo", 7), ("hpd", 8), ("lpd", 9), ("hod", 10), ("lod", 11), ("ipf", 12), ("opf", 13), ("iof", 14), ("oof", 15),)
-
-class TmnxAccPlcyQECounters(Bits, TextualConvention):
-    namedValues = NamedValues(("ipf", 0), ("ipd", 1), ("opf", 2), ("opd", 3), ("iof", 4), ("iod", 5), ("oof", 6), ("ood", 7),)
-
-class TmnxAccPlcyOICounters(Bits, TextualConvention):
-    namedValues = NamedValues(("apo", 0), ("aoo", 1), ("hpd", 2), ("lpd", 3), ("hod", 4), ("lod", 5), ("ipf", 6), ("opf", 7), ("iof", 8), ("oof", 9),)
-
-class TmnxAccPlcyOECounters(Bits, TextualConvention):
-    namedValues = NamedValues(("ipf", 0), ("ipd", 1), ("opf", 2), ("opd", 3), ("iof", 4), ("iod", 5), ("oof", 6), ("ood", 7),)
-
-class TmnxAccPlcyAACounters(Bits, TextualConvention):
-    namedValues = NamedValues(("any", 0), ("sfa", 1), ("nfa", 2), ("sfd", 3), ("nfd", 4), ("saf", 5), ("naf", 6), ("spa", 7), ("npa", 8), ("sba", 9), ("nba", 10), ("spd", 11), ("npd", 12), ("sbd", 13), ("nbd", 14), ("sdf", 15), ("mdf", 16), ("ldf", 17), ("tfd", 18), ("tfc", 19), ("sbm", 20), ("spm", 21), ("smt", 22), ("nbm", 23), ("npm", 24), ("nmt", 25),)
-
-class TmnxVdoGrpIdIndex(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,4)
-
-class TmnxVdoGrpId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,4)
-
-class TmnxVdoGrpIdOrInherit(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,4),)
-class TmnxVdoFccServerMode(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("none", 0), ("burst", 1), ("dent", 2), ("hybrid", 3),)
-
-class TmnxVdoPortNumber(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(1024,5999),ValueRangeConstraint(6251,65535),)
-class TmnxVdoIfName(TNamedItem, TextualConvention):
-    pass
-
-class TmnxTimeInSec(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,86400)
-
-class TmnxMobProfName(TNamedItem, TextualConvention):
-    pass
-
-class TmnxMobProfNameOrEmpty(TNamedItemOrEmpty, TextualConvention):
-    pass
-
-class TmnxMobProfIpTtl(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,255)
-
-class TmnxMobDiaTransTimer(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,180)
-
-class TmnxMobDiaRetryCount(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,8)
-
-class TmnxMobDiaPeerHost(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,80)
-
-class TmnxMobGwId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,8)
-
-class TmnxMobNode(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,30)
-
-class TmnxMobBufferLimit(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1000,12000)
-
-class TmnxMobQueueLimit(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1000,12000)
-
-class TmnxMobRtrAdvtInterval(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,60)
-
-class TmnxMobRtrAdvtLifeTime(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,24)
-
-class TmnxMobAddrScheme(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("stateful", 1), ("stateless", 2),)
-
-class TmnxMobQciValue(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,9)
-
-class TmnxMobQciValueOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,9)
-
-class TmnxMobArpValue(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,15)
-
-class TmnxMobArpValueOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,15)
-
-class TmnxMobApn(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,80)
-
-class TmnxMobApnOrZero(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,80)
-
-class TmnxMobImsi(OctetString, TextualConvention):
-    subtypeSpec = OctetString.subtypeSpec+ValueSizeConstraint(8,8)
-    fixedLength = 8
-
-class TmnxMobMsisdn(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,15)
-
-class TmnxMobImei(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ConstraintsUnion(ValueSizeConstraint(0,0),ValueSizeConstraint(16,16),)
-class TmnxMobNai(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,72)
-
-class TmnxMobMcc(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(3,3)
-    fixedLength = 3
-
-class TmnxMobMnc(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ConstraintsUnion(ValueSizeConstraint(2,2),ValueSizeConstraint(3,3),)
-class TmnxMobMccOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ConstraintsUnion(ValueSizeConstraint(0,0),ValueSizeConstraint(3,3),)
-class TmnxMobMncOrEmpty(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ConstraintsUnion(ValueSizeConstraint(0,0),ValueSizeConstraint(2,2),ValueSizeConstraint(3,3),)
-class TmnxMobUeState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6,)
-    namedValues = NamedValues(("idle", 1), ("active", 2), ("paging", 3), ("init", 4), ("suspend", 5), ("ddnDamp", 6),)
-
-class TmnxMobUeRat(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10,)
-    namedValues = NamedValues(("utran", 1), ("geran", 2), ("wlan", 3), ("gan", 4), ("hspa", 5), ("eutran", 6), ("ehrpd", 7), ("hrpd", 8), ("oneXrtt", 9), ("umb", 10),)
-
-class TmnxMobUeSubType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("homer", 1), ("roamer", 2), ("visitor", 3),)
-
-class TmnxMobPdnType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("ipv4", 1), ("ipv6", 2), ("ipv4v6", 3),)
-
-class TmnxMobPgwSigProtocol(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("gtp", 1), ("pmip", 2),)
-
-class TmnxMobPdnSessionState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,)
-    namedValues = NamedValues(("invalid", 0), ("init", 1), ("waitPcrfResponse", 2), ("waitPgwResponse", 3), ("waitEnodebUpdate", 4), ("connected", 5), ("ulDelPending", 6), ("dlDelPending", 7), ("idleMode", 8), ("pageMode", 9), ("dlHandover", 10), ("incomingHandover", 11), ("outgoingHandover", 12), ("stateMax", 13),)
-
-class TmnxMobPdnSessionEvent(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,)
-    namedValues = NamedValues(("sessionInvalid", 0), ("gtpCreateSessReq", 1), ("gtpUpdateBearerReq", 2), ("gtpDeleteSessReq", 3), ("gtpDeleteBearerResp", 4), ("gtpUpdateBearerResp", 5), ("gtpModifyActiveToIdle", 6), ("gtpResrcAllocCmd", 7), ("gtpModifyQosCmd", 8), ("gtpX1eNodeBTeidUpdate", 9), ("gtpX2SrcSgwDeleteSessReq", 10), ("gtpS1CreateIndirectTunnel", 11), ("dlPktRecvIndication", 12), ("dlPktNotificationAck", 13), ("dlPktNotificationFail", 14), ("pcrfSessEstResp", 15), ("pcrfSessTerminateRsp", 16), ("pcrfProvQosRules", 17), ("pmipSessResp", 18), ("pmipSessUpdate", 19), ("pmipSessDeleteRsp", 20), ("pmipSessDeleteReq", 21), ("eventMax", 22),)
-
-class TmnxMobBearerId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,15)
-
-class TmnxMobBearerType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("default", 1), ("dedicated", 2),)
-
-class TmnxMobQci(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,9)
-
-class TmnxMobArp(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,15)
-
-class TmnxMobSdf(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,255)
-
-class TmnxMobSdfFilter(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,16)
-
-class TmnxMobSdfFilterNum(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,16)
-
-class TmnxMobSdfRuleName(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(1,64)
-
-class TmnxMobSdfFilterDirection(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("preRel7", 0), ("downLink", 1), ("upLink", 2), ("biDir", 3),)
-
-class TmnxMobSdfFilterProtocol(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140,)
-    namedValues = NamedValues(("any", -1), ("ipv6HopByOpOpt", 0), ("icmp", 1), ("igmp", 2), ("ggp", 3), ("ip", 4), ("st", 5), ("tcp", 6), ("cbt", 7), ("egp", 8), ("igp", 9), ("bbnRccMon", 10), ("nvp2", 11), ("pup", 12), ("argus", 13), ("emcon", 14), ("xnet", 15), ("chaos", 16), ("udp", 17), ("mux", 18), ("dcnMeas", 19), ("hmp", 20), ("prm", 21), ("xnsIdp", 22), ("trunk1", 23), ("trunk2", 24), ("leaf1", 25), ("leaf2", 26), ("rdp", 27), ("irdp", 28), ("isoTp4", 29), ("netblt", 30), ("mfeNsp", 31), ("meritInp", 32), ("dccp", 33), ("pc3", 34), ("idpr", 35), ("xtp", 36), ("ddp", 37), ("idprCmtp", 38), ("tpplusplus", 39), ("il", 40), ("ipv6", 41), ("sdrp", 42), ("ipv6Route", 43), ("ipv6Frag", 44), ("idrp", 45), ("rsvp", 46), ("gre", 47), ("dsr", 48), ("bna", 49), ("esp", 50), ("ah", 51), ("iNlsp", 52), ("swipe", 53), ("narp", 54), ("mobile", 55), ("tlsp", 56), ("skip", 57), ("ipv6Icmp", 58), ("ipv6NoNxt", 59), ("ipv6Opts", 60), ("anyHostIntl", 61), ("cftp", 62), ("anyLocalNet", 63), ("satExpak", 64), ("kryptolan", 65), ("rvd", 66), ("ippc", 67), ("anyDFS", 68), ("satMon", 69), ("visa", 70), ("ipcv", 71), ("cpnx", 72), ("cphb", 73), ("wsn", 74), ("pvp", 75), ("brSatMon", 76), ("sunNd", 77), ("wbMon", 78), ("wbExpak", 79), ("isoIp", 80), ("vmtp", 81), ("secureVmpt", 82), ("vines", 83), ("ttp", 84), ("nsfnetIgp", 85), ("dgp", 86), ("tcf", 87), ("eiGrp", 88), ("ospfIgp", 89), ("spriteRpc", 90), ("larp", 91), ("mtp", 92), ("ax25", 93), ("ipip", 94), ("micp", 95), ("sccSp", 96), ("etherIp", 97), ("encap", 98), ("anyPEC", 99), ("gmtp", 100), ("ifmp", 101), ("pnni", 102), ("pim", 103), ("aris", 104), ("scps", 105), ("qnx", 106), ("activeNet", 107), ("ipComp", 108), ("snp", 109), ("compaqPeer", 110), ("ipxInIp", 111), ("vrrp", 112), ("pgm", 113), ("any0hop", 114), ("l2tp", 115), ("ddx", 116), ("iatp", 117), ("stp", 118), ("srp", 119), ("uti", 120), ("smp", 121), ("sm", 122), ("ptp", 123), ("isis", 124), ("fire", 125), ("crtp", 126), ("crudp", 127), ("sscopmce", 128), ("iplt", 129), ("sps", 130), ("pipe", 131), ("sctp", 132), ("fc", 133), ("rsvpE2eIgnore", 134), ("mobHeader", 135), ("udpLite", 136), ("mplsInIp", 137), ("manet", 138), ("hip", 139), ("shim6", 140),)
-
-class TmnxMobPathMgmtState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5,)
-    namedValues = NamedValues(("disabled", 0), ("up", 1), ("reqTimeOut", 2), ("fault", 3), ("idle", 4), ("restart", 5),)
-
-class TmnxMobDiaPathMgmtState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("shutDown", 0), ("shuttingDown", 1), ("inactive", 2), ("active", 3),)
-
-class TmnxMobDiaDetailPathMgmtState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,)
-    namedValues = NamedValues(("error", 0), ("idle", 1), ("closed", 2), ("localShutdown", 3), ("remoteClosing", 4), ("waitConnAck", 5), ("waitCea", 6), ("open", 7), ("openCoolingDown", 8), ("waitDns", 9),)
-
-class TmnxMobGwType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("sgw", 1), ("pgw", 2), ("wlanGw", 3),)
-
-class TmnxMobChargingProfile(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,255)
-
-class TmnxMobChargingProfileOrInherit(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,255),)
-class TmnxMobAuthType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("radius", 1), ("diameter", 2),)
-
-class TmnxMobAuthUserName(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("imsi", 1), ("msisdn", 2), ("pco", 3),)
-
-class TmnxMobProfGbrRate(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,100000)
-
-class TmnxMobProfMbrRate(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,100000)
-
-class TmnxMobPeerType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("sgw", 1), ("pgw", 2), ("hsgw", 3),)
-
-class TmnxMobRfAcctLevel(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("pdnLevel", 1), ("qciLevel", 2),)
-
-class TmnxMobProfPolReportingLevel(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("servId", 1), ("ratingGrp", 2),)
-
-class TmnxMobProfPolChargingMethod(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("profChargingMtd", 0), ("online", 1), ("offline", 2), ("both", 3),)
-
-class TmnxMobProfPolMeteringMethod(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("timeBased", 1), ("volBased", 2), ("both", 3),)
-
-class TmnxMobServerState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2,)
-    namedValues = NamedValues(("na", 0), ("up", 1), ("down", 2),)
-
-class TmnxMobChargingBearerType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("home", 1), ("visiting", 2), ("roaming", 3),)
-
-class TmnxMobChargingLevel(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("pdn", 1), ("bearer", 2),)
-
-class TmnxMobIpCanType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("epc3gpp", 1), ("gprs3gpp", 2),)
-
-class TmnxMobStaticPolPrecedence(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,65536)
-
-class TmnxMobStaticPolPrecedenceOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,65535)
-
-class TmnxMobDualStackPref(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("ipv4", 1), ("ipv6", 2), ("useCplane", 3),)
-
-class TmnxMobDfPeerId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,16)
-
-class TmnxMobLiTarget(OctetString, TextualConvention):
-    subtypeSpec = OctetString.subtypeSpec+ValueSizeConstraint(8,8)
-    fixedLength = 8
-
-class TmnxMobLiTargetType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("imsi", 1), ("msisdn", 2), ("imei", 3),)
-
-class TmnxReasContextVal(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,31)
-
-class TmnxVdoStatInt(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("current", 1), ("interval", 2),)
-
-class TmnxVdoOutputFormat(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("udp", 1), ("rtp-udp", 2),)
-
-class TmnxVdoAnalyzerAlarm(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("none", 0), ("tnc", 1), ("qos", 2), ("poa", 3),)
-
-class TmnxVdoAnalyzerAlarmStates(OctetString, TextualConvention):
-    subtypeSpec = OctetString.subtypeSpec+ValueSizeConstraint(10,10)
+class TmnxVRtrMplsLspID(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 65535), ValueRangeConstraint(65536, 131070), )
+class TmnxVRtrMplsLspIDNoZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(1, 65535), ValueRangeConstraint(65536, 131070), )
+class TPortSchedulerPIR(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 100000000), )
+class TPortSchedulerAggRateLimitPIR(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 800000000), )
+class TPortSchedulerPIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 800000000), )
+class TPortSchedulerCIR(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 800000000), )
+class TWeight(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 100)
+
+class TWeightOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(0, 100), )
+class TNonZeroWeight(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 100)
+
+class TPolicerWeight(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 100)
+
+class THsWrrWeightOvr(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(1, 127), )
+class THsClassWeightOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(1, 1), ValueRangeConstraint(2, 2), ValueRangeConstraint(4, 4), ValueRangeConstraint(8, 8), )
+class THsmdaWeight(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 100)
+
+class THsmdaWrrWeight(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 32)
+
+class THsmdaWeightClass(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 4, 8))
+    namedValues = NamedValues(("class1", 1), ("class2", 2), ("class4", 4), ("class8", 8))
+
+class THsmdaWeightOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(1, 100), )
+class THsmdaWrrWeightOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(1, 32), )
+class TCIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 100000000), )
+class THPolCIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 2000000000), )
+class TRateType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("kbps", 1), ("percent", 2))
+
+class TBWRateType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("kbps", 1), ("percentPortLimit", 2), ("percentLocalLimit", 3))
+
+class TPSPRateType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("kbps", 1), ("percentLocal", 2), ("percentLagActive", 3))
+
+class TPolicerRateType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("kbps", 1), ("percentLocalLimit", 2))
+
+class TCIRRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 100000000), )
+class THPolCIRRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 2000000000), )
+class TCIRPercentOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(0, 10000), )
+class THsmdaCIRKRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 100000000), )
+class THsmdaCIRKRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 100000000), )
+class THsmdaCIRMRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 100000), )
+class THsmdaCIRMRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 100000), )
+class TPIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 100000000), )
+class THPolVirtualSchePIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 800000000), )
+class THPolVirtualScheCIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 800000000), )
+class TAdvCfgRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 100000000)
+
+class TMaxDecRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 100000000), )
+class THPolPIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 2000000000), )
+class TSecondaryShaper10GPIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 10000), )
+class TExpSecondaryShaperPIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 10000000), )
+class TExpSecondaryShaperClassRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 10000000), )
+class TPIRRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 100000000), )
+class TPIRAggRateLimitOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 800000000), )
+class THPolPIRRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 2000000000), )
+class TPIRPercentOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(1, 10000), )
+class TPIRRateOrZero(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 100000000), )
+class THsmdaPIRKRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 100000000), )
+class THsmdaPIRKRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 100000000), )
+class THsmdaPIRMRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 100000), )
+class THsmdaPIRMRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 100000), )
+class TmnxDHCP6MsgType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15))
+    namedValues = NamedValues(("dhcp6MsgTypeSolicit", 1), ("dhcp6MsgTypeAdvertise", 2), ("dhcp6MsgTypeRequest", 3), ("dhcp6MsgTypeConfirm", 4), ("dhcp6MsgTypeRenew", 5), ("dhcp6MsgTypeRebind", 6), ("dhcp6MsgTypeReply", 7), ("dhcp6MsgTypeRelease", 8), ("dhcp6MsgTypeDecline", 9), ("dhcp6MsgTypeReconfigure", 10), ("dhcp6MsgTypeInfoRequest", 11), ("dhcp6MsgTypeRelayForw", 12), ("dhcp6MsgTypeRelayReply", 13), ("dhcp6MsgTypeLeasequery", 14), ("dhcp6MsgTypeLeasequeryReply", 15))
+
+class TmnxIgpInstance(TextualConvention, Unsigned32):
+    reference = "RFC 5838, 'Support of Address Families in OSPFv3', Section 2.1, 'Instance ID Values for New AFs'."
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 31), ValueRangeConstraint(64, 95), )
+class TmnxOspfInstance(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 127)
+
+class TmnxBGPFamilyType(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("ipv4Unicast", 0), ("ipv4Multicast", 1), ("ipv4UastMcast", 2), ("ipv4MplsLabel", 3), ("ipv4Vpn", 4), ("ipv6Unicast", 5), ("ipv6Multicast", 6), ("ipv6UcastMcast", 7), ("ipv6MplsLabel", 8), ("ipv6Vpn", 9), ("l2Vpn", 10), ("ipv4Mvpn", 11), ("msPw", 12), ("ipv4Flow", 13), ("mdtSafi", 14), ("routeTarget", 15), ("mcastVpnIpv4", 16), ("mvpnIpv6", 17), ("ipv6Flow", 18), ("evpn", 19), ("bgpLs", 20), ("mcastVpnIpv6", 21), ("srplcyIpv4", 22), ("reserved23", 23))
+
+class TmnxIgmpGroupFilterMode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("include", 1), ("exclude", 2))
+
+class TmnxIgmpGroupType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("static", 1), ("dynamic", 2))
+
+class TmnxIgmpVersion(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("version1", 1), ("version2", 2), ("version3", 3))
+
+class TmnxMldGroupFilterMode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("include", 1), ("exclude", 2))
+
+class TmnxMldGroupType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("static", 1), ("dynamic", 2))
+
+class TmnxMldVersion(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("version1", 1), ("version2", 2))
+
+class TmnxManagedRouteStatus(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
+    namedValues = NamedValues(("installed", 0), ("notYetInstalled", 1), ("wrongAntiSpoofType", 2), ("outOfMemory", 3), ("shadowed", 4), ("routeTableFull", 5), ("parentInterfaceDown", 6), ("hostInactive", 7), ("enhancedSubMgmtRequired", 8), ("deprecated1", 9), ("l2AwNotSupported", 10), ("nextHopLimitExceeded", 11), ("notApplicable", 12), ("noNextHop", 13), ("gtpNotSupported", 14))
+
+class TmnxTunnelTypeExt(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16))
+    namedValues = NamedValues(("invalid", 1), ("sdp", 2), ("rsvp", 3), ("ldp", 4), ("ospf", 5), ("isis", 6), ("bypass", 7), ("gre", 8), ("bgp", 9), ("srTe", 10), ("fpe", 11), ("udp", 12), ("ospfV3", 13), ("mplsFwdPolicy", 14), ("srPolicy", 15), ("ribApi", 16))
+
+class TmnxIgpSCFamilyType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3))
+    namedValues = NamedValues(("ipv4", 0), ("ipv6", 1), ("srv4", 2), ("srv6", 3))
+
+class TmnxAdjacencySetFamilyType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1))
+    namedValues = NamedValues(("ipv4", 0), ("ipv6", 1))
+
+class TmnxAncpString(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 63)
+
+class TmnxAncpStringOrZero(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 63)
+
+class TmnxMulticastAddrFamily(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1))
+    namedValues = NamedValues(("ipv4Multicast", 0), ("ipv6Multicast", 1))
+
+class TmnxNatIsaGrpId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 4)
+
+class TmnxNatIsaGrpIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 4)
+
+class TmnxNatSubscriberType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4))
+    namedValues = NamedValues(("l2AwareSub", 1), ("classicLsnSub", 2), ("dsliteLsnSub", 3), ("nat64LsnSub", 4))
+
+class TmnxNatSubscriberTypeOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4))
+    namedValues = NamedValues(("none", 0), ("l2AwareSub", 1), ("classicLsnSub", 2), ("dsliteLsnSub", 3), ("nat64LsnSub", 4))
+
+class TmnxNatWaterMark(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 100)
+
+class TmnxAuthPassword(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 64)
+
+class TmnxAsciiSpecification(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 255)
+
+class TmnxMacSpecification(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 17)
+
+class TmnxBinarySpecification(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 255)
+
+class TmnxDefSubIdSource(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("useSapId", 1), ("useString", 2), ("useAutoId", 3))
+
+class TmnxSubAuthPlcyUserNameOp(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4))
+    namedValues = NamedValues(("noOperation", 0), ("appendDomain", 1), ("stripDomain", 2), ("replaceDomain", 3), ("defaultDomain", 4))
+
+class TmnxSubCallingStationIdType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5))
+    namedValues = NamedValues(("sapString", 1), ("mac", 2), ("sapId", 3), ("remoteId", 4), ("llid", 5))
+
+class TmnxSubAcctSessionId(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 22)
+
+class TmnxSubHostGrouping(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4))
+    namedValues = NamedValues(("perSap", 1), ("perGroup", 2), ("perSessionPpp", 3), ("perSessionIpoe", 4))
+
+class TmnxSubIdentString(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 32)
+
+class TmnxSubIdentStringOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 32)
+
+class TmnxSubRadServAlgorithm(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("direct", 1), ("roundRobin", 2), ("hashBased", 3))
+
+class TmnxSubRadiusAttrType(TextualConvention, Unsigned32):
+    reference = 'RFC 2865 Remote Authentication Dial In User Service (RADIUS) section 5. Attributes'
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 255)
+
+class TmnxSubRadiusVendorId(TextualConvention, Unsigned32):
+    reference = 'RFC 2865 Remote Authentication Dial In User Service (RADIUS) section 5.26. Vendor-Specific.'
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 16777215)
+
+class TmnxSubRadiusDisplayString(DisplayString):
+    reference = 'RFC 2865 Remote Authentication Dial In User Service (RADIUS) section 5. Attributes.'
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 253)
+
+class TmnxSubRadiusOctetString(TextualConvention, OctetString):
+    reference = 'RFC 2865 Remote Authentication Dial In User Service (RADIUS) section 5.26. Vendor-Specific.'
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(253, 253)
+    fixedLength = 253
+
+class TmnxSubSlaMode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1))
+    namedValues = NamedValues(("expanded", 0), ("single", 1))
+
+class TmnxRadiusPendingReqLimit(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 4096)
+
+class TmnxRadiusServerOperState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6))
+    namedValues = NamedValues(("unknown", 1), ("inService", 2), ("outOfService", 3), ("transition", 4), ("overloaded", 5), ("probing", 6))
+
+class TmnxSubShcvAction(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("alarm", 1), ("remove", 2))
+
+class TmnxSubShcvInterval(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 6000)
+
+class TmnxSubShcvRetryCount(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(2, 29)
+
+class TmnxSubShcvRetryTimeout(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(10, 60)
+
+class TmnxSubShcvSrcIpOrigin(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("interface", 1), ("vrrp", 2))
+
+class TmnxSubSpiGroupId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(-1, 65535)
+
+class TmnxSubOperSpiGroupId(TextualConvention, Integer32):
+    status = 'current'
+
+class TmnxReferenceBandwidth(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 4000000000)
+
+class TmnxSubProfileString(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 16)
+
+class TmnxSubProfileStringOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 16)
+
+class TmnxSlaProfileString(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 16)
+
+class TmnxSlaProfileStringOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 16)
+
+class TmnxAppProfileString(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 16)
+
+class TmnxAppProfileStringOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 16)
+
+class TmnxSubMgtIntDestIdOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 32)
+
+class TmnxSubMgtIntDestId(TmnxSubMgtIntDestIdOrEmpty):
+    status = 'current'
+    subtypeSpec = TmnxSubMgtIntDestIdOrEmpty.subtypeSpec + ValueSizeConstraint(1, 32)
+
+class TmnxDefInterDestIdSource(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("useString", 1), ("useTopQTag", 2), ("useVpi", 3))
+
+class TmnxSubNasPortSuffixType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2))
+    namedValues = NamedValues(("none", 0), ("circuitId", 1), ("remoteId", 2))
+
+class TmnxSubNasPortPrefixType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1))
+    namedValues = NamedValues(("none", 0), ("userString", 1))
+
+class TmnxSubNasPortTypeType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("standard", 1), ("config", 2))
+
+class TmnxSubCreditVolumeUnit(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3))
+    namedValues = NamedValues(("bytes", 0), ("kilobytes", 1), ("megabytes", 2), ("gigabytes", 3))
+
+class TmnxPccRuleFilterForwardAction(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5))
+    namedValues = NamedValues(("none", 0), ("forward", 1), ("drop", 2), ("redirUrl", 3), ("redirNh", 4), ("redirNhOrFwd", 5))
+
+class TmnxPccRuleQosForwardAction(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("rateLimit", 0), ("fcRemark", 1), ("monitor", 2), ("account", 3), ("forward", 4))
+
+class TmnxRadiusFramedRouteMetric(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class TmnxRadiusFramedRoutePreference(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 255)
+
+class TmnxRadiusFramedRouteTag(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 4294967295)
+
+class TmnxSubMgtOrgStrOrZero(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 32)
+
+class TmnxSubMgtOrgString(TmnxSubMgtOrgStrOrZero):
+    status = 'current'
+    subtypeSpec = TmnxSubMgtOrgStrOrZero.subtypeSpec + ValueSizeConstraint(1, 32)
+
+class TmnxFilterProfileStringOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 16)
+
+class TmnxFpeId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 64)
+
+class TmnxFpeIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 64)
+
+class TmnxAccessLoopEncapDataLink(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1))
+    namedValues = NamedValues(("aal5", 0), ("ethernet", 1))
+
+class TmnxAccessLoopEncaps1(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2))
+    namedValues = NamedValues(("notAvailable", 0), ("untaggedEthernet", 1), ("singleTaggedEthernet", 2))
+
+class TmnxAccessLoopEncaps2(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8))
+    namedValues = NamedValues(("notAvailable", 0), ("pppoaLlc", 1), ("pppoaNull", 2), ("ipoaLlc", 3), ("ipoaNull", 4), ("ethernetOverAal5LlcFcs", 5), ("ethernetOverAal5LlcNoFcs", 6), ("ethernetOverAal5NullFcs", 7), ("ethernetOverAal5NullNoFcs", 8))
+
+class TmnxSubAleOffsetMode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1))
+    namedValues = NamedValues(("none", 0), ("auto", 1))
+
+class TmnxSubAleOffset(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24))
+    namedValues = NamedValues(("none", 0), ("pppoaLlc", 1), ("pppoaNull", 2), ("pppoeoaLlc", 3), ("pppoeoaLlcFcs", 4), ("pppoeoaLlcTagged", 5), ("pppoeoaLlcTaggedFcs", 6), ("pppoeoaNull", 7), ("pppoeoaNullFcs", 8), ("pppoeoaNullTagged", 9), ("pppoeoaNullTaggedFcs", 10), ("ipoaLlc", 11), ("ipoaNull", 12), ("ipoeoaLlc", 13), ("ipoeoaLlcFcs", 14), ("ipoeoaLlcTagged", 15), ("ipoeoaLlcTaggedFcs", 16), ("ipoeoaNull", 17), ("ipoeoaNullFcs", 18), ("ipoeoaNullTagged", 19), ("ipoeoaNullTaggedFcs", 20), ("pppoe", 21), ("pppoeTagged", 22), ("ipoe", 23), ("ipoeTagged", 24))
+
+class TmnxDhcpOptionType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5))
+    namedValues = NamedValues(("ipv4", 1), ("ascii", 2), ("hex", 3), ("ipv6", 4), ("domain", 5))
+
+class TmnxDhcpOptionDisplay(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5))
+    namedValues = NamedValues(("default", 1), ("hexDuration", 2), ("hexNetbiosNodeType", 3), ("hexIpv4Address", 4), ("hexIpv6Address", 5))
+
+class TmnxDhcpServerDUIDTypeCode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(2, 3))
+    namedValues = NamedValues(("duidEnterprise", 2), ("duidLinkLocal", 3))
+
+class TmnxPppoeUserName(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 253)
+
+class TmnxPppoeUserNameOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 253)
+
+class TCpmProtPolicyID(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 255)
+
+class TCpmProtPolicyIDOrDefault(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 255), )
+class TMlpppQoSProfileId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class TMcFrQoSProfileId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class TmnxPppoeSessionId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class TmnxPppoePadoDelay(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 30), )
+class TmnxPppoeSessionInfoOrigin(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13))
+    namedValues = NamedValues(("none", 0), ("default", 1), ("radius", 2), ("localUserDb", 3), ("dhcp", 4), ("midSessionChange", 5), ("tags", 6), ("l2tp", 7), ("localPool", 8), ("diameterNasreq", 9), ("diameterGx", 10), ("gtp", 11), ("python", 12), ("bonding", 13))
+
+class TmnxPppoeSessionType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4))
+    namedValues = NamedValues(("local", 1), ("localWholesale", 2), ("localRetail", 3), ("l2tp", 4))
+
+class TmnxPppNcpProtocol(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("ipcp", 1), ("ipv6cp", 2))
+
+class TmnxDiamCcFailureHndlng(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("terminate", 1), ("continue", 2), ("retryAndTerminate", 3))
+
+class TmnxMlpppEpClass(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5))
+    namedValues = NamedValues(("null", 0), ("local", 1), ("ipv4Address", 2), ("macAddress", 3), ("magicNumber", 4), ("directoryNumber", 5))
+
+class TNetworkPolicyID(TPolicyID):
+    status = 'current'
+    subtypeSpec = TPolicyID.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(1, 65535), ValueRangeConstraint(65536, 65536), ValueRangeConstraint(65537, 65537), ValueRangeConstraint(65538, 65538), )
+class TItemScope(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("exclusive", 1), ("template", 2))
+
+class TItemMatch(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("off", 1), ("false", 2), ("true", 3))
+
+class TPriority(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("low", 1), ("high", 2))
+
+class TPriorityOrDefault(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("low", 1), ("high", 2), ("default", 3))
+
+class TPriorityOrUndefined(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2))
+    namedValues = NamedValues(("undefined", 0), ("low", 1), ("high", 2))
+
+class TProfile(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("in", 1), ("out", 2))
+
+class TProfileOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2))
+    namedValues = NamedValues(("none", 0), ("in", 1), ("out", 2))
+
+class TDEProfile(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("in", 1), ("out", 2), ("de", 3))
+
+class TEgressProfile(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 4, 5))
+    namedValues = NamedValues(("in", 1), ("out", 2), ("exceed", 4), ("inplus", 5))
+
+class TEgressProfileOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5))
+    namedValues = NamedValues(("none", 0), ("in", 1), ("out", 2), ("de", 3), ("exceed", 4), ("inplus", 5))
+
+class TAdaptationRule(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("max", 1), ("min", 2), ("closest", 3))
+
+class TAdaptationRuleOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3))
+    namedValues = NamedValues(("noOverride", 0), ("max", 1), ("min", 2), ("closest", 3))
+
+class TRemarkType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("none", 1), ("dscp", 2), ("precedence", 3))
+
+class TPrecValue(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 7)
+
+class TPrecValueOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 7), )
+class TCpmFilterBurstSize(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 131072), )
+class TBurstSize(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 1048576), )
+class TBurstSizeOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 1048576), )
+class TBurstSizeBytesOvr(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 1073741824), )
+class TBurstPercent(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 100)
+
+class TBurstHundredthsOfPercent(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 10000)
+
+class TBurstPercentOrDefault(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 100), )
+class TBurstPercentOrDefaultOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 100), )
+class TRatePercent(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 100)
+
+class TPIRRatePercent(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 100)
+
+class TLevel(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 8)
+
+class TPortSchedLevel(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 8)
+
+class TLevelOrDefault(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 8), )
+class TQueueMode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("priority", 1), ("profile", 2))
+
+class TQueueStatModeFormat(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("priority", 1), ("profile", 2), ("v4V6", 3))
+
+class TEntryIndicator(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class TEntryId(TEntryIndicator):
+    status = 'current'
+    subtypeSpec = TEntryIndicator.subtypeSpec + ValueRangeConstraint(1, 65535)
+
+class TMatchCriteria(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("ip", 1), ("mac", 2), ("none", 3))
+
+class TmnxMdaQos(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4))
+    namedValues = NamedValues(("unknown", 0), ("mda", 1), ("hsmda1", 2), ("hsmda2", 3), ("hs", 4))
+
+class TAtmTdpDescrType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3))
+    namedValues = NamedValues(("clp0And1pcr", 0), ("clp0And1pcrPlusClp0And1scr", 1), ("clp0And1pcrPlusClp0scr", 2), ("clp0And1pcrPlusClp0scrTag", 3))
+
+class TDEValue(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 1), )
+class TQGroupType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1))
+    namedValues = NamedValues(("port", 0), ("vpls", 1))
+
+class TQosOverrideType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7))
+    namedValues = NamedValues(("queue", 1), ("policer", 2), ("aggRateLimit", 3), ("arbiter", 4), ("scheduler", 5), ("slaAggRateLimit", 6), ("wrrGroup", 7))
+
+class TQosOverrideTypeId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 63)
+
+class TmnxIPsecTunnelTemplateId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 2048)
+
+class TmnxIPsecTunnelTemplateIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 2048)
+
+class TmnxIpSecIsaOperFlags(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("adminDown", 0), ("noActive", 1), ("noResources", 2), ("mcAdminDown", 3))
+
+class TmnxIkePolicyAuthMethod(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+    namedValues = NamedValues(("psk", 1), ("hybridX509XAuth", 2), ("plainX509XAuth", 3), ("plainPskXAuth", 4), ("cert", 5), ("pskRadius", 6), ("certRadius", 7), ("eap", 8), ("autoEapRadius", 9), ("autoEap", 10))
+
+class TmnxIkePolicyAutoEapMethod(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("psk", 1), ("cert", 2), ("pskOrCert", 3))
+
+class TmnxIkePolicyAutoEapOwnMethod(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("psk", 1), ("cert", 2))
+
+class TmnxIkePolicyOwnAuthMethod(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 5, 8))
+    namedValues = NamedValues(("symmetric", 0), ("psk", 1), ("cert", 5), ("eapOnly", 8))
+
+class TmnxRsvpDSTEClassType(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 7)
+
+class TmnxAccPlcyQICounters(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("hpo", 0), ("lpo", 1), ("ucp", 2), ("hoo", 3), ("loo", 4), ("uco", 5), ("apo", 6), ("aoo", 7), ("hpd", 8), ("lpd", 9), ("hod", 10), ("lod", 11), ("ipf", 12), ("opf", 13), ("iof", 14), ("oof", 15))
+
+class TmnxAccPlcyQECounters(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("ipf", 0), ("ipd", 1), ("opf", 2), ("opd", 3), ("iof", 4), ("iod", 5), ("oof", 6), ("ood", 7))
+
+class TmnxAccPlcyOICounters(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("apo", 0), ("aoo", 1), ("hpd", 2), ("lpd", 3), ("hod", 4), ("lod", 5), ("ipf", 6), ("opf", 7), ("iof", 8), ("oof", 9))
+
+class TmnxAccPlcyOECounters(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("ipf", 0), ("ipd", 1), ("opf", 2), ("opd", 3), ("iof", 4), ("iod", 5), ("oof", 6), ("ood", 7))
+
+class TmnxAccPlcyAACounters(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("any", 0), ("sfa", 1), ("nfa", 2), ("sfd", 3), ("nfd", 4), ("saf", 5), ("naf", 6), ("spa", 7), ("npa", 8), ("sba", 9), ("nba", 10), ("spd", 11), ("npd", 12), ("sbd", 13), ("nbd", 14), ("sdf", 15), ("mdf", 16), ("ldf", 17), ("tfd", 18), ("tfc", 19), ("sbm", 20), ("spm", 21), ("smt", 22), ("nbm", 23), ("npm", 24), ("nmt", 25), ("sfc", 26), ("nfc", 27))
+
+class TmnxAccPlcyAASubAttributes(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("appProfile", 0), ("appServiceOption", 1))
+
+class TmnxIsaBbGrpId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 4)
+
+class TmnxIsaScalingProfile(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("profile1", 1), ("profile2", 2))
+
+class TmnxVdoGrpIdIndex(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 4)
+
+class TmnxVdoGrpId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 4)
+
+class TmnxVdoGrpIdOrInherit(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 4), )
+class TmnxVdoFccServerMode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3))
+    namedValues = NamedValues(("none", 0), ("burst", 1), ("dent", 2), ("hybrid", 3))
+
+class TmnxVdoPortNumber(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(1024, 5999), ValueRangeConstraint(6251, 65535), )
+class TmnxVdoIfName(TNamedItem):
+    status = 'current'
+
+class TmnxTimeInSec(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 86400)
+
+class TmnxReasContextVal(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 31)
+
+class TmnxVdoStatInt(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("current", 1), ("interval", 2))
+
+class TmnxVdoOutputFormat(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("udp", 1), ("rtp-udp", 2))
+
+class TmnxVdoAnalyzerAlarm(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3))
+    namedValues = NamedValues(("none", 0), ("tnc", 1), ("qos", 2), ("poa", 3))
+
+class TmnxVdoAnalyzerAlarmStates(TextualConvention, OctetString):
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(10, 10)
     fixedLength = 10
 
-class SvcISID(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,16777215),)
-class TIngPolicerId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,32)
+class SvcISID(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 16777215), )
+class TmnxISID(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 16777215), )
+class TIngPolicerId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 32)
 
-class TIngPolicerIdOrNone(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,32),)
-class TEgrPolicerId(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,8)
+class TIngPolicerIdOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 32), )
+class TIngressPolicerId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 63)
 
-class TEgrPolicerIdOrNone(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(0,0),ValueRangeConstraint(1,8),)
-class TFIRRate(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,100000000),)
-class TBurstSizeBytes(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,134217728),)
-class THSMDABurstSizeBytes(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,2688000),)
-class THSMDAQueueBurstLimit(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,1000000),)
-class TClassBurstLimit(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,327680),)
-class TPlcrBurstSizeBytes(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,4194304),)
-class TBurstSizeBytesOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,134217728),)
-class THSMDABurstSizeBytesOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,2688000),)
-class TPlcrBurstSizeBytesOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-2,-2),ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,4194304),)
-class TmnxBfdSessOperState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6,)
-    namedValues = NamedValues(("unknown", 1), ("connected", 2), ("broken", 3), ("peerDetectsDown", 4), ("notConfigured", 5), ("noResources", 6),)
+class TIngressPolicerIdOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 63), )
+class TIngDynPolicerIdOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 63), )
+class TEgrPolicerId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 8)
 
-class TmnxIngPolicerStatMode(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,)
-    namedValues = NamedValues(("noStats", 0), ("minimal", 1), ("offeredProfileNoCIR", 2), ("offeredTotalCIR", 3), ("offeredPrioNoCIR", 4), ("offeredProfileCIR", 5), ("offeredPrioCIR", 6), ("offeredLimitedProfileCIR", 7), ("offeredProfileCapCIR", 8), ("offeredLimitedCapCIR", 9),)
+class TEgrPolicerIdOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 8), )
+class TEgressPolicerId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 63)
 
-class TmnxIngPolicerStatModeOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,)
-    namedValues = NamedValues(("noOverride", -1), ("noStats", 0), ("minimal", 1), ("offeredProfileNoCIR", 2), ("offeredTotalCIR", 3), ("offeredPrioNoCIR", 4), ("offeredProfileCIR", 5), ("offeredPrioCIR", 6), ("offeredLimitedProfileCIR", 7), ("offeredProfileCapCIR", 8), ("offeredLimitedCapCIR", 9),)
+class TEgressPolicerIdOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 63), )
+class TEgrDynPolicerIdOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 63), )
+class TFIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 100000000), )
+class TBurstSizeBytes(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 1073741824), )
+class THSMDABurstSizeBytes(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 2688000), )
+class THSMDAQueueBurstLimit(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 1000000), )
+class TClassBurstLimit(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 327680), )
+class TPlcrBurstSizeBytes(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 16777216), )
+class TBurstSizeBytesOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 134217728), )
+class THSMDABurstSizeBytesOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 2688000), )
+class TPlcrBurstSizeBytesOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 16777216), )
+class TmnxBfdSessionProtocols(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("ospfv2", 0), ("pim", 1), ("isis", 2), ("staticRoute", 3), ("mcRing", 4), ("rsvp", 5), ("bgp", 6), ("vrrp", 7), ("srrp", 8), ("mcep", 9), ("ldp", 10), ("ipsecTunnel", 11), ("ospfv3", 12), ("mcIpsec", 13), ("mcMobile", 14), ("mplsTp", 15), ("lag", 16), ("opergrp", 17), ("vccv", 18), ("rsvpLsp", 19), ("ldpLsp", 20), ("bgpLsp", 21), ("rip", 22), ("ripng", 23))
 
-class TmnxEgrPolicerStatMode(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6,)
-    namedValues = NamedValues(("noStats", 0), ("minimal", 1), ("offeredProfileNoCIR", 2), ("offeredTotalCIR", 3), ("offeredProfileCIR", 4), ("offeredLimitedCapCIR", 5), ("offeredProfileCapCIR", 6),)
+class TmnxBfdSessOperState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6))
+    namedValues = NamedValues(("unknown", 1), ("connected", 2), ("broken", 3), ("peerDetectsDown", 4), ("notConfigured", 5), ("noResources", 6))
 
-class TmnxEgrPolicerStatModeOverride(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(-1, 0, 1, 2, 3, 4, 5, 6,)
-    namedValues = NamedValues(("noOverride", -1), ("noStats", 0), ("minimal", 1), ("offeredProfileNoCIR", 2), ("offeredTotalCIR", 3), ("offeredProfileCIR", 4), ("offeredLimitedCapCIR", 5), ("offeredProfileCapCIR", 6),)
+class TmnxBfdOnLspSessFecType(TextualConvention, Integer32):
+    reference = "RFC 5884, 'Bidirectional Forwarding Detection (BFD) for MPLS Label Switched Paths (LSPs)', Section 3.1, 'BFD for MPLS LSPs: Motivation'."
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("rsvp", 1), ("ldp", 2), ("bgp", 3))
 
-class TmnxTlsGroupId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,4094)
+class TmnxIngPolicerStatMode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
+    namedValues = NamedValues(("noStats", 0), ("minimal", 1), ("offeredProfileNoCIR", 2), ("offeredTotalCIR", 3), ("offeredPriorityNoCIR", 4), ("offeredProfileCIR", 5), ("offeredPriorityCIR", 6), ("offeredLimitedProfileCIR", 7), ("offeredProfileCappedCIR", 8), ("offeredLimitedCappedCIR", 9))
 
-class TSubHostId(Unsigned32, TextualConvention):
-    pass
+class TmnxIngPolicerStatModeOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
+    namedValues = NamedValues(("noOverride", -1), ("noStats", 0), ("minimal", 1), ("offeredProfileNoCIR", 2), ("offeredTotalCIR", 3), ("offeredPriorityNoCIR", 4), ("offeredProfileCIR", 5), ("offeredPriorityCIR", 6), ("offeredLimitedProfileCIR", 7), ("offeredProfileCappedCIR", 8), ("offeredLimitedCappedCIR", 9))
 
-class TDirection(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2,)
-    namedValues = NamedValues(("both", 0), ("ingress", 1), ("egress", 2),)
+class TmnxEgrPolicerStatMode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 8, 9, 10))
+    namedValues = NamedValues(("noStats", 0), ("minimal", 1), ("offeredProfileNoCIR", 2), ("offeredTotalCIR", 3), ("offeredProfileCIR", 4), ("offeredLimitedCappedCIR", 5), ("offeredProfileCappedCIR", 6), ("offeredTotalCirExceed", 8), ("offeredFourProfileNoCir", 9), ("offeredTotalCirFourProfile", 10))
 
-class TBurstLimit(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(1,14000000),)
-class TMacFilterType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("normal", 1), ("isid", 2), ("vid", 3),)
+class TmnxEgrPolicerStatModeOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(-1, 0, 1, 2, 3, 4, 5, 6, 8, 9, 10))
+    namedValues = NamedValues(("noOverride", -1), ("noStats", 0), ("minimal", 1), ("offeredProfileNoCIR", 2), ("offeredTotalCIR", 3), ("offeredProfileCIR", 4), ("offeredLimitedCappedCIR", 5), ("offeredProfileCappedCIR", 6), ("offeredTotalCirExceed", 8), ("offeredFourProfileNoCir", 9), ("offeredTotalCirFourProfile", 10))
 
-class TmnxPwGlobalId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,4294967295)
+class TmnxTlsGroupId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 4094)
 
-class TmnxPwGlobalIdOrZero(Unsigned32, TextualConvention):
-    pass
+class TSubHostId(TextualConvention, Unsigned32):
+    status = 'current'
 
-class TmnxPwPathHopId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,16)
+class TDirection(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2))
+    namedValues = NamedValues(("both", 0), ("ingress", 1), ("egress", 2))
 
-class TmnxPwPathHopIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,16)
+class TDirectionIngEgr(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("ingress", 1), ("egress", 2))
 
-class TmnxSpokeSdpId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,4294967295)
+class TBurstLimit(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 14000000), )
+class TMacFilterType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("normal", 1), ("isid", 2), ("vid", 3))
 
-class TmnxSpokeSdpIdOrZero(Unsigned32, TextualConvention):
-    pass
+class TIPFilterType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("normal", 1), ("vxlanVni", 2))
 
-class TmnxMsPwPeSignaling(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("auto", 1), ("master", 2),)
+class TmnxPwGlobalId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 4294967295)
 
-class TmnxLdpFECType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 128, 129, 130,)
-    namedValues = NamedValues(("addrWildcard", 1), ("addrPrefix", 2), ("addrHost", 3), ("vll", 128), ("vpws", 129), ("vpls", 130),)
+class TmnxPwGlobalIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
 
-class TmnxSvcOperGrpCreationOrigin(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("manual", 1), ("mvrp", 2),)
+class TmnxPwPathHopId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 16)
 
-class TmnxOperGrpHoldUpTime(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,3600)
+class TmnxPwPathHopIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 16)
 
-class TmnxOperGrpHoldDownTime(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,3600)
+class TmnxSpokeSdpId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 4294967295)
 
-class TmnxSrrpPriorityStep(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,10)
+class TmnxSpokeSdpIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
 
-class TmnxAiiType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("aiiType1", 1), ("aiiType2", 2),)
+class TmnxMsPwPeSignaling(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("auto", 1), ("master", 2))
 
-class ServObjDesc(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(0,80)
+class TmnxLdpFECType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 128, 129, 130))
+    namedValues = NamedValues(("addrWildcard", 1), ("addrPrefix", 2), ("addrHost", 3), ("vll", 128), ("vpws", 129), ("vpls", 130))
 
-class TMplsLspExpProfMapID(TPolicyID, TextualConvention):
-    subtypeSpec = TPolicyID.subtypeSpec+ValueRangeConstraint(1,65535)
+class TmnxSvcOperGrpCreationOrigin(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 7, 12))
+    namedValues = NamedValues(("manual", 1), ("mvrp", 2), ("dynScript", 7), ("vsd", 12))
 
-class TSysResource(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ConstraintsUnion(ValueRangeConstraint(-1,-1),ValueRangeConstraint(0,11),)
-class TmnxSpbFid(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(1,4095)
+class TmnxOperGrpHoldUpTime(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 3600)
 
-class TmnxSpbFidOrZero(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,4095)
+class TmnxOperGrpHoldDownTime(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 3600)
 
-class TmnxSpbBridgePriority(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+ValueRangeConstraint(0,15)
+class TmnxSrrpPriorityStep(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 10)
 
-class TmnxSlopeMap(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3,)
-    namedValues = NamedValues(("none", 0), ("low", 1), ("high", 2), ("highLow", 3),)
+class TmnxAiiType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("aiiType1", 1), ("aiiType2", 2))
 
-class TmnxCdrType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("pgwCdr", 1), ("gCdr", 2), ("eGCdr", 3),)
+class TmnxSpbFid(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 4095)
 
-class TmnxThresholdGroupType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6, 7,)
-    namedValues = NamedValues(("brMgmtLimit", 1), ("brMgmtCfSuccess", 2), ("brMgmtCfFailure", 3), ("brMgmtTraffic", 4), ("pathMgmt", 5), ("cpmSystem", 6), ("mgIsmSystem", 7),)
+class TmnxSpbFidOrZero(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 4095)
 
-class TmnxMobUeId(OctetString, TextualConvention):
-    subtypeSpec = OctetString.subtypeSpec+ValueSizeConstraint(8,8)
-    fixedLength = 8
+class TmnxSpbBridgePriority(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 15)
 
-class TmnxMobUeIdType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2,)
-    namedValues = NamedValues(("imsi", 0), ("imei", 1), ("msisdn", 2),)
+class TmnxSlopeMap(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3))
+    namedValues = NamedValues(("none", 0), ("low", 1), ("high", 2), ("highLow", 3))
 
-class TmnxMobImsiStr(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ConstraintsUnion(ValueSizeConstraint(0,0),ValueSizeConstraint(9,15),)
-class TmnxVpnIpBackupFamily(Bits, TextualConvention):
-    namedValues = NamedValues(("ipv4", 0), ("ipv6", 1),)
+class TmnxCdrType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("pgwCdr", 1), ("gCdr", 2), ("eGCdr", 3))
 
-class TmnxTunnelGroupId(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(1,16)
+class TmnxThresholdGroupType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7))
+    namedValues = NamedValues(("brMgmtLimit", 1), ("brMgmtCfSuccess", 2), ("brMgmtCfFailure", 3), ("brMgmtTraffic", 4), ("pathMgmt", 5), ("pdnConnections", 6), ("mgIsmSystem", 7))
 
-class TmnxTunnelGroupIdOrZero(Unsigned32, TextualConvention):
-    subtypeSpec = Unsigned32.subtypeSpec+ValueRangeConstraint(0,16)
+class TmnxVpnIpBackupFamily(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("ipv4", 0), ("ipv6", 1))
 
-class TmnxMobRatingGrpState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8,)
-    namedValues = NamedValues(("allowFlow", 1), ("disallowFlow", 2), ("redWebPortal", 3), ("allowResRules", 4), ("iom1stPktTrigger", 5), ("dis1stPktTrigger", 6), ("creditsToppedUp", 7), ("waitForFpt", 8),)
+class TmnxTunnelGroupId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 16)
 
-class TmnxMobPresenceState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1,)
-    namedValues = NamedValues(("absent", 0), ("present", 1),)
+class TmnxTunnelGroupIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 16)
 
-class TmnxMobPdnGyChrgTriggerType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,)
-    namedValues = NamedValues(("sgsnIpAddrRecvd", 0), ("qosRecvd", 1), ("locRecvd", 2), ("ratRecvd", 3), ("qosTrfClsRecvd", 4), ("qosRlbClsRecvd", 5), ("qosDlyClsRecvd", 6), ("qosPeakThrptRecvd", 7), ("qosPrcClsRecvd", 8), ("qosMeanTrptRecvd", 9), ("qosMxBtRtUplnkRecvd", 10), ("qosMxBtRtDllnkRecvd", 11), ("qosResBerRecvd", 12), ("qosSduErrRatRecvd", 13), ("qosTransDelayRecvd", 14), ("qosTrfHndPriRecvd", 15), ("qosGrtBtRtUplnkRecvd", 16), ("qosGrtBtRtDllnkRecvd", 17), ("locMccRecvd", 18), ("locMncRecvd", 19), ("locRacRecvd", 20), ("locLacRecvd", 21), ("locCellIdRecvd", 22), ("medCompRecvd", 23), ("partcNmbRecvd", 24), ("thrldPartcNmbRecvd", 25), ("usrPartcTypeRecvd", 26), ("servCondRecvd", 27), ("servNodeRecvd", 28), ("usrCsgInfoRecvd", 29),)
-
-class TmnxMobPdnRefPointType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4, 5,)
-    namedValues = NamedValues(("s5", 1), ("s8", 2), ("gn", 3), ("s2a", 4), ("gp", 5),)
-
-class TmnxQosBytesHex(OctetString, TextualConvention):
+class TmnxQosBytesHex(TextualConvention, OctetString):
+    status = 'current'
     displayHint = '2x '
-    subtypeSpec = OctetString.subtypeSpec+ValueSizeConstraint(0,30)
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(0, 30)
 
-class TSiteOperStatus(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("up", 1), ("down", 2), ("outOfResource", 3),)
+class TSiteOperStatus(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("up", 1), ("down", 2), ("outOfResource", 3))
 
-class TmnxSpbFdbLocale(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3, 4,)
-    namedValues = NamedValues(("local", 1), ("sap", 2), ("sdp", 3), ("unknown", 4),)
+class TmnxSpbFdbLocale(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4))
+    namedValues = NamedValues(("local", 1), ("sap", 2), ("sdp", 3), ("unknown", 4))
 
-class TmnxSpbFdbState(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6,)
-    namedValues = NamedValues(("ok", 0), ("addModPending", 1), ("delPending", 2), ("sysFdbLimit", 3), ("noFateShared", 4), ("svcFdbLimit", 5), ("noUcast", 6),)
+class TmnxSpbFdbState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6))
+    namedValues = NamedValues(("ok", 0), ("addModPending", 1), ("delPending", 2), ("sysFdbLimit", 3), ("noFateShared", 4), ("svcFdbLimit", 5), ("noUcast", 6))
 
-class TmnxMobServRefPointType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 4,)
-    namedValues = NamedValues(("s5", 1), ("s8", 2), ("s2a", 4),)
+class TmnxCdrDiagnosticAction(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("included", 1), ("excluded", 2))
 
-class TmnxMobAccessType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2, 3,)
-    namedValues = NamedValues(("eps", 1), ("gprs", 2), ("non3gpp", 3),)
+class TmnxLinkMapProfileId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 64)
 
-class TmnxMobUeStrPrefix(DisplayString, TextualConvention):
-    subtypeSpec = DisplayString.subtypeSpec+ValueSizeConstraint(4,15)
+class TmnxLinkMapProfileIdOrZero(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 64), )
+class TmnxDayOfWeek(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7))
+    namedValues = NamedValues(("unspecified", 0), ("sunday", 1), ("monday", 2), ("tuesday", 3), ("wednesday", 4), ("thursday", 5), ("friday", 6), ("saturday", 7))
 
-class TmnxCdrDiagnosticAction(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1, 2,)
-    namedValues = NamedValues(("included", 1), ("excluded", 2),)
+class TmnxDayOfWeekList(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("sunday", 0), ("monday", 1), ("tuesday", 2), ("wednesday", 3), ("thursday", 4), ("friday", 5), ("saturday", 6))
 
-class TmnxMplsTpGlobalID(Unsigned32, TextualConvention):
-    pass
+class TmnxMplsTpGlobalID(TextualConvention, Unsigned32):
+    reference = "RFC 6370, 'MPLS Transport Profile (MPLS-TP) Identifiers', Section 3, 'Uniquely Identifying an Operator - the Global_ID'."
+    status = 'current'
 
-class TmnxMplsTpNodeID(Unsigned32, TextualConvention):
-    pass
+class TmnxMplsTpNodeID(TextualConvention, Unsigned32):
+    reference = "RFC 6370, 'MPLS Transport Profile (MPLS-TP) Identifiers', Section 4, 'Node and Interface Identifiers'."
+    status = 'current'
 
-class TmnxMplsTpTunnelType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(1,)
-    namedValues = NamedValues(("mplsTpStatic", 1),)
+class TmnxMplsTpTunnelType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1))
+    namedValues = NamedValues(("mplsTpStatic", 1))
 
-class TmnxVwmCardType(Integer32, TextualConvention):
-    subtypeSpec = Integer32.subtypeSpec+SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,)
-    namedValues = NamedValues(("not-provisioned", 0), ("not-equipped", 1), ("sfc1A", 2), ("sfc1B", 3), ("sfc1C", 4), ("sfc1D", 5), ("sfc1E", 6), ("sfc1F", 7), ("sfc1G", 8), ("sfc1H", 9), ("sfc2AandB", 10), ("sfc2CandD", 11), ("sfc2EandF", 12), ("sfc2GandH", 13), ("sfc4A-D", 14), ("sfc4E-H", 15), ("sfc8", 16), ("sfd8A-R", 17), ("sfd8B-R", 18), ("sfd8C-R", 19), ("sfd8D-R", 20), ("sfd4A-R", 21), ("sfd4B-R", 22), ("sfd4C-R", 23), ("sfd4D-R", 24), ("sfd4E-R", 25), ("sfd4F-R", 26), ("sfd4G-R", 27), ("sfd4H-R", 28), ("sfd2A-R", 29), ("sfd2B-R", 30), ("sfd2C-R", 31), ("sfd2D-R", 32), ("sfd2E-R", 33), ("sfd2F-R", 34), ("sfd2G-R", 35), ("sfd2H-R", 36), ("sfd2I-R", 37), ("sfd2L-R", 38), ("sfd2M-R", 39), ("sfd2N-R", 40), ("sfd2O-R", 41), ("sfd2P-R", 42), ("sfd2Q-R", 43), ("sfd2R-R", 44),)
+class TmnxDistCpuProtPacketRateLimit(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 255), )
+class TmnxDistCpuProtRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 20000000), )
+class TmnxDistCpuProtBurstSize(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 4194304), )
+class TmnxDistCpuProtActionDuration(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 10080), )
+class TmnxDistCpuProtAction(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("discard", 1), ("low-priority", 2), ("none", 3))
 
-mibBuilder.exportSymbols("TIMETRA-TC-MIB", TmnxMobChargingProfileOrInherit=TmnxMobChargingProfileOrInherit, QTagFullRangeOrNone=QTagFullRangeOrNone, TEgressHsmdaQueueId=TEgressHsmdaQueueId, TmnxMldVersion=TmnxMldVersion, TmnxMobImsi=TmnxMobImsi, TmnxSpbFdbLocale=TmnxSpbFdbLocale, QTagFullRange=QTagFullRange, TmnxMobDiaDetailPathMgmtState=TmnxMobDiaDetailPathMgmtState, THsmdaWeightOverride=THsmdaWeightOverride, THPolPIRRate=THPolPIRRate, TNonZeroWeight=TNonZeroWeight, TmnxTimeInSec=TmnxTimeInSec, THsmdaPIRKRateOverride=THsmdaPIRKRateOverride, TmnxVdoOutputFormat=TmnxVdoOutputFormat, TmnxOperGrpHoldUpTime=TmnxOperGrpHoldUpTime, TPlcyMode=TPlcyMode, TmnxMobSdfFilterNum=TmnxMobSdfFilterNum, ServObjDesc=ServObjDesc, TSysResource=TSysResource, TmnxMobMnc=TmnxMobMnc, TmnxMobStaticPolPrecedence=TmnxMobStaticPolPrecedence, TmnxBsxAarpServiceRefType=TmnxBsxAarpServiceRefType, TmnxMobAuthUserName=TmnxMobAuthUserName, TBWRateType=TBWRateType, TmnxMobUeState=TmnxMobUeState, TmnxMobNai=TmnxMobNai, TmnxTunnelID=TmnxTunnelID, THsmdaPIRKRate=THsmdaPIRKRate, TSapEgrEncapGroupType=TSapEgrEncapGroupType, TmnxVRtrIDOrZero=TmnxVRtrIDOrZero, TBurstPercent=TBurstPercent, TmnxPppoeSessionInfoOrigin=TmnxPppoeSessionInfoOrigin, TmnxSlaProfileString=TmnxSlaProfileString, TEgressQPerPacketOffset=TEgressQPerPacketOffset, TIngPolicerId=TIngPolicerId, TmnxVcIdOrNone=TmnxVcIdOrNone, TmnxAncpStringOrZero=TmnxAncpStringOrZero, TmnxSubMgtOrgStrOrZero=TmnxSubMgtOrgStrOrZero, TmnxMobSdfFilterDirection=TmnxMobSdfFilterDirection, TIngressHsmdaPerPacketOffset=TIngressHsmdaPerPacketOffset, TNamedItem=TNamedItem, TmnxIkePolicyOwnAuthMethod=TmnxIkePolicyOwnAuthMethod, THPolVirtualSchePIRRate=THPolVirtualSchePIRRate, TmnxMobMcc=TmnxMobMcc, TmnxSubRadiusAttrType=TmnxSubRadiusAttrType, TmnxVdoGrpIdIndex=TmnxVdoGrpIdIndex, TmnxSubRadiusVendorId=TmnxSubRadiusVendorId, TQosOverrideType=TQosOverrideType, TPlcrBurstSizeBytes=TPlcrBurstSizeBytes, TmnxSpokeSdpIdOrZero=TmnxSpokeSdpIdOrZero, TmnxMobBufferLimit=TmnxMobBufferLimit, THsmdaCIRMRateOverride=THsmdaCIRMRateOverride, TmnxMobPdnSessionState=TmnxMobPdnSessionState, TSapIngressPolicyID=TSapIngressPolicyID, TFIRRate=TFIRRate, THSMDABurstSizeBytesOverride=THSMDABurstSizeBytesOverride, TmnxSubMgtIntDestId=TmnxSubMgtIntDestId, TItemDescription=TItemDescription, TmnxMobAccessType=TmnxMobAccessType, TEgressHsmdaCounterId=TEgressHsmdaCounterId, TmnxSlaProfileStringOrEmpty=TmnxSlaProfileStringOrEmpty, TmnxSpbBridgePriority=TmnxSpbBridgePriority, TmnxServId=TmnxServId, TPortSchedulerPIR=TPortSchedulerPIR, TmnxPppoeSessionType=TmnxPppoeSessionType, TmnxMobUeId=TmnxMobUeId, TmnxMobMncOrEmpty=TmnxMobMncOrEmpty, TmnxLdpFECType=TmnxLdpFECType, TmnxMobDiaPathMgmtState=TmnxMobDiaPathMgmtState, PYSNMP_MODULE_ID=timetraTCMIBModule, THPolCIRRate=THPolCIRRate, TmnxReasContextVal=TmnxReasContextVal, TmnxMobGwId=TmnxMobGwId, SvcISID=SvcISID, TmnxVcId=TmnxVcId, TPolicyID=TPolicyID, TmnxBinarySpecification=TmnxBinarySpecification, TmnxMobPresenceState=TmnxMobPresenceState, TSapEgrEncapGrpQosPolicyIdOrZero=TSapEgrEncapGrpQosPolicyIdOrZero, TDSCPValueOrNone=TDSCPValueOrNone, TmnxIngPolicerStatMode=TmnxIngPolicerStatMode, TmnxMobChargingBearerType=TmnxMobChargingBearerType, TLNamedItemOrEmpty=TLNamedItemOrEmpty, TmnxMobSdfFilterProtocol=TmnxMobSdfFilterProtocol, TBurstLimit=TBurstLimit, TPIRRateOrZero=TPIRRateOrZero, TNetworkIngressMeterId=TNetworkIngressMeterId, TmnxSpbFdbState=TmnxSpbFdbState, TmnxRadiusServerOperState=TmnxRadiusServerOperState, TmnxMobProfPolReportingLevel=TmnxMobProfPolReportingLevel, TCpmProtPolicyIDOrDefault=TCpmProtPolicyIDOrDefault, TMeterMode=TMeterMode, TmnxMobDiaRetryCount=TmnxMobDiaRetryCount, TmnxMldGroupFilterMode=TmnxMldGroupFilterMode, TPIRRate=TPIRRate, TQueueIdOrAll=TQueueIdOrAll, TmnxOperGrpHoldDownTime=TmnxOperGrpHoldDownTime, TmnxAncpString=TmnxAncpString, TmnxMobPdnRefPointType=TmnxMobPdnRefPointType, TmnxMobDiaTransTimer=TmnxMobDiaTransTimer, TBurstSizeBytesOverride=TBurstSizeBytesOverride, SdpBindId=SdpBindId, TmnxCdrDiagnosticAction=TmnxCdrDiagnosticAction, TmnxBfdSessOperState=TmnxBfdSessOperState, THsmdaSchedulerPolicyGroupId=THsmdaSchedulerPolicyGroupId, TmnxMobRtrAdvtInterval=TmnxMobRtrAdvtInterval, TmnxBgpRouteTarget=TmnxBgpRouteTarget, TPrecValue=TPrecValue, TmnxSubNasPortPrefixType=TmnxSubNasPortPrefixType, TmnxActionType=TmnxActionType, QTagOrZero=QTagOrZero, TPIRRateOverride=TPIRRateOverride, TmnxVdoPortNumber=TmnxVdoPortNumber, THsmdaPIRMRateOverride=THsmdaPIRMRateOverride, TPerPacketOffsetOvr=TPerPacketOffsetOvr, TProfile=TProfile, TmnxOperState=TmnxOperState, TmnxMdaQos=TmnxMdaQos, TEgrHsmdaPerPacketOffsetOvr=TEgrHsmdaPerPacketOffsetOvr, TOperator=TOperator, TmnxMobChargingProfile=TmnxMobChargingProfile, TPlcrBurstSizeBytesOverride=TPlcrBurstSizeBytesOverride, THSMDABurstSizeBytes=THSMDABurstSizeBytes, TmnxRadiusPendingReqLimit=TmnxRadiusPendingReqLimit, TmnxIngPolicerStatModeOverride=TmnxIngPolicerStatModeOverride, TBurstSizeBytes=TBurstSizeBytes, TmnxAccessLoopEncaps2=TmnxAccessLoopEncaps2, TmnxVdoIfName=TmnxVdoIfName, TLevelOrDefault=TLevelOrDefault, THPolCIRRateOverride=THPolCIRRateOverride, TRemarkType=TRemarkType, TEgressHsmdaCounterIdOrZero=TEgressHsmdaCounterIdOrZero, TmnxPwGlobalId=TmnxPwGlobalId, TProfileOrDei=TProfileOrDei, TmnxMobArpValue=TmnxMobArpValue, TDEProfile=TDEProfile, TmnxDHCP6MsgType=TmnxDHCP6MsgType, TmnxVPNRouteDistinguisher=TmnxVPNRouteDistinguisher, TmnxMobProfPolMeteringMethod=TmnxMobProfPolMeteringMethod, TmnxIgmpGroupType=TmnxIgmpGroupType, TmnxMsPwPeSignaling=TmnxMsPwPeSignaling, TAtmTdpDescrType=TAtmTdpDescrType, TAdaptationRule=TAdaptationRule, TmnxIgmpVersion=TmnxIgmpVersion, TmnxSlopeMap=TmnxSlopeMap, TPortSchedulerCIR=TPortSchedulerCIR, TmnxBsxTransitIpPolicyId=TmnxBsxTransitIpPolicyId, TmnxMobGwType=TmnxMobGwType, TmnxAppProfileStringOrEmpty=TmnxAppProfileStringOrEmpty, TPolicyStatementNameOrEmpty=TPolicyStatementNameOrEmpty, TFCType=TFCType, TPriority=TPriority, TmnxVcType=TmnxVcType, TmnxMobUeIdType=TmnxMobUeIdType, TmnxSubNasPortSuffixType=TmnxSubNasPortSuffixType, TmnxMobNode=TmnxMobNode, TmnxMobImsiStr=TmnxMobImsiStr, TEntryIndicator=TEntryIndicator, THPolPIRRateOverride=THPolPIRRateOverride, THsmdaCounterIdOrZeroOrAll=THsmdaCounterIdOrZeroOrAll, TmnxMobUeStrPrefix=TmnxMobUeStrPrefix, TmnxEnabledDisabled=TmnxEnabledDisabled, TmnxTunnelGroupId=TmnxTunnelGroupId, TmnxIpSecIsaOperFlags=TmnxIpSecIsaOperFlags, TDSCPFilterActionValue=TDSCPFilterActionValue, TmnxAccPlcyOECounters=TmnxAccPlcyOECounters, TmnxMobProfMbrRate=TmnxMobProfMbrRate, TSdpIngressPolicyID=TSdpIngressPolicyID, TmnxQosBytesHex=TmnxQosBytesHex, TmnxMobUeRat=TmnxMobUeRat, TmnxMobQciValueOrZero=TmnxMobQciValueOrZero, THsmdaPIRMRate=THsmdaPIRMRate, TmnxSrrpPriorityStep=TmnxSrrpPriorityStep, TmnxAccPlcyQICounters=TmnxAccPlcyQICounters, TQosQGrpInstanceIDorZero=TQosQGrpInstanceIDorZero, TSiteOperStatus=TSiteOperStatus, TmnxCdrType=TmnxCdrType, TFCName=TFCName, TmnxSubAleOffset=TmnxSubAleOffset, TIngressHsmdaCounterId=TIngressHsmdaCounterId, TPolicerWeight=TPolicerWeight, TmnxSubAleOffsetMode=TmnxSubAleOffsetMode, TAdvCfgRate=TAdvCfgRate, TmnxMobPdnType=TmnxMobPdnType, TmnxMobProfName=TmnxMobProfName, TmnxAdminState=TmnxAdminState, TmnxDhcpOptionType=TmnxDhcpOptionType, TmnxMobImei=TmnxMobImei, TmnxMobArp=TmnxMobArp, TBurstPercentOrDefaultOverride=TBurstPercentOrDefaultOverride, TmnxPwPathHopId=TmnxPwPathHopId, TmnxEgrPolicerStatModeOverride=TmnxEgrPolicerStatModeOverride, TCpmProtPolicyID=TCpmProtPolicyID, TClassBurstLimit=TClassBurstLimit, TmnxMobDualStackPref=TmnxMobDualStackPref, TmnxSpbFid=TmnxSpbFid, TmnxSubNasPortTypeType=TmnxSubNasPortTypeType, TmnxManagedRouteStatus=TmnxManagedRouteStatus, TmnxMobQueueLimit=TmnxMobQueueLimit, TmnxTunnelType=TmnxTunnelType, TmnxVRtrMplsLspID=TmnxVRtrMplsLspID, TmnxTlsGroupId=TmnxTlsGroupId, TmnxVdoFccServerMode=TmnxVdoFccServerMode, TLNamedItem=TLNamedItem, TmnxAccessLoopEncaps1=TmnxAccessLoopEncaps1, TMlpppQoSProfileId=TMlpppQoSProfileId, TmnxMobProfGbrRate=TmnxMobProfGbrRate, TmnxMobPgwSigProtocol=TmnxMobPgwSigProtocol, TSdpEgressPolicyID=TSdpEgressPolicyID, TmnxMobProfIpTtl=TmnxMobProfIpTtl, TmnxRsvpDSTEClassType=TmnxRsvpDSTEClassType, TmnxDefSubIdSource=TmnxDefSubIdSource, TmnxPwGlobalIdOrZero=TmnxPwGlobalIdOrZero, TmnxBgpPreference=TmnxBgpPreference, TMaxDecRate=TMaxDecRate, TmnxMobIpCanType=TmnxMobIpCanType, TmnxAiiType=TmnxAiiType, TmnxBsxTransPrefPolicyIdOrZero=TmnxBsxTransPrefPolicyIdOrZero, TmnxBgpLocalPreference=TmnxBgpLocalPreference, TBurstPercentOrDefault=TBurstPercentOrDefault, TmnxMobQci=TmnxMobQci, TBurstSizeOverride=TBurstSizeOverride, TRateType=TRateType, TmnxBgpAutonomousSystem=TmnxBgpAutonomousSystem, TQWeight=TQWeight, TmnxMobRfAcctLevel=TmnxMobRfAcctLevel, TPIRPercentOverride=TPIRPercentOverride, TNetworkPolicyID=TNetworkPolicyID, TEgressQueueId=TEgressQueueId, TmnxSpbFidOrZero=TmnxSpbFidOrZero, TmnxMobMsisdn=TmnxMobMsisdn, TmnxBsxAarpIdOrZero=TmnxBsxAarpIdOrZero, TMcFrQoSProfileId=TMcFrQoSProfileId, TmnxBGPFamilyType=TmnxBGPFamilyType, TmnxMobDfPeerId=TmnxMobDfPeerId, TPortSchedulerPIRRate=TPortSchedulerPIRRate, TmnxMobBearerType=TmnxMobBearerType, TSapIngressMeterId=TSapIngressMeterId, TmnxMobPdnSessionEvent=TmnxMobPdnSessionEvent, TmnxMobPdnGyChrgTriggerType=TmnxMobPdnGyChrgTriggerType, TDEProfileOrDei=TDEProfileOrDei, TCIRRate=TCIRRate, TmnxMobRatingGrpState=TmnxMobRatingGrpState, TmnxOspfInstance=TmnxOspfInstance, TmnxMobStaticPolPrecedenceOrZero=TmnxMobStaticPolPrecedenceOrZero, THsmdaPolicyScheduleClass=THsmdaPolicyScheduleClass, TmnxMobPeerType=TmnxMobPeerType, TCIRRateOverride=TCIRRateOverride, Dot1PPriorityMask=Dot1PPriorityMask, TmnxVwmCardType=TmnxVwmCardType, THsmdaWrrWeightOverride=THsmdaWrrWeightOverride, TmnxMplsTpNodeID=TmnxMplsTpNodeID, TmnxAccPlcyOICounters=TmnxAccPlcyOICounters, TmnxMobArpValueOrZero=TmnxMobArpValueOrZero)
-mibBuilder.exportSymbols("TIMETRA-TC-MIB", TmnxMacSpecification=TmnxMacSpecification, TIpProtocol=TIpProtocol, TmnxMobPathMgmtState=TmnxMobPathMgmtState, TEntryId=TEntryId, TTmplPolicyID=TTmplPolicyID, TmnxMobApnOrZero=TmnxMobApnOrZero, TmnxStrSapId=TmnxStrSapId, TDirection=TDirection, TmnxMlpppEpClass=TmnxMlpppEpClass, TmnxMobMccOrEmpty=TmnxMobMccOrEmpty, TFCSet=TFCSet, TRatePercent=TRatePercent, TmnxCustId=TmnxCustId, TmnxIgmpGroupFilterMode=TmnxIgmpGroupFilterMode, TmnxMobServerState=TmnxMobServerState, TmnxMplsTpGlobalID=TmnxMplsTpGlobalID, TmnxMobQciValue=TmnxMobQciValue, QTag=QTag, TNamedItemOrEmpty=TNamedItemOrEmpty, TItemMatch=TItemMatch, TPIRRatePercent=TPIRRatePercent, TMatchCriteria=TMatchCriteria, TSapEgrEncapGroupActionType=TSapEgrEncapGroupActionType, TmnxEncapVal=TmnxEncapVal, TProfileOrNone=TProfileOrNone, TWeight=TWeight, timetraTCMIBModule=timetraTCMIBModule, TmnxIPsecTunnelTemplateId=TmnxIPsecTunnelTemplateId, TmnxEgrPolicerStatMode=TmnxEgrPolicerStatMode, TmnxSubMgtIntDestIdOrEmpty=TmnxSubMgtIntDestIdOrEmpty, TEgrPolicerId=TEgrPolicerId, BgpPeeringStatus=BgpPeeringStatus, TmnxIkePolicyAuthMethod=TmnxIkePolicyAuthMethod, TmnxAccPlcyQECounters=TmnxAccPlcyQECounters, TmnxIPsecTunnelTemplateIdOrZero=TmnxIPsecTunnelTemplateIdOrZero, TmnxMobProfNameOrEmpty=TmnxMobProfNameOrEmpty, THPolVirtualScheCIRRate=THPolVirtualScheCIRRate, TPriorityOrUndefined=TPriorityOrUndefined, TPriorityOrDefault=TPriorityOrDefault, TmnxMobSdfFilter=TmnxMobSdfFilter, TmnxVdoStatInt=TmnxVdoStatInt, TBurstSize=TBurstSize, TmnxVdoAnalyzerAlarm=TmnxVdoAnalyzerAlarm, TmnxSubIdentString=TmnxSubIdentString, TLspExpValue=TLspExpValue, ServiceAdminStatus=ServiceAdminStatus, TPolicerRateType=TPolicerRateType, TIngressHsmdaQueueId=TIngressHsmdaQueueId, TEgrPolicerIdOrNone=TEgrPolicerIdOrNone, TIngPolicerIdOrNone=TIngPolicerIdOrNone, TQueueId=TQueueId, TDSCPName=TDSCPName, TmnxSubProfileStringOrEmpty=TmnxSubProfileStringOrEmpty, TmnxMobRtrAdvtLifeTime=TmnxMobRtrAdvtLifeTime, TExpSecondaryShaperPIRRate=TExpSecondaryShaperPIRRate, TmnxThresholdGroupType=TmnxThresholdGroupType, TmnxMobAuthType=TmnxMobAuthType, TmnxVdoAnalyzerAlarmStates=TmnxVdoAnalyzerAlarmStates, IpAddressPrefixLength=IpAddressPrefixLength, TAdaptationRuleOverride=TAdaptationRuleOverride, TmnxAsciiSpecification=TmnxAsciiSpecification, TPerPacketOffset=TPerPacketOffset, THsmdaCIRKRateOverride=THsmdaCIRKRateOverride, TmnxPppoeSessionId=TmnxPppoeSessionId, TmnxVpnIpBackupFamily=TmnxVpnIpBackupFamily, THsmdaWeight=THsmdaWeight, TEgrRateModType=TEgrRateModType, TmnxPppoePadoDelay=TmnxPppoePadoDelay, TSapEgressPolicyID=TSapEgressPolicyID, TSecondaryShaper10GPIRRate=TSecondaryShaper10GPIRRate, THsmdaCIRMRate=THsmdaCIRMRate, TmnxBsxTransitIpPolicyIdOrZero=TmnxBsxTransitIpPolicyIdOrZero, TmnxSvcOperGrpCreationOrigin=TmnxSvcOperGrpCreationOrigin, TmnxMobChargingLevel=TmnxMobChargingLevel, TmnxPppNcpProtocol=TmnxPppNcpProtocol, TmnxSubProfileString=TmnxSubProfileString, TIngHsmdaPerPacketOffsetOvr=TIngHsmdaPerPacketOffsetOvr, THsmdaWrrWeight=THsmdaWrrWeight, TmnxMldGroupType=TmnxMldGroupType, THSMDAQueueBurstLimit=THSMDAQueueBurstLimit, TCIRPercentOverride=TCIRPercentOverride, TmnxSubIdentStringOrEmpty=TmnxSubIdentStringOrEmpty, TTcpUdpPort=TTcpUdpPort, TQGroupType=TQGroupType, TFCNameOrEmpty=TFCNameOrEmpty, TItemLongDescription=TItemLongDescription, TMplsLspExpProfMapID=TMplsLspExpProfMapID, TmnxAppProfileString=TmnxAppProfileString, TmnxAccessLoopEncapDataLink=TmnxAccessLoopEncapDataLink, TmnxSubMgtOrgString=TmnxSubMgtOrgString, TmnxMobApn=TmnxMobApn, TmnxVdoGrpId=TmnxVdoGrpId, TItemScope=TItemScope, TIpOption=TIpOption, TmnxSpokeSdpId=TmnxSpokeSdpId, TPlcyQuanta=TPlcyQuanta, THsmdaPolicyIncludeQueues=THsmdaPolicyIncludeQueues, TmnxMobSdfRuleName=TmnxMobSdfRuleName, TMacFilterType=TMacFilterType, TmnxMobBearerId=TmnxMobBearerId, TIngressQueueId=TIngressQueueId, TmnxFilterProfileStringOrEmpty=TmnxFilterProfileStringOrEmpty, TIngressHsmdaCounterIdOrZero=TIngressHsmdaCounterIdOrZero, TmnxPppoeUserNameOrEmpty=TmnxPppoeUserNameOrEmpty, TmnxBsxTransPrefPolicyId=TmnxBsxTransPrefPolicyId, Dot1PPriority=Dot1PPriority, ServiceOperStatus=ServiceOperStatus, TSubHostId=TSubHostId, TmnxEnabledDisabledOrInherit=TmnxEnabledDisabledOrInherit, TDSCPValue=TDSCPValue, THsmdaCounterIdOrZero=THsmdaCounterIdOrZero, TmnxMobUeSubType=TmnxMobUeSubType, TmnxPppoeUserName=TmnxPppoeUserName, TmnxStatus=TmnxStatus, TmnxMobLiTargetType=TmnxMobLiTargetType, TmnxTunnelGroupIdOrZero=TmnxTunnelGroupIdOrZero, TmnxMobAddrScheme=TmnxMobAddrScheme, TmnxMplsTpTunnelType=TmnxMplsTpTunnelType, TmnxMobSdf=TmnxMobSdf, TFrameType=TFrameType, TLevel=TLevel, TQueueMode=TQueueMode, TIngressMeterId=TIngressMeterId, TmnxMulticastAddrFamily=TmnxMulticastAddrFamily, TmnxAccPlcyAACounters=TmnxAccPlcyAACounters, TmnxMobLiTarget=TmnxMobLiTarget, TExpSecondaryShaperClassRate=TExpSecondaryShaperClassRate, TmnxMobProfPolChargingMethod=TmnxMobProfPolChargingMethod, TProfileUseDEOrNone=TProfileUseDEOrNone, THsmdaCIRKRate=THsmdaCIRKRate, ServiceAccessPoint=ServiceAccessPoint, TmnxSubRadServAlgorithm=TmnxSubRadServAlgorithm, TPrecValueOrNone=TPrecValueOrNone, TmnxVRtrID=TmnxVRtrID, TBurstHundredthsOfPercent=TBurstHundredthsOfPercent, TDEValue=TDEValue, TmnxPortID=TmnxPortID, TmnxBsxAarpId=TmnxBsxAarpId, InterfaceIndex=InterfaceIndex, TDSCPNameOrEmpty=TDSCPNameOrEmpty, TmnxDefInterDestIdSource=TmnxDefInterDestIdSource, TTcpUdpPortOperator=TTcpUdpPortOperator, THsmdaWeightClass=THsmdaWeightClass, TmnxMobDiaPeerHost=TmnxMobDiaPeerHost, TmnxVdoGrpIdOrInherit=TmnxVdoGrpIdOrInherit, TEgressHsmdaPerPacketOffset=TEgressHsmdaPerPacketOffset, TmnxPwPathHopIdOrZero=TmnxPwPathHopIdOrZero, TmnxMobServRefPointType=TmnxMobServRefPointType)
+class TmnxDistCpuProtEnforceType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("static", 1), ("dynamic", 2))
+
+class TmnxDistCpuProtProtocolId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18))
+    namedValues = NamedValues(("arp", 1), ("dhcp", 2), ("http-redirect", 3), ("icmp", 4), ("igmp", 5), ("mld", 6), ("ndis", 7), ("pppoe-pppoa", 8), ("all-unspecified", 9), ("mpls-ttl", 10), ("bfd-cpm", 11), ("bgp", 12), ("eth-cfm", 13), ("isis", 14), ("ldp", 15), ("ospf", 16), ("pim", 17), ("rsvp", 18))
+
+class TmnxDistCpuProtRateType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("packets", 1), ("kbps", 2))
+
+class TmnxDistCpuProtLogEventType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2))
+    namedValues = NamedValues(("none", 0), ("enable", 1), ("verbose", 2))
+
+class TmnxDistCpuProtState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("exceed", 1), ("conform", 2), ("not-applicable", 3))
+
+class TmnxIsidMFibStatus(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("ok", 0), ("addPending", 1), ("delPending", 2), ("sysMFibLimit", 3), ("useDefMCTree", 4))
+
+class TmnxBfdIntfSessOperState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6))
+    namedValues = NamedValues(("unknown", 1), ("connected", 2), ("broken", 3), ("peerDetectsDown", 4), ("notConfigured", 5), ("noResources", 6))
+
+class TmnxBfdEncap(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1))
+    namedValues = NamedValues(("ipv4", 1))
+
+class TLDisplayString(TextualConvention, OctetString):
+    status = 'current'
+    displayHint = '255a'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(0, 1022)
+
+class IPv6FlowLabel(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 1048575), )
+class IPv6FlowLabelMask(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 1048575)
+
+class TmnxWlanGwIsaGrpId(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 4)
+
+class TmnxWlanGwIsaGrpIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 4)
+
+class TmnxMplsLdpNgIdType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("ipv4", 1), ("ipv6", 2))
+
+class TmnxMplsLdpNgIdentifier(TextualConvention, OctetString):
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(0, 18)
+
+class TmnxMplsLsrNgIdentifier(TextualConvention, OctetString):
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(16, 16)
+    fixedLength = 16
+
+class TmnxLagPerLinkHashClass(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 3)
+
+class TmnxLagPerLinkHashClassOrNone(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 3)
+
+class TmnxLagPerLinkHashWeight(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 1024)
+
+class BgpConnectRetryTime(TextualConvention, Integer32):
+    reference = 'BGP4-MIB.bgpPeerConnectRetryInterval'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 65535)
+
+class BgpHoldTime(TextualConvention, Integer32):
+    reference = 'BGP4-MIB.bgpPeerHoldTime'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(3, 65535), )
+class TmnxInternalSchedWeightMode(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5))
+    namedValues = NamedValues(("noOverride", 1), ("default", 2), ("forceEqual", 3), ("offeredLoad", 4), ("cappedOfferedLoad", 5))
+
+class TmnxHigh32(TextualConvention, Unsigned32):
+    status = 'current'
+
+class TmnxLow32(TextualConvention, Unsigned32):
+    status = 'current'
+
+class TQosQueuePIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 2000000000), )
+class TQosQueueCIRRate(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 2000000000), )
+class TQosQueuePIRRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 2000000000), )
+class TQosQueueCIRRateOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(0, 2000000000), )
+class TResolveStatus(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3))
+    namedValues = NamedValues(("disabled", 0), ("filter", 1), ("any", 2), ("match-family-ip", 3))
+
+class LAGInterfaceNumber(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 800)
+
+class LAGInterfaceNumberOrZero(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 800), )
+class TmnxRouteTargetOrigin(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4))
+    namedValues = NamedValues(("none", 0), ("configured", 1), ("derivedVpls", 2), ("derivedEvi", 3), ("vsi", 4))
+
+class TmnxRouteDistType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5))
+    namedValues = NamedValues(("none", 0), ("configured", 1), ("derivedVpls", 2), ("derivedEvi", 3), ("auto", 4), ("default", 5))
+
+class TmnxScriptAuthType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4))
+    namedValues = NamedValues(("none", 0), ("cron", 1), ("xmpp", 2), ("event-script", 3), ("vsd", 4))
+
+class TmnxISIDNoZero(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 16777215)
+
+class TmnxSvcEvi(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 65535)
+
+class TmnxSecRadiusServAlgorithm(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("direct", 1), ("round-robin", 2))
+
+class TmnxSvcEviOrZero(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class TmnxSubTerminationType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("local", 1), ("localWholesale", 2), ("localRetail", 3))
+
+class TmnxLongDisplayString(TextualConvention, OctetString):
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(0, 1024)
+
+class TmnxLongDisplayStringToBinary(TmnxLongDisplayString):
+    status = 'current'
+
+class TmnxLongDisplayStringLegacyBinary(TextualConvention, OctetString):
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(0, 900)
+
+class TmnxProxyEntryType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4))
+    namedValues = NamedValues(("evpn", 1), ("stat", 2), ("dyn", 3), ("dup", 4))
+
+class TmnxCBFClasses(TextualConvention, Bits):
+    status = 'current'
+    namedValues = NamedValues(("be", 0), ("l2", 1), ("af", 2), ("l1", 3), ("h2", 4), ("ef", 5), ("h1", 6), ("nc", 7), ("defaultLsp", 8))
+
+class TmnxUserPassword(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 60)
+
+class TmnxUdpPort(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class TmnxUuid(TextualConvention, OctetString):
+    status = 'current'
+    displayHint = '4x-2x-2x-2x-6x'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(16, 16)
+    fixedLength = 16
+
+class TmnxSyslogFacility(TextualConvention, Integer32):
+    reference = 'The Syslog Protocol (RFC5424): Table 1'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23))
+    namedValues = NamedValues(("kernel", 0), ("user", 1), ("mail", 2), ("systemd", 3), ("auth", 4), ("syslogd", 5), ("printer", 6), ("netnews", 7), ("uucp", 8), ("cron", 9), ("authpriv", 10), ("ftp", 11), ("ntp", 12), ("logaudit", 13), ("logalert", 14), ("cron2", 15), ("local0", 16), ("local1", 17), ("local2", 18), ("local3", 19), ("local4", 20), ("local5", 21), ("local6", 22), ("local7", 23))
+
+class TmnxSyslogSeverity(TextualConvention, Integer32):
+    reference = 'The Syslog Protocol (RFC5424): Table 2'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7))
+    namedValues = NamedValues(("emergency", 0), ("alert", 1), ("critical", 2), ("error", 3), ("warning", 4), ("notice", 5), ("info", 6), ("debug", 7))
+
+class TmnxEvpnMultiHomingState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3))
+    namedValues = NamedValues(("disabled", 0), ("singleActive", 1), ("singleActiveNoEsiLabel", 2), ("allActive", 3))
+
+class TmnxBgpEvpnAcEthTag(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(0, 16777215)
+
+class TmnxL2tpTunnelGroupName(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(1, 63)
+
+class TmnxL2tpTunnelGroupNameOrEmpty(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 63)
+
+class TFilterID(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class TIPFilterID(TFilterID):
+    status = 'current'
+
+class TDHCPFilterID(TFilterID):
+    status = 'current'
+
+class TEntryIdOrZero(TEntryIndicator):
+    status = 'current'
+    subtypeSpec = TEntryIndicator.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class MciBoolean(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2))
+    namedValues = NamedValues(("mciTrue", 1), ("mciFalse", 2))
+
+class TmnxPppCpState(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+    namedValues = NamedValues(("initial", 1), ("starting", 2), ("closed", 3), ("stopped", 4), ("closing", 5), ("stopping", 6), ("requestSent", 7), ("ackReceived", 8), ("ackSent", 9), ("opened", 10))
+
+class TmnxRipNgAuthType(TextualConvention, Integer32):
+    reference = 'RIP2-MIB.rip2IfConfAuthType'
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4))
+    namedValues = NamedValues(("noAuthentication", 1), ("simplePassword", 2), ("md5", 3), ("md20", 4))
+
+class TmnxRipNgAuthKey(TextualConvention, OctetString):
+    reference = 'RIP2-MIB.rip2IfConfAuthKey'
+    status = 'current'
+    subtypeSpec = OctetString.subtypeSpec + ValueSizeConstraint(0, 16)
+
+class TmnxAddressAndPrefixType(InetAddressType):
+    status = 'current'
+
+class TmnxAddressAndPrefixAddress(InetAddress):
+    status = 'current'
+
+class TmnxAddressAndPrefixPrefix(InetAddressPrefixLength):
+    status = 'current'
+
+class TmnxIpv6AddressAndPrefixAddress(InetAddressIPv6):
+    status = 'current'
+
+class TmnxIpv6AddressAndPrefixPrefix(InetAddressPrefixLength):
+    status = 'current'
+
+class TmnxIpv4AddressAndMaskOrPrefixAddress(TextualConvention, IpAddress):
+    status = 'current'
+
+class TmnxIpv4AddressAndMaskOrPrefixMask(TextualConvention, IpAddress):
+    status = 'current'
+
+class TmnxIpv4AddressAndMaskOrPrefixPrefix(IpAddressPrefixLength):
+    status = 'current'
+
+class TmnxIpv4AddressAndPrefixAddress(TextualConvention, IpAddress):
+    status = 'current'
+
+class TmnxIpv4AddressAndPrefixPrefix(IpAddressPrefixLength):
+    status = 'current'
+
+class TmnxIpv6AddressAndMaskOrPrefixAddress(InetAddressIPv6):
+    status = 'current'
+
+class TmnxIpv6AddressAndMaskOrPrefixMask(InetAddressIPv6):
+    status = 'current'
+
+class TmnxIpv6AddressAndMaskOrPrefixPrefix(InetAddressPrefixLength):
+    status = 'current'
+
+class TmnxAddressAndMaskOrPrefixType(InetAddressType):
+    status = 'current'
+
+class TmnxAddressAndMaskOrPrefixAddress(InetAddress):
+    status = 'current'
+
+class TmnxAddressAndMaskOrPrefixPrefix(InetAddressPrefixLength):
+    status = 'current'
+
+class TmnxAddressAndMaskOrPrefixMask(InetAddress):
+    status = 'current'
+
+class TmnxAddressWithZoneType(InetAddressType):
+    status = 'current'
+
+class TmnxAddressWithZoneAddress(InetAddress):
+    status = 'current'
+
+class THsPirRate(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(1, 100000), ValueRangeConstraint(4294967295, 4294967295), )
+class THsPirRateOverride(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(1, 100000), ValueRangeConstraint(4294967294, 4294967294), ValueRangeConstraint(4294967295, 4294967295), )
+class THsSchedulerPolicyGroupId(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 1), )
+class THsSchedulerPolicyWeight(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ValueRangeConstraint(1, 127)
+
+class THsSchedulerPolicyWeightOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(1, 127), )
+class TmnxWaveKey(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 4095)
+
+class TmnxSubBondingConnIdOrEmpty(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 2), )
+class TBurstLimitOverride(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(-2, -2), ValueRangeConstraint(-1, -1), ValueRangeConstraint(1, 14000000), )
+class TmnxEvpnMHEthSegStatus(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("df", 1), ("ndf", 2), ("notesmanaged", 3))
+
+class TmnxVxlanInstance(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 1)
+
+class TmnxSvcEvpnMplsTransportType(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+    namedValues = NamedValues(("invalid", 0), ("local", 1), ("static", 2), ("rsvp", 3), ("ldp", 4), ("ospf", 5), ("isis", 6), ("bgp", 7), ("srTe", 8), ("udp", 9), ("srPolicy", 10))
+
+class TmnxMplsLabel(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(32, 1048575)
+
+class TmnxMplsLabelOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(32, 1048575), )
+class TmnxVni(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(1, 16777215)
+
+class TmnxVniOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 16777215)
+
+class PwPortIdOrZero(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(1, 32767), )
+class TmnxCliEngine(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3))
+    namedValues = NamedValues(("classicCli", 1), ("mdCli", 2), ("systemDerived", 3))
+
+class TmnxRsvpSessionNameString(DisplayString):
+    status = 'current'
+    subtypeSpec = DisplayString.subtypeSpec + ValueSizeConstraint(0, 160)
+
+class TmnxQosMdAutoPolicyID(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ConstraintsUnion(ValueRangeConstraint(0, 0), ValueRangeConstraint(2, 65535), )
+class TmnxQosMdAutoIDCount(TextualConvention, Unsigned32):
+    status = 'current'
+    subtypeSpec = Unsigned32.subtypeSpec + ValueRangeConstraint(0, 65535)
+
+class TmnxNhgDownReason(TextualConvention, Integer32):
+    status = 'current'
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(0, 1, 3, 4, 5))
+    namedValues = NamedValues(("notApplicable", 0), ("nextHopNotResolved", 1), ("nextHopIsLocal", 3), ("nextHopIsMcast", 4), ("resTypeMismatch", 5))
+
+mibBuilder.exportSymbols("TIMETRA-TC-MIB", TTmplPolicyID=TTmplPolicyID, TmnxDistCpuProtBurstSize=TmnxDistCpuProtBurstSize, TPriority=TPriority, TCIRPercentOverride=TCIRPercentOverride, TmnxSvcOperGrpCreationOrigin=TmnxSvcOperGrpCreationOrigin, TmnxHigh32=TmnxHigh32, TEgressHsmdaPerPacketOffset=TEgressHsmdaPerPacketOffset, TmnxCreateOrigin=TmnxCreateOrigin, TmnxPwGlobalId=TmnxPwGlobalId, TmnxIpv6AddressAndMaskOrPrefixAddress=TmnxIpv6AddressAndMaskOrPrefixAddress, TmnxSpokeSdpIdOrZero=TmnxSpokeSdpIdOrZero, TXLPolicyNameOrExpOrEmpty=TXLPolicyNameOrExpOrEmpty, TEgressQPerPacketOffset=TEgressQPerPacketOffset, TmnxIPsecTunnelTemplateIdOrZero=TmnxIPsecTunnelTemplateIdOrZero, TmnxVniOrZero=TmnxVniOrZero, TmnxAddressAndPrefixAddress=TmnxAddressAndPrefixAddress, TmnxAddressAndMaskOrPrefixPrefix=TmnxAddressAndMaskOrPrefixPrefix, THSMDABurstSizeBytesOverride=THSMDABurstSizeBytesOverride, TmnxSlopeMap=TmnxSlopeMap, THPolVirtualScheCIRRate=THPolVirtualScheCIRRate, TmnxSubOperSpiGroupId=TmnxSubOperSpiGroupId, PYSNMP_MODULE_ID=timetraTCMIBModule, TQosQueuePIRRateOverride=TQosQueuePIRRateOverride, TmnxLagPerLinkHashWeight=TmnxLagPerLinkHashWeight, TmnxSubShcvRetryCount=TmnxSubShcvRetryCount, TmnxVcIdOrNone=TmnxVcIdOrNone, TmnxActionType=TmnxActionType, TPrecValue=TPrecValue, TExpSecondaryShaperClassRate=TExpSecondaryShaperClassRate, TmnxDistCpuProtRateType=TmnxDistCpuProtRateType, TmnxProxyEntryType=TmnxProxyEntryType, TIngDynPolicerIdOrNone=TIngDynPolicerIdOrNone, TmnxAiiType=TmnxAiiType, TResolveStatus=TResolveStatus, TRatePercent=TRatePercent, TmnxSpokeSdpId=TmnxSpokeSdpId, TmnxPppNcpProtocol=TmnxPppNcpProtocol, TmnxDhcpOptionDisplay=TmnxDhcpOptionDisplay, TCpmProtPolicyIDOrDefault=TCpmProtPolicyIDOrDefault, TmnxAdjacencySetFamilyType=TmnxAdjacencySetFamilyType, TSapEgrEncapGroupType=TSapEgrEncapGroupType, TmnxSubMgtOrgStrOrZero=TmnxSubMgtOrgStrOrZero, THsSchedulerPolicyWeight=THsSchedulerPolicyWeight, TmnxVdoIfName=TmnxVdoIfName, TIngressHsmdaQueueId=TIngressHsmdaQueueId, TBurstLimit=TBurstLimit, TmnxTimeInSec=TmnxTimeInSec, TmnxSubRadServAlgorithm=TmnxSubRadServAlgorithm, TmnxVcType=TmnxVcType, LAGInterfaceNumberOrZero=LAGInterfaceNumberOrZero, TmnxSubNasPortTypeType=TmnxSubNasPortTypeType, TQueueId=TQueueId, TPIRRateOrZero=TPIRRateOrZero, TEgressProfile=TEgressProfile, TmnxRadiusPendingReqLimit=TmnxRadiusPendingReqLimit, TmnxOperState=TmnxOperState, TPriorityOrUndefined=TPriorityOrUndefined, TIngressQPerPacketOffset=TIngressQPerPacketOffset, TIngressHsmdaCounterIdOrZero=TIngressHsmdaCounterIdOrZero, TNamedItemOrEmpty=TNamedItemOrEmpty, TIPFilterID=TIPFilterID, TmnxAddressAndMaskOrPrefixAddress=TmnxAddressAndMaskOrPrefixAddress, TmnxSubMgtOrgString=TmnxSubMgtOrgString, TmnxSubAleOffset=TmnxSubAleOffset, TEgressProfileOrNone=TEgressProfileOrNone, TmnxBsxAaGrpPartIndexOrZero=TmnxBsxAaGrpPartIndexOrZero, TmnxPccRuleQosForwardAction=TmnxPccRuleQosForwardAction, TPerPacketOffset=TPerPacketOffset, TSapIngressPolicyID=TSapIngressPolicyID, TmnxMplsTpTunnelType=TmnxMplsTpTunnelType, TmnxVdoAnalyzerAlarm=TmnxVdoAnalyzerAlarm, TBurstPercentOrDefaultOverride=TBurstPercentOrDefaultOverride, TIngHsmdaPerPacketOffsetOvr=TIngHsmdaPerPacketOffsetOvr, TEgressHsmdaCounterIdOrZero=TEgressHsmdaCounterIdOrZero, TItemScope=TItemScope, QTagFullRangeOrNone=QTagFullRangeOrNone, TmnxIgpInstance=TmnxIgpInstance, TmnxEncapVal=TmnxEncapVal, TmnxNatSubscriberType=TmnxNatSubscriberType, TmnxLagPerLinkHashClassOrNone=TmnxLagPerLinkHashClassOrNone, Dot1PPriorityMask=Dot1PPriorityMask, TQosOverrideTypeId=TQosOverrideTypeId, TmnxDhcpServerDUIDTypeCode=TmnxDhcpServerDUIDTypeCode, TmnxVdoStatInt=TmnxVdoStatInt, TLNamedItem=TLNamedItem, TPolicerWeight=TPolicerWeight, THsSchedulerPolicyWeightOverride=THsSchedulerPolicyWeightOverride, TmnxVRtrIDOrZero=TmnxVRtrIDOrZero, TmnxIpv6AddressAndMaskOrPrefixMask=TmnxIpv6AddressAndMaskOrPrefixMask, TmnxIsaScalingProfile=TmnxIsaScalingProfile, THsmdaCIRKRate=THsmdaCIRKRate, TmnxIkePolicyAutoEapOwnMethod=TmnxIkePolicyAutoEapOwnMethod, TBurstPercentOrDefault=TBurstPercentOrDefault, ServiceAccessPoint=ServiceAccessPoint, TPriorityOrDefault=TPriorityOrDefault, TmnxWaveKey=TmnxWaveKey, TmnxAdminStateTruthValue=TmnxAdminStateTruthValue, TFCType=TFCType, TmnxDefInterDestIdSource=TmnxDefInterDestIdSource, TMlpppQoSProfileId=TMlpppQoSProfileId, TmnxBfdOnLspSessFecType=TmnxBfdOnLspSessFecType, TAnyQosPolicyID=TAnyQosPolicyID, THsClassWeightOverride=THsClassWeightOverride, TRateType=TRateType, TItemMatch=TItemMatch, TEgrPolicerIdOrNone=TEgrPolicerIdOrNone, TIngPolicerId=TIngPolicerId, TmnxSpbBridgePriority=TmnxSpbBridgePriority, TmnxPortID=TmnxPortID, TmnxTunnelType=TmnxTunnelType, THsmdaCIRMRateOverride=THsmdaCIRMRateOverride, TAtmTdpDescrType=TAtmTdpDescrType, TmnxRouteTargetOrigin=TmnxRouteTargetOrigin, TProfileOrNone=TProfileOrNone, TDirection=TDirection, TmnxSubAuthPlcyUserNameOp=TmnxSubAuthPlcyUserNameOp, TmnxNatSubscriberTypeOrNone=TmnxNatSubscriberTypeOrNone, TmnxAddressAndMaskOrPrefixType=TmnxAddressAndMaskOrPrefixType, TruthValueNoTypeTranslator=TruthValueNoTypeTranslator, TPIRAggRateLimitOverride=TPIRAggRateLimitOverride, TSapEgrEncapGroupActionType=TSapEgrEncapGroupActionType, TAnyQosPolicyIDorZero=TAnyQosPolicyIDorZero, TmnxSubIdentString=TmnxSubIdentString, TFCName=TFCName, TmnxSubProfileStringOrEmpty=TmnxSubProfileStringOrEmpty, TmnxMplsLabel=TmnxMplsLabel, TmnxIpv4AddressAndMaskOrPrefixMask=TmnxIpv4AddressAndMaskOrPrefixMask, TPerPacketOffsetOvr=TPerPacketOffsetOvr, TSapEgressPolicyID=TSapEgressPolicyID, TmnxExtServId=TmnxExtServId, ServiceOperStatus=ServiceOperStatus, TmnxCdrDiagnosticAction=TmnxCdrDiagnosticAction, TmnxVdoGrpIdOrInherit=TmnxVdoGrpIdOrInherit, TmnxEnabledDisabledAdminState=TmnxEnabledDisabledAdminState, TPolicyID=TPolicyID, TEgrPolicerId=TEgrPolicerId, TFCTypeOrNone=TFCTypeOrNone, TmnxLagPerLinkHashClass=TmnxLagPerLinkHashClass, IpAddressPrefixLength=IpAddressPrefixLength, TPolicyStatementName=TPolicyStatementName, TmnxMacSpecification=TmnxMacSpecification, TmnxSubCallingStationIdType=TmnxSubCallingStationIdType, TmnxMplsLdpNgIdType=TmnxMplsLdpNgIdType, TmnxDayOfWeekList=TmnxDayOfWeekList, TmnxFilterProfileStringOrEmpty=TmnxFilterProfileStringOrEmpty, TEntryIndicator=TEntryIndicator, TmnxAccPlcyOECounters=TmnxAccPlcyOECounters, TItemLongDescription=TItemLongDescription, TmnxIgpSCFamilyType=TmnxIgpSCFamilyType, TBurstSizeBytes=TBurstSizeBytes, TmnxAuthPassword=TmnxAuthPassword, TmnxInternalSchedWeightMode=TmnxInternalSchedWeightMode, TmnxMplsTpNodeID=TmnxMplsTpNodeID, TmnxBfdEncap=TmnxBfdEncap, TmnxL2tpTunnelGroupNameOrEmpty=TmnxL2tpTunnelGroupNameOrEmpty, TmnxAccessLoopEncapDataLink=TmnxAccessLoopEncapDataLink, TBWRateType=TBWRateType, TAdaptationRuleOverride=TAdaptationRuleOverride, TmnxMldVersion=TmnxMldVersion, TmnxTunnelGroupIdOrZero=TmnxTunnelGroupIdOrZero, THsmdaCounterIdOrZero=THsmdaCounterIdOrZero, THsmdaWeightOverride=THsmdaWeightOverride, TWeightOverride=TWeightOverride, TLNamedItemOrEmpty=TLNamedItemOrEmpty, TmnxNatIsaGrpId=TmnxNatIsaGrpId, TEgressPerPacketOffsetOvr=TEgressPerPacketOffsetOvr, TDHCPFilterID=TDHCPFilterID, TmnxEgrPolicerStatMode=TmnxEgrPolicerStatMode, TSdpEgressPolicyID=TSdpEgressPolicyID, TmnxBgpAutonomousSystem=TmnxBgpAutonomousSystem, TmnxAddressAndPrefixType=TmnxAddressAndPrefixType, TmnxSubAleOffsetMode=TmnxSubAleOffsetMode, TmnxIngPolicerStatModeOverride=TmnxIngPolicerStatModeOverride, TmnxSubShcvAction=TmnxSubShcvAction, TmnxPwPathHopId=TmnxPwPathHopId, TmnxRipListenerStatus=TmnxRipListenerStatus, TPSPRateType=TPSPRateType, TmnxCBFClasses=TmnxCBFClasses, TmnxMlpppEpClass=TmnxMlpppEpClass, THPolPIRRate=THPolPIRRate, TmnxIkePolicyAutoEapMethod=TmnxIkePolicyAutoEapMethod, TEgressPerPacketOffset=TEgressPerPacketOffset, TmnxBsxTransitIpPolicyIdOrZero=TmnxBsxTransitIpPolicyIdOrZero, TmnxUdpPort=TmnxUdpPort, TmnxLinkMapProfileIdOrZero=TmnxLinkMapProfileIdOrZero, TmnxIpv4AddressAndPrefixPrefix=TmnxIpv4AddressAndPrefixPrefix, TPlcrBurstSizeBytesOverride=TPlcrBurstSizeBytesOverride, TEgrHsmdaPerPacketOffsetOvr=TEgrHsmdaPerPacketOffsetOvr, TPIRRate=TPIRRate, TmnxSubMgtIntDestIdOrEmpty=TmnxSubMgtIntDestIdOrEmpty, TmnxVcId=TmnxVcId, TQosQGrpInstanceIDorZero=TQosQGrpInstanceIDorZero, TmnxAccPlcyOICounters=TmnxAccPlcyOICounters, TmnxAddressWithZoneType=TmnxAddressWithZoneType, TTcpUdpPortOperator=TTcpUdpPortOperator, TmnxDistCpuProtState=TmnxDistCpuProtState, TmnxVRtrID=TmnxVRtrID, TWeight=TWeight, TmnxAccPlcyAACounters=TmnxAccPlcyAACounters, TmnxISID=TmnxISID, TmnxSpbFidOrZero=TmnxSpbFidOrZero, TQGroupType=TQGroupType, TmnxPppCpState=TmnxPppCpState, TmnxVPNRouteDistinguisher=TmnxVPNRouteDistinguisher, TmnxBgpEvpnAcEthTag=TmnxBgpEvpnAcEthTag, TmnxLongDisplayStringLegacyBinary=TmnxLongDisplayStringLegacyBinary, TRegularExpression=TRegularExpression, TmnxIsaBbGrpId=TmnxIsaBbGrpId, TMcFrQoSProfileId=TMcFrQoSProfileId, TmnxAccPlcyQECounters=TmnxAccPlcyQECounters, VRtrIgmpHostMcRDstStatType=VRtrIgmpHostMcRDstStatType, THsmdaPIRMRate=THsmdaPIRMRate, TmnxVdoFccServerMode=TmnxVdoFccServerMode, TNetworkPolicyID=TNetworkPolicyID, TmnxSubNasPortSuffixType=TmnxSubNasPortSuffixType, TmnxPppoeUserNameOrEmpty=TmnxPppoeUserNameOrEmpty, TmnxSapAASubScope=TmnxSapAASubScope, TmnxDistCpuProtAction=TmnxDistCpuProtAction, TmnxOspfInstance=TmnxOspfInstance, TmnxIpv4AddressAndMaskOrPrefixPrefix=TmnxIpv4AddressAndMaskOrPrefixPrefix, TmnxSubHostGrouping=TmnxSubHostGrouping, TmnxBsxAarpId=TmnxBsxAarpId, TmnxSubSpiGroupId=TmnxSubSpiGroupId, TEgressQueueId=TEgressQueueId, TPrecValueOrNone=TPrecValueOrNone, TCIRRateOverride=TCIRRateOverride, TmnxStrSapId=TmnxStrSapId, TmnxVRtrMplsLspID=TmnxVRtrMplsLspID, TmnxAsciiSpecification=TmnxAsciiSpecification, TQosOverrideType=TQosOverrideType, BgpConnectRetryTime=BgpConnectRetryTime, TmnxSpbFdbLocale=TmnxSpbFdbLocale, TEntryId=TEntryId, THsmdaWeightClass=THsmdaWeightClass, TmnxMdaQos=TmnxMdaQos, TmnxQosMdAutoIDCount=TmnxQosMdAutoIDCount, IPv6FlowLabel=IPv6FlowLabel, TmnxDhcpOptionType=TmnxDhcpOptionType, THSMDAQueueBurstLimit=THSMDAQueueBurstLimit, TmnxSyslogSeverity=TmnxSyslogSeverity, TEntryIdOrZero=TEntryIdOrZero, TIngressPolicerId=TIngressPolicerId, TmnxSubAcctSessionId=TmnxSubAcctSessionId, TmnxIpSecIsaOperFlags=TmnxIpSecIsaOperFlags, TBurstHundredthsOfPercent=TBurstHundredthsOfPercent, TmnxIpv6AddressAndPrefixPrefix=TmnxIpv6AddressAndPrefixPrefix, TLPolicyStatementNameOrEmpty=TLPolicyStatementNameOrEmpty, TmnxUuid=TmnxUuid, TmnxDistCpuProtProtocolId=TmnxDistCpuProtProtocolId, TFCNameOrEmpty=TFCNameOrEmpty, TmnxPppoeUserName=TmnxPppoeUserName, TRemarkType=TRemarkType, TExpSecondaryShaperPIRRate=TExpSecondaryShaperPIRRate, TmnxSlaProfileStringOrEmpty=TmnxSlaProfileStringOrEmpty)
+mibBuilder.exportSymbols("TIMETRA-TC-MIB", TmnxPppoePadoDelay=TmnxPppoePadoDelay, TmnxSlaProfileString=TmnxSlaProfileString, TmnxThresholdGroupType=TmnxThresholdGroupType, TmnxAncpString=TmnxAncpString, TIngressHsmdaCounterId=TIngressHsmdaCounterId, TmnxSubRadiusAttrType=TmnxSubRadiusAttrType, TmnxSyslogFacility=TmnxSyslogFacility, TmnxAdminState=TmnxAdminState, TmnxSubShcvSrcIpOrigin=TmnxSubShcvSrcIpOrigin, TPortSchedLevel=TPortSchedLevel, TMatchCriteria=TMatchCriteria, TmnxEvpnMHEthSegStatus=TmnxEvpnMHEthSegStatus, THsmdaSchedulerPolicyGroupId=THsmdaSchedulerPolicyGroupId, TXLNamedItem=TXLNamedItem, TCpmProtPolicyID=TCpmProtPolicyID, PwPortIdOrZero=PwPortIdOrZero, TIngPolicerIdOrNone=TIngPolicerIdOrNone, TmnxVni=TmnxVni, TmnxRipNgAuthKey=TmnxRipNgAuthKey, TDSCPName=TDSCPName, MciBoolean=MciBoolean, TCIRRate=TCIRRate, TmnxLow32=TmnxLow32, THsPirRate=THsPirRate, BgpPeeringStatus=BgpPeeringStatus, TLevel=TLevel, SvcISID=SvcISID, TNonZeroWeight=TNonZeroWeight, TSecondaryShaper10GPIRRate=TSecondaryShaper10GPIRRate, TProfile=TProfile, TmnxISIDNoZero=TmnxISIDNoZero, TSubHostId=TSubHostId, TmnxSrrpPriorityStep=TmnxSrrpPriorityStep, TmnxVpnIpBackupFamily=TmnxVpnIpBackupFamily, THPolPIRRateOverride=THPolPIRRateOverride, TmnxTimeInterval=TmnxTimeInterval, TItemDescription=TItemDescription, TQosQueuePIRRate=TQosQueuePIRRate, TmnxTunnelGroupId=TmnxTunnelGroupId, TSdpIngressPolicyID=TSdpIngressPolicyID, TDEValue=TDEValue, TmnxSvcEvpnMplsTransportType=TmnxSvcEvpnMplsTransportType, THsmdaCIRMRate=THsmdaCIRMRate, TmnxBgpRouteTarget=TmnxBgpRouteTarget, THsmdaWeight=THsmdaWeight, TDSCPNameOrEmpty=TDSCPNameOrEmpty, BgpHoldTime=BgpHoldTime, TmnxUserPassword=TmnxUserPassword, TmnxBGPFamilyType=TmnxBGPFamilyType, TFrameType=TFrameType, THsPirRateOverride=THsPirRateOverride, QTagFullRange=QTagFullRange, TmnxNatIsaGrpIdOrZero=TmnxNatIsaGrpIdOrZero, TmnxSubRadiusVendorId=TmnxSubRadiusVendorId, TPIRPercentOverride=TPIRPercentOverride, TEgressPolicerId=TEgressPolicerId, TMaxDecRate=TMaxDecRate, TmnxSpbFid=TmnxSpbFid, TmnxRsvpSessionNameString=TmnxRsvpSessionNameString, TmnxBsxTransitIpPolicyId=TmnxBsxTransitIpPolicyId, TmnxPppoeSessionId=TmnxPppoeSessionId, THsmdaPolicyIncludeQueues=THsmdaPolicyIncludeQueues, TmnxLinkMapProfileId=TmnxLinkMapProfileId, TIngressQueueId=TIngressQueueId, TmnxIngPolicerStatMode=TmnxIngPolicerStatMode, TLDisplayString=TLDisplayString, TmnxSubRadiusDisplayString=TmnxSubRadiusDisplayString, TmnxSubBondingConnIdOrEmpty=TmnxSubBondingConnIdOrEmpty, TmnxSecRadiusServAlgorithm=TmnxSecRadiusServAlgorithm, TIpOption=TIpOption, TOperator=TOperator, TmnxEvpnMultiHomingState=TmnxEvpnMultiHomingState, THsmdaCounterIdOrZeroOrAll=THsmdaCounterIdOrZeroOrAll, IPv6FlowLabelMask=IPv6FlowLabelMask, LAGInterfaceNumber=LAGInterfaceNumber, TmnxBinarySpecification=TmnxBinarySpecification, THsSchedulerPolicyGroupId=THsSchedulerPolicyGroupId, TmnxVdoGrpIdIndex=TmnxVdoGrpIdIndex, TmnxPppoeSessionInfoOrigin=TmnxPppoeSessionInfoOrigin, TmnxIgmpGroupType=TmnxIgmpGroupType, TmnxSvcEviOrZero=TmnxSvcEviOrZero, TmnxLongDisplayString=TmnxLongDisplayString, TmnxQosMdAutoPolicyID=TmnxQosMdAutoPolicyID, QTagOrZero=QTagOrZero, TDirectionIngEgr=TDirectionIngEgr, TLPolicyNameOrExpOrEmpty=TLPolicyNameOrExpOrEmpty, TmnxEgrPolicerStatModeOverride=TmnxEgrPolicerStatModeOverride, TmnxBsxTransPrefPolicyId=TmnxBsxTransPrefPolicyId, TQueueStatModeFormat=TQueueStatModeFormat, TmnxBgpPreference=TmnxBgpPreference, TmnxAddressAndMaskOrPrefixMask=TmnxAddressAndMaskOrPrefixMask, TmnxDayOfWeek=TmnxDayOfWeek, TmnxBgpLocalPreference=TmnxBgpLocalPreference, TmnxVxlanInstance=TmnxVxlanInstance, TPortSchedulerAggRateLimitPIR=TPortSchedulerAggRateLimitPIR, TmnxDistCpuProtRate=TmnxDistCpuProtRate, TmnxMulticastAddrFamily=TmnxMulticastAddrFamily, TmnxIgmpGroupFilterMode=TmnxIgmpGroupFilterMode, TmnxSubShcvRetryTimeout=TmnxSubShcvRetryTimeout, TmnxMplsLabelOrZero=TmnxMplsLabelOrZero, TMacFilterType=TMacFilterType, TmnxMsPwPeSignaling=TmnxMsPwPeSignaling, TmnxAccPlcyQICounters=TmnxAccPlcyQICounters, TmnxWlanGwIsaGrpId=TmnxWlanGwIsaGrpId, QTag=QTag, TmnxBfdSessionProtocols=TmnxBfdSessionProtocols, TQosQueueCIRRateOverride=TQosQueueCIRRateOverride, TmnxRadiusFramedRouteMetric=TmnxRadiusFramedRouteMetric, TPolicyStatementNameOrEmpty=TPolicyStatementNameOrEmpty, TmnxDistCpuProtPacketRateLimit=TmnxDistCpuProtPacketRateLimit, TmnxManagedRouteStatus=TmnxManagedRouteStatus, TmnxFpeId=TmnxFpeId, TmnxServId=TmnxServId, TEgressPolicerIdOrNone=TEgressPolicerIdOrNone, TmnxWlanGwIsaGrpIdOrZero=TmnxWlanGwIsaGrpIdOrZero, TmnxSpbFdbState=TmnxSpbFdbState, TmnxL2tpTunnelGroupName=TmnxL2tpTunnelGroupName, TmnxDefSubIdSource=TmnxDefSubIdSource, TmnxNhgDownReason=TmnxNhgDownReason, TPortSchedulerPIR=TPortSchedulerPIR, TEgrRateModType=TEgrRateModType, TmnxSubIdentStringOrEmpty=TmnxSubIdentStringOrEmpty, TmnxBsxTransPrefPolicyIdOrZero=TmnxBsxTransPrefPolicyIdOrZero, TFCSet=TFCSet, TEgressHsmdaCounterId=TEgressHsmdaCounterId, TmnxPwPathHopIdOrZero=TmnxPwPathHopIdOrZero, THPolCIRRate=THPolCIRRate, TmnxBsxAarpServiceRefType=TmnxBsxAarpServiceRefType, TmnxNatWaterMark=TmnxNatWaterMark, TmnxCustId=TmnxCustId, TDSCPValueOrNone=TDSCPValueOrNone, TmnxQosBytesHex=TmnxQosBytesHex, TmnxIpv6AddressAndPrefixAddress=TmnxIpv6AddressAndPrefixAddress, TmnxMldGroupType=TmnxMldGroupType, TmnxFpeIdOrZero=TmnxFpeIdOrZero, TmnxAccessLoopEncaps1=TmnxAccessLoopEncaps1, TmnxLdpFECType=TmnxLdpFECType, TFIRRate=TFIRRate, TPIRRateOverride=TPIRRateOverride, TmnxIpv4AddressAndMaskOrPrefixAddress=TmnxIpv4AddressAndMaskOrPrefixAddress, TIngressHsmdaPerPacketOffset=TIngressHsmdaPerPacketOffset, TmnxSubSlaMode=TmnxSubSlaMode, TmnxIkePolicyAuthMethod=TmnxIkePolicyAuthMethod, TmnxDistCpuProtActionDuration=TmnxDistCpuProtActionDuration, TmnxEnabledDisabledOrInherit=TmnxEnabledDisabledOrInherit, TmnxMldGroupFilterMode=TmnxMldGroupFilterMode, TmnxCustIdNoZero=TmnxCustIdNoZero, SdpBindId=SdpBindId, TBurstSizeBytesOvr=TBurstSizeBytesOvr, TmnxCdrType=TmnxCdrType, TmnxEnabledDisabled=TmnxEnabledDisabled, TPortSchedulerPIRRate=TPortSchedulerPIRRate, THPolVirtualSchePIRRate=THPolVirtualSchePIRRate, TmnxStatus=TmnxStatus, TAdaptationRule=TAdaptationRule, TLevelOrDefault=TLevelOrDefault, TmnxRadiusFramedRoutePreference=TmnxRadiusFramedRoutePreference, TmnxVdoPortNumber=TmnxVdoPortNumber, TmnxSubNasPortPrefixType=TmnxSubNasPortPrefixType, InterfaceIndex=InterfaceIndex, TmnxScriptAuthType=TmnxScriptAuthType, TmnxPwGlobalIdOrZero=TmnxPwGlobalIdOrZero, TmnxBfdSessOperState=TmnxBfdSessOperState, TmnxLongDisplayStringToBinary=TmnxLongDisplayStringToBinary, TmnxPccRuleFilterForwardAction=TmnxPccRuleFilterForwardAction, TNamedItem=TNamedItem, TFilterID=TFilterID, TmnxSubTerminationType=TmnxSubTerminationType, TmnxDiamCcFailureHndlng=TmnxDiamCcFailureHndlng, TPolicerRateType=TPolicerRateType, THsmdaCIRKRateOverride=THsmdaCIRKRateOverride, TmnxTlsGroupId=TmnxTlsGroupId, TBurstSize=TBurstSize, TAdvCfgRate=TAdvCfgRate, TmnxAppProfileString=TmnxAppProfileString, TmnxEnabledDisabledOrNA=TmnxEnabledDisabledOrNA, TmnxBfdIntfSessOperState=TmnxBfdIntfSessOperState, THsmdaPolicyScheduleClass=THsmdaPolicyScheduleClass, THPolCIRRateOverride=THPolCIRRateOverride, TmnxRadiusFramedRouteTag=TmnxRadiusFramedRouteTag, TEgrDynPolicerIdOrNone=TEgrDynPolicerIdOrNone, TmnxDHCP6MsgType=TmnxDHCP6MsgType, TBurstSizeOverride=TBurstSizeOverride, TmnxRipNgAuthType=TmnxRipNgAuthType, TQosQueueCIRRate=TQosQueueCIRRate, Dot1PPriorityNonZeroMask=Dot1PPriorityNonZeroMask, TmnxSubShcvInterval=TmnxSubShcvInterval, TmnxReasContextVal=TmnxReasContextVal, TPlcrBurstSizeBytes=TPlcrBurstSizeBytes, TmnxVdoGrpId=TmnxVdoGrpId, THsmdaPIRKRateOverride=THsmdaPIRKRateOverride, TmnxBsxIsaAaGroupIndexOrZero=TmnxBsxIsaAaGroupIndexOrZero, TmnxAccPlcyAASubAttributes=TmnxAccPlcyAASubAttributes, TmnxTunnelTypeExt=TmnxTunnelTypeExt, TmnxAddressWithZoneAddress=TmnxAddressWithZoneAddress, TXLNamedItemOrEmpty=TXLNamedItemOrEmpty, TmnxAccessLoopEncaps2=TmnxAccessLoopEncaps2, TmnxVdoOutputFormat=TmnxVdoOutputFormat, THsmdaPIRMRateOverride=THsmdaPIRMRateOverride, TmnxIpv6AddressAndMaskOrPrefixPrefix=TmnxIpv6AddressAndMaskOrPrefixPrefix, TLspExpValue=TLspExpValue, TmnxIsidMFibStatus=TmnxIsidMFibStatus, TQueueMode=TQueueMode, TSapEgrEncapGrpQosPolicyIdOrZero=TSapEgrEncapGrpQosPolicyIdOrZero, THsmdaPIRKRate=THsmdaPIRKRate, TmnxSvcEvi=TmnxSvcEvi, TQosIngressPolicyID=TQosIngressPolicyID, TPortSchedulerCIR=TPortSchedulerCIR, TmnxMplsLsrNgIdentifier=TmnxMplsLsrNgIdentifier, THsWrrWeightOvr=THsWrrWeightOvr, TmnxCliEngine=TmnxCliEngine, TTcpUdpPort=TTcpUdpPort, TBurstLimitOverride=TBurstLimitOverride, TmnxTunnelID=TmnxTunnelID, TBurstSizeBytesOverride=TBurstSizeBytesOverride, TmnxOperGrpHoldDownTime=TmnxOperGrpHoldDownTime, TmnxAddressAndPrefixPrefix=TmnxAddressAndPrefixPrefix, TBurstPercent=TBurstPercent, TmnxRouteDistType=TmnxRouteDistType, TmnxPppoeSessionType=TmnxPppoeSessionType, Dot1PPriority=Dot1PPriority, TEgressHsmdaQueueId=TEgressHsmdaQueueId, TmnxAppProfileStringOrEmpty=TmnxAppProfileStringOrEmpty, TmnxBsxAarpIdOrZero=TmnxBsxAarpIdOrZero, TmnxAdminStateUpDown=TmnxAdminStateUpDown, THSMDABurstSizeBytes=THSMDABurstSizeBytes, TmnxMplsTpGlobalID=TmnxMplsTpGlobalID, THsmdaWrrWeight=THsmdaWrrWeight, TmnxRsvpDSTEClassType=TmnxRsvpDSTEClassType, TmnxSubMgtIntDestId=TmnxSubMgtIntDestId, TDEProfile=TDEProfile, TmnxDistCpuProtEnforceType=TmnxDistCpuProtEnforceType, TmnxSubCreditVolumeUnit=TmnxSubCreditVolumeUnit, timetraTCMIBModule=timetraTCMIBModule, TmnxRadiusServerOperState=TmnxRadiusServerOperState, TmnxMplsLdpNgIdentifier=TmnxMplsLdpNgIdentifier, TDSCPValue=TDSCPValue, TmnxSubRadiusOctetString=TmnxSubRadiusOctetString, TmnxHttpRedirectUrl=TmnxHttpRedirectUrl, TQueueIdOrAll=TQueueIdOrAll, ServiceAdminStatus=ServiceAdminStatus, TmnxVRtrMplsLspIDNoZero=TmnxVRtrMplsLspIDNoZero, TmnxIgmpVersion=TmnxIgmpVersion, TCpmFilterBurstSize=TCpmFilterBurstSize, TIngressPolicerIdOrNone=TIngressPolicerIdOrNone, TmnxIpv4AddressAndPrefixAddress=TmnxIpv4AddressAndPrefixAddress, TmnxDistCpuProtLogEventType=TmnxDistCpuProtLogEventType, TIPFilterType=TIPFilterType, TmnxReferenceBandwidth=TmnxReferenceBandwidth, TPIRRatePercent=TPIRRatePercent, TmnxAncpStringOrZero=TmnxAncpStringOrZero, TSiteOperStatus=TSiteOperStatus, THsmdaWrrWeightOverride=THsmdaWrrWeightOverride, TIpProtocol=TIpProtocol)
+mibBuilder.exportSymbols("TIMETRA-TC-MIB", TmnxIPsecTunnelTemplateId=TmnxIPsecTunnelTemplateId, TDSCPFilterActionValue=TDSCPFilterActionValue, TmnxOperGrpHoldUpTime=TmnxOperGrpHoldUpTime, TmnxVdoAnalyzerAlarmStates=TmnxVdoAnalyzerAlarmStates, TmnxIkePolicyOwnAuthMethod=TmnxIkePolicyOwnAuthMethod, TmnxSubProfileString=TmnxSubProfileString, TmnxDisplayStringURL=TmnxDisplayStringURL, TClassBurstLimit=TClassBurstLimit)
