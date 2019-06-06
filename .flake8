@@ -1,0 +1,7 @@
+[flake8]
+exclude=build
+max-line-length=99
+application-import-names=shell_tests,tests
+application-package-names=cloudshell
+import-order-style=appnexus
+ignore=D100,D101,D102,D103,D104,D105,D107,D401  # we don't need have docstrings in every func, class and package
