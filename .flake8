@@ -1,3 +1,0 @@
-[flake8]
-max-line-length=88
-ignore=D100,D101,D102,D103,D104,D105,D107,D401  # we don't need have docstrings in every func, class and package
