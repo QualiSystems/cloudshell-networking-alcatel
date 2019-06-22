@@ -12,10 +12,12 @@ class AlcatelSaveFlow(SaveConfigurationFlow):
         :param vrf_management_name: Virtual Routing and Forwarding Name
         """
 
-        with self._cli_handler.get_cli_service(self._cli_handler.enable_mode) as enable_session:
+        with self._cli_handler.get_cli_service(
+            self._cli_handler.enable_mode
+        ) as enable_session:
             system_action = SystemActions(enable_session, self._logger)
 
-            if configuration_type == 'running':
+            if configuration_type == "running":
                 system_action.copy_running_config(folder_path)
             else:
                 config_path = system_action.get_startup_config_path()
