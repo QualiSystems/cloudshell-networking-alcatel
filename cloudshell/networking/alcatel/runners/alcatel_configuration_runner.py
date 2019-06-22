@@ -15,4 +15,4 @@ class AlcatelConfigurationRunner(ConfigurationRunner):
 
     @property
     def file_system(self):
-        return 'cf1:'
+        return "cf1:"

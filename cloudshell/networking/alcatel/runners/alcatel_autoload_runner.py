@@ -3,7 +3,9 @@
 
 from cloudshell.devices.runners.autoload_runner import AutoloadRunner
 
-from cloudshell.networking.alcatel.flows.alcatel_autoload_flow import AlcatelSnmpAutoloadFlow
+from cloudshell.networking.alcatel.flows.alcatel_autoload_flow import (
+    AlcatelSnmpAutoloadFlow,
+)
 
 
 class AlcatelAutoloadRunner(AutoloadRunner):
