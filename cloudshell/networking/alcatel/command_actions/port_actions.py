@@ -1,7 +1,8 @@
 import re
 
-from cloudshell.cli.cli_service import CliService
-from cloudshell.cli.command_template.command_template_executor import CommandTemplateExecutor
+from cloudshell.cli.command_template.command_template_executor import (
+    CommandTemplateExecutor,
+)
 
 from cloudshell.networking.alcatel.command_templates import port_template
 
@@ -10,7 +11,8 @@ class PortActions(object):
     def __init__(self, cli_service, logger, port_name):
         """Port actions
 
-        :param CliService cli_service: enable mode cli_service
+        :param cli_service: enable mode cli_service
+        :type cli_service: cloudshell.cli.cli_service.CliService
         :param logger:
         :param str port_name:
         """
@@ -29,14 +31,16 @@ class PortActions(object):
         """
 
         if not port_name:
-            err_msg = 'Failed to get port name.'
+            err_msg = "Failed to get port name."
             self._logger.error(err_msg)
             raise Exception(self.__class__.__name__, err_msg)
 
-        port = port_name.split('/')[-1]
-        port = port.split(' ')[-1]
-        port = port.replace('-', '/')
-        self._logger.info('Interface name validation OK, port name - "{0}"'.format(port))
+        port = port_name.split("/")[-1]
+        port = port.split(" ")[-1]
+        port = port.replace("-", "/")
+        self._logger.info(
+            'Interface name validation OK, port name - "{0}"'.format(port)
+        )
 
         return port
 
@@ -46,10 +50,9 @@ class PortActions(object):
         :param bool qnq:
         """
 
-        mode = 'hybrid' if qnq else 'network'
+        mode = "hybrid" if qnq else "network"
         CommandTemplateExecutor(
-            self._cli_service,
-            port_template.SET_PORT_MODE,
+            self._cli_service, port_template.SET_PORT_MODE
         ).execute_command(port=self.port_name, mode=mode)
 
     def set_port_encap_type(self, qnq):
@@ -58,28 +61,24 @@ class PortActions(object):
         :param bool qnq:
         """
 
-        encap_type = 'qinq' if qnq else 'dot1q'
+        encap_type = "qinq" if qnq else "dot1q"
         CommandTemplateExecutor(
-            self._cli_service,
-            port_template.SET_PORT_ENCAP_TYPE,
+            self._cli_service, port_template.SET_PORT_ENCAP_TYPE
         ).execute_command(port=self.port_name, encap_type=encap_type)
 
     def shutdown(self):
         CommandTemplateExecutor(
-            self._cli_service,
-            port_template.SHUTDOWN,
+            self._cli_service, port_template.SHUTDOWN
         ).execute_command(port=self.port_name)
 
     def no_shutdown(self):
         CommandTemplateExecutor(
-            self._cli_service,
-            port_template.NO_SHUTDOWN,
+            self._cli_service, port_template.NO_SHUTDOWN
         ).execute_command(port=self.port_name)
 
     def is_qnq_on_port(self):
         output = CommandTemplateExecutor(
-            self._cli_service,
-            port_template.SHOW_PORT_ETHERNET,
+            self._cli_service, port_template.SHOW_PORT_ETHERNET
         ).execute_command(port=self.port_name)
 
-        return bool(re.search('Encap Type\s*: QinQ', output))
+        return bool(re.search(r"Encap Type\s*: QinQ", output))
