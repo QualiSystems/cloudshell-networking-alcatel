@@ -32,11 +32,10 @@ class AlcatelEnableSnmpFlow(EnableSnmpFlow):
             self._enable_snmp_v2(snmp_param)
 
     def _enable_snmp_v2(self, snmp_param):
-        """Enable SNMP V2
+        """Enable SNMP V2.
 
         :type snmp_param: SNMPV2WriteParameters|cloudshell.snmp.snmp_parameters.SNMPV2ReadParameters  # noqa E501
         """
-
         self._validate_snmp_v2_params(snmp_param)
 
         snmp_community = snmp_param.snmp_community
@@ -66,11 +65,10 @@ class AlcatelEnableSnmpFlow(EnableSnmpFlow):
                 )
 
     def _enable_snmp_v3(self, snmp_param):
-        """Enable SNMP V3
+        """Enable SNMP V3.
 
         :param SNMPV3Parameters snmp_param:
         """
-
         auth_type = self.SNMP_AUTH_MAP.get(snmp_param.auth_protocol)
         priv_type = self.SNMP_PRIV_MAP.get(snmp_param.private_key_protocol)
 

@@ -5,13 +5,12 @@ from cloudshell.networking.alcatel.command_actions.system_actions import SystemA
 
 class AlcatelSaveFlow(SaveConfigurationFlow):
     def execute_flow(self, folder_path, configuration_type, vrf_management_name=None):
-        """Execute flow which save selected file to the provided destination
+        """Execute flow which save selected file to the provided destination.
 
         :param folder_path: destination path where file will be saved
         :param configuration_type: running or startup
         :param vrf_management_name: Virtual Routing and Forwarding Name
         """
-
         with self._cli_handler.get_cli_service(
             self._cli_handler.enable_mode
         ) as enable_session:

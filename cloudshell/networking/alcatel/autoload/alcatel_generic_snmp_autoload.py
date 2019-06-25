@@ -21,8 +21,7 @@ class AlcatelGenericSNMPAutoload(object):
     HW_POSSIBLE_CLASSES = ["physChassis", "powerSupply", "ioModule", "mdaModule"]
 
     def __init__(self, snmp_handler, shell_name, shell_type, resource_name, logger):
-        """ Basic init with injected snmp handler and logger """
-
+        """Basic init with injected snmp handler and logger."""
         self.snmp_handler = snmp_handler
         self.shell_name = shell_name
         self.shell_type = shell_type
@@ -45,20 +44,19 @@ class AlcatelGenericSNMPAutoload(object):
         )
 
     def load_additional_mibs(self):
-        """ Loads specific mibs inside snmp handler """
-
+        """Loads specific mibs inside snmp handler."""
         # Path to General Alcatel MIBs
         path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "mibs"))
         self.snmp_handler.update_mib_sources(path)
 
     def discover(self, supported_os):
-        """General entry point for autoload,
-            read device structure and attributes: chassis, modules, submodules, ports,
-            port-channels and power supplies
+        """General entry point for autoload.
+
+        Read device structure and attributes: chassis, modules, submodules, ports,
+        port-channels and power supplies
 
         :return: AutoLoadDetails object
         """
-
         if not self._is_valid_device_os(supported_os):
             raise Exception(self.__class__.__name__, "Unsupported device OS")
 
@@ -92,10 +90,10 @@ class AlcatelGenericSNMPAutoload(object):
         return autoload_details
 
     def _is_valid_device_os(self, supported_os):
-        """Validate device OS using snmp
-            :return: True or False
-        """
+        """Validate device OS using snmp.
 
+        :return: True or False
+        """
         system_description = self.snmp_handler.get_property(
             "SNMPv2-MIB", "sysDescr", "0"
         )
@@ -119,8 +117,7 @@ class AlcatelGenericSNMPAutoload(object):
             return False
 
     def _get_device_details(self):
-        """ Get root element attributes """
-
+        """Get root element attributes."""
         self.logger.info("Building Root")
         vendor = "Alcatel"
 
@@ -138,12 +135,11 @@ class AlcatelGenericSNMPAutoload(object):
         self.resource.vendor = vendor
 
     def _get_device_model(self):
-        """ Get device model form snmp SNMPv2 mib
+        """Get device model form snmp SNMPv2 mib.
 
         :return: device model
         :rtype: str
         """
-
         result = ""
 
         match_name = re.search(
@@ -155,12 +151,11 @@ class AlcatelGenericSNMPAutoload(object):
         return re.sub(r".*model", "", result, flags=re.IGNORECASE)
 
     def _get_device_os_version(self):
-        """ Get device OS Version form snmp SNMPv2 mib
+        """Get device OS Version form snmp SNMPv2 mib.
 
         :return: device model
         :rtype: str
         """
-
         result = ""
         matched = re.search(
             r"TiMOS\S+?(?P<os_version>\d+\S+)\s",
@@ -172,8 +167,7 @@ class AlcatelGenericSNMPAutoload(object):
         return result
 
     def _load_snmp_tables(self):
-        """ Load all required SNMP tables """
-
+        """Load all required SNMP tables."""
         self.logger.info("Start loading MIB tables:")
         self.lldp_local_table = self.snmp_handler.get_table(
             "LLDP-MIB", "lldpLocPortDesc"
@@ -193,10 +187,11 @@ class AlcatelGenericSNMPAutoload(object):
         self.logger.info("MIB Tables loaded successfully")
 
     def _get_hw_data(self):
-        """ Read TIMETRA-CHASSIS-MIB and filter out device's structure and elements
+        """Get HW data from mib tables.
+
+        Read TIMETRA-CHASSIS-MIB and filter out device's structure and elements
             like chassis, modules, power ports
         """
-
         hw_names = self.snmp_handler.get_table("TIMETRA-CHASSIS-MIB", "tmnxHwName")
 
         resources = {}
@@ -247,8 +242,7 @@ class AlcatelGenericSNMPAutoload(object):
                     continue
 
     def _get_chassis_info(self):
-        """ Get Chassis element attributes """
-
+        """Get Chassis element attributes."""
         self.logger.info("Building Chassis")
 
         for chassis_index, attrs in self.chassis_dict.items():
@@ -286,8 +280,7 @@ class AlcatelGenericSNMPAutoload(object):
         return self._get_parent_ids(contained_in_id) + [pos_id]
 
     def _get_power_ports_info(self):
-        """ Get power port elements attributes """
-
+        """Get power port elements attributes."""
         self.logger.info("Start loading Power Ports")
 
         for index, attrs in self.power_supply_dict.items():
@@ -317,8 +310,7 @@ class AlcatelGenericSNMPAutoload(object):
         self.logger.info("Building Power Ports completed")
 
     def _get_modules_info(self):
-        """ Set attributes for all discovered modules """
-
+        """Set attributes for all discovered modules."""
         self.logger.info("Building Modules")
 
         self.logger.info("Building IO Modules")
@@ -410,8 +402,7 @@ class AlcatelGenericSNMPAutoload(object):
         self.logger.info("Building Modules completed")
 
     def _get_ports_and_portchannels_info(self):
-        """ Get port and port channel elements attributes """
-
+        """Get port and port channel elements attributes."""
         self.logger.info("Building Ports and PortChannels")
 
         port_pattern = re.compile(
@@ -502,13 +493,12 @@ class AlcatelGenericSNMPAutoload(object):
         self.logger.info("Building Ports and PortChannels completed")
 
     def _get_ipv4_interface_address(self, port_index):
-        """Get IP address details for provided port
+        """Get IP address details for provided port.
 
         :param port_index: port index in ifTable
         :return interface_details: detected info for provided interface
             dict{'IPv4 Address': '', 'IPv6 Address': ''}
         """
-
         if self.ip_v4_table and len(self.ip_v4_table) > 1:
             for key, value in self.ip_v4_table.iteritems():
                 if (
@@ -527,8 +517,7 @@ class AlcatelGenericSNMPAutoload(object):
                     return key
 
     def _get_associated_ports(self, port_channel_id, ifindex2name_mapping):
-        """ Get all ports associated with provided port channel """
-
+        """Get all ports associated with provided port channel."""
         port_names = []
         for port_if_index in self.port_channel2ports.get(port_channel_id, []):
             port_names.append(ifindex2name_mapping.get(port_if_index).strip(" \t\n\r"))
@@ -536,11 +525,10 @@ class AlcatelGenericSNMPAutoload(object):
         return "; ".join(port_names)
 
     def _get_duplex(self, port_hw_id):
-        """ Determine interface duplex
+        """Determine interface duplex.
 
-            :return: Full or Half
+        :return: Full or Half
         """
-
         if (
             self.snmp_handler.get_property(
                 "TIMETRA-PORT-MIB", "tmnxPortEtherDuplex", port_hw_id
@@ -556,11 +544,10 @@ class AlcatelGenericSNMPAutoload(object):
         return "Half"
 
     def _get_auto_negotiation(self, port_hw_id):
-        """ Determine interface auto negotiation
+        """Determine interface auto negotiation.
 
         :return: "True" or "False"
         """
-
         if (
             self.snmp_handler.get_property(
                 "TIMETRA-PORT-MIB", "tmnxPortEtherAutoNegotiate", port_hw_id
@@ -572,11 +559,10 @@ class AlcatelGenericSNMPAutoload(object):
         return "False"
 
     def _add_element(self, relative_path, resource, parent_id=""):
-        """Add object data to resources and attributes lists
+        """Add object data to resources and attributes lists.
 
         :param resource: object which contains all required data for certain resource
         """
-
         rel_seq = relative_path.split("/")
 
         if len(rel_seq) == 1:  # Chassis and PortChannel connected directly to root
@@ -595,8 +581,8 @@ class AlcatelGenericSNMPAutoload(object):
             self.elements.update({relative_path: resource})
 
     def _log_autoload_details(self, autoload_details):
-        """
-        Logging autoload details
+        """Logging autoload details.
+
         :param autoload_details:
         :return:
         """

@@ -13,8 +13,7 @@ class EnableCommandMode(CommandMode):
     EXIT_COMMAND = ""
 
     def __init__(self, resource_config, api):
-        """Initialize Enable command mode - default command mode for Alcatel Shells"""
-
+        """Initialize Enable command mode - default command mode for Alcatel Shells."""
         self.resource_config = resource_config
         self._api = api
         CommandMode.__init__(self, self.PROMPT, self.ENTER_COMMAND, self.EXIT_COMMAND)
@@ -26,8 +25,7 @@ class ConfigCommandMode(CommandMode):
     EXIT_COMMAND = "exit"
 
     def __init__(self, resource_config, api):
-        """Initialize Config command mode"""
-
+        """Initialize Config command mode."""
         self.resource_config = resource_config
         self._api = api
         CommandMode.__init__(self, self.PROMPT, self.ENTER_COMMAND, self.EXIT_COMMAND)

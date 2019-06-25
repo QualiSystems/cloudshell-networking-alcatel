@@ -9,31 +9,28 @@ from cloudshell.networking.alcatel.command_templates import enable_disable_snmp
 
 class EnableDisableSnmpV2Actions(object):
     def __init__(self, cli_service, logger):
-        """Enable Disable Snmp actions
+        """Enable Disable Snmp actions.
 
         :param cli_service: enable mode cli service
         :type cli_service: cloudshell.cli.cli_service_impl.CliServiceImpl
         :param logger:
         """
-
         self._cli_service = cli_service
         self._logger = logger
 
     def enable_snmp_server(self):
-        """Enable SNMP server"""
-
+        """Enable SNMP server."""
         CommandTemplateExecutor(
             self._cli_service, enable_disable_snmp.ENABLE_SNMP_SERVER
         ).execute_command()
 
     def is_configured(self, snmp_community):
-        """Check snmp community is configured
+        """Check snmp community is configured.
 
         :param str snmp_community:
         :return: True or False
         :rtype: bool
         """
-
         output = self._cli_service.send_command(
             "configure system security snmp community \t"
         )
@@ -41,18 +38,17 @@ class EnableDisableSnmpV2Actions(object):
         return snmp_community in output
 
     def enable_snmp(self, snmp_community, access_mode):
-        """Enable snmp on the device
+        """Enable snmp on the device.
 
         :param snmp_community: community string
         :param access_mode: r or rw
         """
-
         CommandTemplateExecutor(
             self._cli_service, enable_disable_snmp.ENABLE_SNMPV2
         ).execute_command(snmp_community=snmp_community, access_mode=access_mode)
 
     def disable_snmp(self, snmp_community):
-        """Disable SNMP
+        """Disable SNMP.
 
         :param snmp_community: community string
         """
@@ -63,30 +59,28 @@ class EnableDisableSnmpV2Actions(object):
 
 class EnableDisableSnmpV3Actions(object):
     def __init__(self, cli_service, logger):
-        """Enable Disable Snmp actions
+        """Enable Disable Snmp actions.
 
         :param cli_service: enable mode cli service
         :type cli_service: cloudshell.cli.cli_service_impl.CliServiceImpl
         :param logger:
         """
-
         self._cli_service = cli_service
         self._logger = logger
 
     def enable_snmp_server(self):
-        """Enable SNMP server"""
+        """Enable SNMP server."""
         CommandTemplateExecutor(
             self._cli_service, enable_disable_snmp.ENABLE_SNMP_SERVER
         ).execute_command()
 
     def is_exists_user(self, user):
-        """Check user is exists
+        """Check user is exists.
 
         :param str user: user name
         :return: True or False
         :rtype: bool
         """
-
         output = CommandTemplateExecutor(
             self._cli_service, enable_disable_snmp.SHOW_USERS
         ).execute_command()
@@ -94,49 +88,45 @@ class EnableDisableSnmpV3Actions(object):
         return bool(re.search(r"^{}\s".format(user), output, re.MULTILINE))
 
     def enable_view(self, view):
-        """Enable SNMP view
+        """Enable SNMP view.
 
         :param str view: snmp view
         """
-
         CommandTemplateExecutor(
             self._cli_service, enable_disable_snmp.ENABLE_VIEW
         ).execute_command(view=view)
 
     def disable_view(self, view):
-        """Disable SNMP view
+        """Disable SNMP view.
 
         :param str view: snmp view
         """
-
         CommandTemplateExecutor(
             self._cli_service, enable_disable_snmp.DISABLE_VIEW
         ).execute_command(view=view)
 
     def enable_group(self, view, group, security_level):
-        """Enable SNMP group
+        """Enable SNMP group.
 
         :param str view: snmp view
         :param str group: snmp group
         :param str security_level: no-auth-no-privacy or auth-no-privacy or privacy
         """
-
         CommandTemplateExecutor(
             self._cli_service, enable_disable_snmp.ENABLE_GROUP
         ).execute_command(view=view, group=group, security_level=security_level)
 
     def disable_group(self, group):
-        """Disable SNMP group
+        """Disable SNMP group.
 
         :param str group: snmp group
         """
-
         CommandTemplateExecutor(
             self._cli_service, enable_disable_snmp.DISABLE_GROUP
         ).execute_command(group=group)
 
     def enable_snmp_user(self, user, group, auth_type, auth_key, priv_type, priv_key):
-        """Enable snmp user
+        """Enable snmp user.
 
         :param str user: user name
         :param str group: snmp group
@@ -145,7 +135,6 @@ class EnableDisableSnmpV3Actions(object):
         :param str priv_type: privacy type none or des-key or aes-128-cfb-key
         :param str priv_key: privacy key
         """
-
         if auth_type == "none":
             auth_key = priv_type = priv_key = None
         if priv_type == "none":
@@ -170,11 +159,10 @@ class EnableDisableSnmpV3Actions(object):
         ).execute_command(user=user, group=group)
 
     def disable_snmp_user(self, user):
-        """Enable snmp user
+        """Enable snmp user.
 
         :param str user: user name
         """
-
         CommandTemplateExecutor(
             self._cli_service, enable_disable_snmp.DISABLE_USER
         ).execute_command(user=user)

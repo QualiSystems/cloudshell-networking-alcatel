@@ -18,11 +18,10 @@ class AlcatelDisableSnmpFlow(DisableSnmpFlow):
             self._disable_snmp_v2(snmp_param)
 
     def _disable_snmp_v2(self, snmp_param):
-        """Disable SNMP V3
+        """Disable SNMP V3.
 
         :type snmp_param: cloudshell.snmp.snmp_parameters.SNMPV2WriteParameters|cloudshell.snmp.snmp_parameters.SNMPV2ReadParameters  # noqa E501
         """
-
         snmp_community = snmp_param.snmp_community
 
         with self._cli_handler.get_cli_service(
@@ -41,11 +40,10 @@ class AlcatelDisableSnmpFlow(DisableSnmpFlow):
                 )
 
     def _disable_snmp_v3(self, snmp_param):
-        """Disable SNMP V3
+        """Disable SNMP V3.
 
         :param SNMPV3Parameters snmp_param:
         """
-
         with self._cli_handler.get_cli_service(
             self._cli_handler.enable_mode
         ) as service:

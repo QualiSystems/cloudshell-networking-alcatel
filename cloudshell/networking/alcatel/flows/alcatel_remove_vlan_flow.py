@@ -8,7 +8,7 @@ class AlcatelRemoveVlanFlow(RemoveVlanFlow):
     def execute_flow(
         self, vlan_range, port_name, port_mode, action_map=None, error_map=None
     ):
-        """Remove configuration of VLAN on multiple ports or port-channels
+        """Remove configuration of VLAN on multiple ports or port-channels.
 
         :param vlan_range: VLAN id
         :param port_name: full port name
@@ -17,7 +17,6 @@ class AlcatelRemoveVlanFlow(RemoveVlanFlow):
         :param error_map:
         :rtype: str
         """
-
         if "-" in vlan_range:
             raise Exception("Doesn't support VLAN range")
         vlan_id = vlan_range  # doesn't support range

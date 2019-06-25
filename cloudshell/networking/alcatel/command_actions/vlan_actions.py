@@ -9,7 +9,7 @@ from cloudshell.networking.alcatel.command_templates import vlan_template
 
 class VlanActions(object):
     def __init__(self, cli_service, logger, port_name, vlan_id, qnq):
-        """Service actions
+        """Service actions.
 
         :param cli_service: enable mode cli_service
         :type cli_service: cloudshell.cli.cli_service.CliService
@@ -18,7 +18,6 @@ class VlanActions(object):
         :param str vlan_id:
         :param bool qnq:
         """
-
         self._cli_service = cli_service
         self._logger = logger
         self._port_name = port_name
@@ -27,12 +26,11 @@ class VlanActions(object):
         self.if_name = "p{}:{}{}".format(port_name, vlan_id, ".*" if qnq else "")
 
     def _get_interfaces_with_vlan(self):
-        """Getting names of sub interfaces with used VLAN on the port
+        """Getting names of sub interfaces with used VLAN on the port.
 
         :return: list of sub interface names for the port with VLANs
         :rtype: list
         """
-
         output = CommandTemplateExecutor(
             self._cli_service, vlan_template.SHOW_SUB_INTERFACES
         ).execute_command()
@@ -42,8 +40,7 @@ class VlanActions(object):
         return re.findall(pattern, output, re.MULTILINE)
 
     def remove_all_sub_interfaces(self):
-        """Remove all sub interfaces"""
-
+        """Remove all sub interfaces."""
         for if_name in self._get_interfaces_with_vlan():
             CommandTemplateExecutor(
                 self._cli_service, vlan_template.SHUTDOWN_SUB_INTERFACE
@@ -53,8 +50,7 @@ class VlanActions(object):
             ).execute_command(if_name=if_name)
 
     def remove_sub_interface(self):
-        """Remove sub interface"""
-
+        """Remove sub interface."""
         CommandTemplateExecutor(
             self._cli_service, vlan_template.SHUTDOWN_SUB_INTERFACE
         ).execute_command(if_name=self.if_name)
@@ -63,8 +59,7 @@ class VlanActions(object):
         ).execute_command(if_name=self.if_name)
 
     def create_sub_interface(self):
-        """Create router interface for the port with VLAN"""
-
+        """Create router interface for the port with VLAN."""
         kwargs = {
             "port_name": self._port_name,
             "vlan_id": self._vlan_id,
@@ -78,8 +73,7 @@ class VlanActions(object):
         ).execute_command(**kwargs)
 
     def is_configured_sub_interface(self):
-        """Check that router interface is configured"""
-
+        """Check that router interface is configured."""
         output = CommandTemplateExecutor(
             self._cli_service, vlan_template.SHOW_SUB_INTERFACES
         ).execute_command()

@@ -39,7 +39,7 @@ class ConsoleTelnetSession(TelnetSession):
         self._start_with_new_line = start_with_new_line
 
     def connect(self, prompt, logger):
-        """Open connection to device / create session
+        """Open connection to device / create session.
 
         :param prompt:
         :param logger:

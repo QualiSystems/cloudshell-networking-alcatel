@@ -92,8 +92,7 @@ class AlcatelCliHandler(CliHandlerImpl):
         return self._enable_password
 
     def on_session_start(self, session, logger):
-        """Send default commands to configure/clear session outputs"""
-
+        """Send default commands to configure/clear session outputs."""
         cli_service = CliServiceImpl(session, self.enable_mode, logger)
         cli_service.send_command(
             "enable-admin",

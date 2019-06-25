@@ -12,7 +12,7 @@ class AlcatelRestoreFlow(RestoreConfigurationFlow):
     def execute_flow(
         self, path, configuration_type, restore_method, vrf_management_name
     ):
-        """ Execute flow which restore selected file to the provided destination
+        """Execute flow which restore selected file to the provided destination.
 
         :param str path: the path to the configuration file,
             including the configuration file name
@@ -22,7 +22,6 @@ class AlcatelRestoreFlow(RestoreConfigurationFlow):
             startup or running
         :param str vrf_management_name: Virtual Routing and Forwarding Name
         """
-
         if restore_method == "append":
             msg = 'Restore method "append" not supported for the device'
             self._logger.error(msg)

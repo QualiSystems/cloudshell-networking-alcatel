@@ -9,19 +9,17 @@ from cloudshell.networking.alcatel.command_templates import configuration
 
 class SystemActions(object):
     def __init__(self, cli_service, logger):
-        """System actions
+        """System actions.
 
         :param cli_service: enable mode cli_service
         :type cli_service: cloudshell.cli.cli_service.CliService
         :param logger:
         """
-
         self._cli_service = cli_service
         self._logger = logger
 
     def get_startup_config_path(self):
-        """Get path to startup file"""
-
+        """Get path to startup file."""
         sys_info = CommandTemplateExecutor(
             self._cli_service, configuration.SHOW_SYS_INFO
         ).execute_command()
@@ -39,13 +37,12 @@ class SystemActions(object):
         ).execute_command(dst=destination)
 
     def copy(self, src, dst, timeout=120):
-        """Copy file from device to ftp or vice versa from ftp to device
+        """Copy file from device to ftp or vice versa from ftp to device.
 
         :param src: source path local, ftp or tftp
         :param dst: source path local, ftp or tftp
         :param timeout: session timeout
         """
-
         CommandTemplateExecutor(
             self._cli_service, configuration.COPY, timeout=timeout
         ).execute_command(src=src, dst=dst)
@@ -68,18 +65,16 @@ class SystemActions(object):
                     raise e
 
     def change_primary_conf(self, path):
-        """Change path to primary config in BOF
+        """Change path to primary config in BOF.
 
         :param path: path to new primary config
         """
-
         CommandTemplateExecutor(
             self._cli_service, configuration.CHANGE_PRIMARY_CONF
         ).execute_command(path=path)
 
     def get_primary_config_path(self):
-        """Get path to primary config file"""
-
+        """Get path to primary config file."""
         bof = CommandTemplateExecutor(
             self._cli_service, configuration.SHOW_BOF
         ).execute_command()
@@ -90,8 +85,7 @@ class SystemActions(object):
         return match.group("path").strip()
 
     def reboot(self, timeout=3600, upgrade=False):
-        """Reboot device"""
-
+        """Reboot device."""
         kwargs = {"upgrade": ""} if upgrade else {}
         try:
             CommandTemplateExecutor(
@@ -102,18 +96,16 @@ class SystemActions(object):
         self._cli_service.reconnect(timeout)
 
     def change_primary_image(self, folder_path):
-        """Change path to primary image in BOF
+        """Change path to primary image in BOF.
 
         :param folder_path: path to new primary image folder
         """
-
         CommandTemplateExecutor(
             self._cli_service, configuration.CHANGE_PRIMARY_IMAGE
         ).execute_command(folder_path=folder_path)
 
     def save_bof(self):
-        """Save BOF"""
-
+        """Save BOF."""
         CommandTemplateExecutor(
             self._cli_service, configuration.SAVE_BOF
         ).execute_command()
