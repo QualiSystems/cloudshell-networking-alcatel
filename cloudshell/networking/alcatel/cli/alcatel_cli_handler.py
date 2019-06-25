@@ -72,8 +72,7 @@ class AlcatelCliHandler(CliHandlerImpl):
         elif self.cli_type.lower() == TelnetSession.SESSION_TYPE.lower():
             new_sessions = self._telnet_session()
         elif self.cli_type.lower() == "console":
-            new_sessions = list()
-            new_sessions.append(self._console_ssh_session())
+            new_sessions = [self._console_ssh_session()]
             new_sessions.extend(self._console_telnet_session())
         else:
             new_sessions = [
