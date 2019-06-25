@@ -18,6 +18,7 @@ repos:
           flake8-docstrings,
           flake8-builtins,
           flake8-comprehensions,
+          flake8-print,
         ]
         language_version: python3.7
         exclude: '\mibs'
