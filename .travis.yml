@@ -1,5 +1,12 @@
 language: python
 
+matrix:
+  include:
+    - python: 2.7
+    - python: 3.7
+      dist: xenial
+      sudo: true
+
 jobs:
   include:
     - env: TOXENV=master
