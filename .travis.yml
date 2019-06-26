@@ -5,5 +5,5 @@ python:
 install:
   - pip install tox
   - pip install codecov
-script: tox
+script: tox -e master
 after_success: codecov
