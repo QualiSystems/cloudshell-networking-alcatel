@@ -7,9 +7,9 @@ jobs:
       python: 2.7
       after_success: codecov
     - if: branch != master
-        env: TOXENV=dev
-        python: 2.7
-        after_success: codecov
+      env: TOXENV=dev
+      python: 2.7
+      after_success: codecov
     - env: TOXENV=pre-commit
       python: 3.7
       dist: xenial
