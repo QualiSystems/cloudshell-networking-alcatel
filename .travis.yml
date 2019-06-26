@@ -5,6 +5,8 @@ jobs:
     - env: TOXENV=master
       python: 2.7
       after_success: codecov
+    - env: TOXENV=pre-commit
+      python: 3.7
 
 install:
   - pip install tox-travis
