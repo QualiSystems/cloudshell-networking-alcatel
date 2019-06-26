@@ -1,7 +1,13 @@
 language: python
-python: "2.7"
+
+jobs:
+  include:
+    - env: TOXENV=master
+      python: 2.7
+      after_success: codecov
+
 install:
-  - pip install tox
+  - pip install tox-travis
   - pip install codecov
+
 script: tox
-after_success: codecov
