@@ -1,17 +1,18 @@
+from mock import MagicMock, patch
+
 from cloudshell.snmp.quali_snmp import QualiMibTable
-from mock import patch
-from mock.mock import MagicMock
+
+from cloudshell.networking.alcatel.runners.alcatel_autoload_runner import (
+    AlcatelAutoloadRunner,
+)
+from cloudshell.networking.alcatel.snmp.alcatel_snmp_handler import AlcatelSnmpHandler
+
 from tests.networking.alcatel.base_test import (
     DEFAULT_PROMPT,
     ENABLE_PASSWORD,
     BaseAlcatelTestCase,
     CliEmulator,
 )
-
-from cloudshell.networking.alcatel.runners.alcatel_autoload_runner import (
-    AlcatelAutoloadRunner,
-)
-from cloudshell.networking.alcatel.snmp.alcatel_snmp_handler import AlcatelSnmpHandler
 
 
 class TestSnmp(BaseAlcatelTestCase):

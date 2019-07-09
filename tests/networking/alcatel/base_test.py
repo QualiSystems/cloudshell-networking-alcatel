@@ -1,6 +1,8 @@
 import re
 from unittest import TestCase
 
+from mock import MagicMock, create_autospec
+
 from cloudshell.devices.driver_helper import get_cli
 from cloudshell.devices.standards.networking.configuration_attributes_structure import (
     create_networking_resource_from_context,
@@ -9,7 +11,6 @@ from cloudshell.shell.core.driver_context import (
     ResourceCommandContext,
     ResourceContextDetails,
 )
-from mock import MagicMock, create_autospec
 
 from cloudshell.networking.alcatel.cli.alcatel_cli_handler import AlcatelCliHandler
 

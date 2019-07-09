@@ -1,12 +1,13 @@
 from mock import MagicMock, patch
+
+from cloudshell.networking.alcatel.runners.alcatel_configuration_runner import (
+    AlcatelConfigurationRunner,
+)
+
 from tests.networking.alcatel.base_test import (
     DEFAULT_PROMPT,
     BaseAlcatelTestCase,
     CliEmulator,
-)
-
-from cloudshell.networking.alcatel.runners.alcatel_configuration_runner import (
-    AlcatelConfigurationRunner,
 )
 
 

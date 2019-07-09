@@ -1,13 +1,14 @@
 import jsonpickle as jsonpickle
 from mock import patch
+
+from cloudshell.networking.alcatel.runners.alcatel_connectivity_runner import (
+    AlcatelConnectivityRunner,
+)
+
 from tests.networking.alcatel.base_test import (
     DEFAULT_PROMPT,
     BaseAlcatelTestCase,
     CliEmulator,
-)
-
-from cloudshell.networking.alcatel.runners.alcatel_connectivity_runner import (
-    AlcatelConnectivityRunner,
 )
 
 
