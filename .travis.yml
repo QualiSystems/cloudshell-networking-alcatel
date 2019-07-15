@@ -3,19 +3,21 @@ language: python
 jobs:
   include:
     - if: branch = master
-      env: TOXENV=master, build
+      env: TOXFACTOR=master
       python: 2.7
       after_success: codecov
     - if: branch != master
-      env: TOXENV=dev, build
+      env: TOXFACTOR=dev
       python: 2.7
       after_success: codecov
+    - env: TOXENV=build
+      python: 2.7
     - env: TOXENV=pre-commit
       python: 3.7
       dist: xenial
 
 install:
-  - pip install tox-travis
+  - pip install tox-travis, tox-factor
   - pip install codecov
 
 script: tox
