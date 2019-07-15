@@ -3,11 +3,11 @@ language: python
 jobs:
   include:
     - if: branch = master
-      env: TOXENV=master
+      env: TOXENV=master, build
       python: 2.7
       after_success: codecov
     - if: branch != master
-      env: TOXENV=dev
+      env: TOXENV=dev, build
       python: 2.7
       after_success: codecov
     - env: TOXENV=pre-commit
