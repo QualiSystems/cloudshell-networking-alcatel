@@ -19,6 +19,7 @@ setup(
     packages=find_packages(),
     install_requires=required,
     tests_require=required_for_tests,
+    python_requires="~=2.7",
     version=version_from_file,
     package_data={"": ["*.txt"]},
     description="QualiSystems networking Alcatel specific package",
