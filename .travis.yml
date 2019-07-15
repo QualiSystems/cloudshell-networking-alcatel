@@ -3,16 +3,16 @@ language: python
 jobs:
   include:
     - if: branch = master
+      env: TOXFACTOR=master
       python: 2.7
-      script: tox -f master
       after_success: codecov
     - if: branch != master
+      env: TOXFACTOR=dev
       python: 2.7
-      script: tox -f dev
       after_success: codecov
-    - script: tox -e build
+    - env: TOXENV=build
       python: 2.7
-    - script: tox -e pre-commit
+    - env: TOXENV=pre-commit
       python: 3.7
       dist: xenial
 
