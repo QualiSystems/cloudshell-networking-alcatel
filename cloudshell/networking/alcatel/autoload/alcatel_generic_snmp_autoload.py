@@ -482,7 +482,6 @@ class AlcatelGenericSNMPAutoload(object):
                 port_object.duplex = self._get_duplex(port_hw_index)
                 port_object.auto_negotiation = self._get_auto_negotiation(port_hw_index)
                 port_object.adjacent = ""
-                # port_object.adjacent = self._get_adjacent(port_hw_index)
 
                 self._add_element(
                     relative_path="{}/{}".format(chassis_index, port_name),
