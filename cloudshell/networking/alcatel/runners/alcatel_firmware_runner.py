@@ -1,6 +1,8 @@
 from cloudshell.devices.runners.firmware_runner import FirmwareRunner
 
-from cloudshell.networking.alcatel.flows.alcatel_load_firmware_flow import AlcatelLoadFirmwareFlow
+from cloudshell.networking.alcatel.flows.alcatel_load_firmware_flow import (
+    AlcatelLoadFirmwareFlow,
+)
 
 
 class AlcatelFirmwareRunner(FirmwareRunner):

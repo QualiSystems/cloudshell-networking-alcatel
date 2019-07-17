@@ -1,2 +1,5 @@
-cloudshell-networking>=5.1,<5.2
-cloudshell-networking-devices>=2.4,<2.5
+pre-commit
+tox
+tox-factor
+-r test_requirements.txt
+--extra-index-url https://test.pypi.org/simple -r requirements.txt

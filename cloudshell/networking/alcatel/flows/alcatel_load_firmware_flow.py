@@ -12,7 +12,9 @@ class AlcatelLoadFirmwareFlow(LoadFirmwareFlow):
         :param vrf: Virtual Routing and Forwarding Name
         :param timeout:
         """
-        with self._cli_handler.get_cli_service(self._cli_handler.enable_mode) as enable_session:
+        with self._cli_handler.get_cli_service(
+            self._cli_handler.enable_mode
+        ) as enable_session:
             system_action = SystemActions(enable_session, self._logger)
             bof_source = system_action.get_bof_source()
             dst = self._get_dst_path(bof_source, path)
@@ -29,4 +31,4 @@ class AlcatelLoadFirmwareFlow(LoadFirmwareFlow):
         :param str path: ftp://ftp_host/file_name, etc
         """
         file_name = UrlParser.parse_url(path)[UrlParser.FILENAME]
-        return '{}\\{}'.format(bof_source, file_name)
+        return "{}\\{}".format(bof_source, file_name)

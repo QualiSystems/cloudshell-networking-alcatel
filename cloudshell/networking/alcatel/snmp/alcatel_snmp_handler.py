@@ -3,8 +3,12 @@
 
 from cloudshell.devices.snmp_handler import SnmpHandler
 
-from cloudshell.networking.alcatel.flows.alcatel_disable_snmp_flow import AlcatelDisableSnmpFlow
-from cloudshell.networking.alcatel.flows.alcatel_enable_snmp_flow import AlcatelEnableSnmpFlow
+from cloudshell.networking.alcatel.flows.alcatel_disable_snmp_flow import (
+    AlcatelDisableSnmpFlow,
+)
+from cloudshell.networking.alcatel.flows.alcatel_enable_snmp_flow import (
+    AlcatelEnableSnmpFlow,
+)
 
 
 class AlcatelSnmpHandler(SnmpHandler):
