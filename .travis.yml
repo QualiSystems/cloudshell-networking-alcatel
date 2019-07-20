@@ -1,18 +1,22 @@
 language: python
 
-python:
-  - "2.7"
-  - "3.6"
-
 jobs:
   include:
     - if: branch = master
-      env: TOXFACTOR = master
+      env: TOXFACTOR=master
+      python:
+        - 2.7
+        - 3.6
+      after_success: codecov
     - if: branch != master
-      env: TOXFACTOR = dev
-    - env: TOXENV = build
+      env: TOXFACTOR=dev
+      python:
+        - 2.7
+        - 3.6
+      after_success: codecov
+    - env: TOXENV=build
       python: 2.7
-    - env: TOXENV = pre-commit
+    - env: TOXENV=pre-commit
       python: 3.7
       dist: xenial
 
@@ -21,4 +25,3 @@ install:
   - pip install codecov
 
 script: tox
-after_success: codecov
