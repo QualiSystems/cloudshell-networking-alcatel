@@ -4,19 +4,19 @@ jobs:
   include:
     - if: branch = master
       python: 2.7
-      env: TOXFACTOR=master
+      env: TOXENV=py27-master
       after_success: codecov
     - if: branch = master
       python: 3.6
-      env: TOXFACTOR=master
+      env: TOXENV=py36-master
       after_success: codecov
     - if: branch != master
       python: 2.7
-      env: TOXFACTOR=dev
+      env: TOXENV=py27-dev
       after_success: codecov
     - if: branch != master
       python: 3.6
-      env: TOXFACTOR=dev
+      env: TOXENV=py36-dev
       after_success: codecov
     - env: TOXENV=build
       python: 2.7
@@ -25,8 +25,7 @@ jobs:
       dist: xenial
 
 install:
-  - pip install tox-factor
-  - pip install tox-travis
+  - pip install tox
   - pip install codecov
 
 script: tox
