@@ -1,19 +1,21 @@
 language: python
 
-python:
-  - 2.7
-  - 3.7
-
-env:
-  TOXFACTOR = master
-  TOXFACTOR = dev
-
-matrix:
+jobs:
   include:
     - if: branch = master
+      python: 2.7
+      env: TOXFACTOR=master
+      after_success: codecov
+    - if: branch = master
+      python: 3.6
       env: TOXFACTOR=master
       after_success: codecov
     - if: branch != master
+      python: 2.7
+      env: TOXFACTOR=dev
+      after_success: codecov
+    - if: branch != master
+      python: 3.6
       env: TOXFACTOR=dev
       after_success: codecov
     - env: TOXENV=build
@@ -24,6 +26,7 @@ matrix:
 
 install:
   - pip install tox-factor
+  - pip install tox-travis
   - pip install codecov
 
 script: tox
