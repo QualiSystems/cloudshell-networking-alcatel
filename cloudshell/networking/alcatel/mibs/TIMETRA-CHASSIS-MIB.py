@@ -49,13 +49,17 @@ class TmnxHwIndexOrZero(TextualConvention, Integer32):
 
 class TmnxHwClass(TextualConvention, Integer32):
     status = 'current'
-    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 19, 20, 21, 22, 23))
-    namedValues = NamedValues(("other", 1), ("unknown", 2), ("physChassis", 3), ("container", 4), ("powerSupply", 5), ("fan", 6), ("sensor", 7), ("ioModule", 8), ("cpmModule", 9), ("fabricModule", 10), ("mdaModule", 11), ("flashDiskModule", 12), ("port", 13), ("mcm", 14), ("ccm", 15), ("alarmInputModule", 19), ("pcm", 20), ("powerShelf", 21), ("powerShelfController", 22), ("cpmCarrier", 23))
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1,
+                                                                                 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 19, 20, 21, 22, 23, 24))
+    namedValues = NamedValues(("other", 1), ("unknown", 2), ("physChassis", 3),
+                              ("container", 4), ("powerSupply", 5), ("fan", 6), ("sensor", 7), ("ioModule", 8), ("cpmModule", 9), ("fabricModule", 10), ("mdaModule", 11), ("flashDiskModule", 12), ("port", 13), ("mcm", 14), ("ccm", 15), ("alarmInputModule", 19), ("pcm", 20), ("powerShelf", 21), ("powerShelfController", 22), ("cpmCarrier", 23), ("xioModule", 24))
 
 class TmnxPhysChassisClass(TextualConvention, Integer32):
     status = 'current'
-    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 5, 6))
-    namedValues = NamedValues(("other", 1), ("unknown", 2), ("routerChassis", 3), ("ethSatChassis", 5), ("tdmSatChassis", 6))
+    subtypeSpec = Integer32.subtypeSpec + ConstraintsUnion(SingleValueConstraint(1, 2, 3, 5, 6, 7))
+    namedValues = NamedValues(("other", 1), ("unknown", 2), ("routerChassis", 3),
+                              ("ethSatChassis", 5), ("tdmSatChassis", 6),
+                              ("esaChassis", 7))
 
 class TmnxPhysChassisRole(TextualConvention, Integer32):
     status = 'current'

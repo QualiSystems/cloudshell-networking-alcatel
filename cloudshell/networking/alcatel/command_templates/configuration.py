@@ -7,7 +7,7 @@ SHOW_BOF = CommandTemplate('show bof')
 SAVE_BOF = CommandTemplate(
     'bof save',
     error_map={
-        r'^((?!Completed\.).)*$': Exception('Fail to save BOF'),
+        r'^((?!Completed\.|OK).)*$': Exception('Fail to save BOF'),
     }
 )
 SHOW_SYS_INFO = CommandTemplate('show system information')
